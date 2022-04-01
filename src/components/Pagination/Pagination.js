@@ -4,7 +4,7 @@ import ProductSize from "../ProductSize/ProductSize";
 class Pagination extends Component {
   render() {
     return (
-      <div class="container">
+      <div className="container">
         {pages.map((page) => {
           <ProductSize title={page.number} />;
         })}

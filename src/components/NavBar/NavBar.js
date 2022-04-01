@@ -3,16 +3,16 @@ import React, { Component } from "react";
 class NavBar extends Component {
   render() {
     return (
-      <nav class="container">
-        <ul class="nav-group">
-          <li class="nav-item">WOMEN</li>
-          <li class="nav-item">MEN</li>
-          <li class="nav-item">KIDS</li>
+      <nav className="container">
+        <ul className="nav-group">
+          <li className="nav-item">WOMEN</li>
+          <li className="nav-item">MEN</li>
+          <li className="nav-item">KIDS</li>
         </ul>
         <img
           src="../../assets/images/shopping-bag.png"
           alt="Shopping Bag Icon, created by DinosoftLabs - Flaticon https://www.flaticon.com/free-icons/bag"
-          class="nav-image"
+          className="nav-image"
         />
         <div>
           <select name="currency" id="currency" aria-label="Choose currency">
@@ -24,7 +24,7 @@ class NavBar extends Component {
           <img
             src="../../assets/images/shopping-cart.png"
             alt="Toggle minicart, created by Kiranshastry - Flaticon https://www.flaticon.com/free-icons/shopping-cart"
-            class="nav-image"
+            className="nav-image"
           />
         </div>
       </nav>

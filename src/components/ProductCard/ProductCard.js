@@ -3,10 +3,10 @@ import React, { Component } from "react";
 class ProductCard extends Component {
   render() {
     return (
-      <div>
-        <img src={product.image} alt={product.name} />
-        <p>{product.name}</p>
-        <p>{product.price}</p>
+      <div className="container">
+        <img src={product.image} alt={product.name} className="image" />
+        <p className="title">{product.name}</p>
+        <p className="price">{product.price}</p>
       </div>
     );
   }
