@@ -17,11 +17,11 @@ class MiniCart extends Component {
           <span>Total:</span>
           <span>{this.props.cartItem.priceTotal}</span>
         </div>
-        <div className="btns">
-          <div className="left-btn">
+        <div className="buttons">
+          <div className="left-button">
             <OutlineButton onClick={onViewBag}>VIEW BAG</OutlineButton>
           </div>
-          <div className="right-btn">
+          <div className="right-button">
             <FillButton onClick={onCheckout}>CHECK OUT</FillButton>
           </div>
         </div>

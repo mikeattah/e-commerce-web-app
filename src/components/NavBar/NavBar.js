@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 class NavBar extends Component {
   render() {
     return (
@@ -14,8 +13,13 @@ class NavBar extends Component {
           alt="Shopping Bag Icon, created by DinosoftLabs - Flaticon https://www.flaticon.com/free-icons/bag"
           className="nav-image"
         />
-        <div>
-          <select name="currency" id="currency" aria-label="Choose currency">
+        <div className="nav-toggles">
+          <select
+            name="currency"
+            id="currency"
+            className="currency"
+            aria-label="Choose currency"
+          >
             <option value="">&#36;</option>
             <option value="usd">&#36; USD</option>
             <option value="eur">&#128; EUR</option>

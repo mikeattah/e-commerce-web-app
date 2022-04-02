@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import NavBar from "../../components/NavBar/NavBar";
 import CartItem from "../../components/CartItem/CartItem";
 import FillButton from "../../components/FillButton/FillButton";
 import OutlineButton from "../../components/OutlineButton/OutlineButton";
@@ -8,8 +7,7 @@ class CartPage extends Component {
   render() {
     return (
       <div className="container">
-        <NavBar />
-        <h1>CART</h1>
+        <h1 className="title">CART</h1>
         <div className="main-container">
           {cart.map((item) => {
             return (
@@ -24,7 +22,7 @@ class CartPage extends Component {
             );
           })}
         </div>
-        <div>
+        <div className="bottom-container">
           <div className="total-price">
             <span>Total:</span>
             <span>{cartTotal}</span>
