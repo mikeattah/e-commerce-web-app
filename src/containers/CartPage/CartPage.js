@@ -4,6 +4,24 @@ import FillButton from "../../components/FillButton/FillButton";
 import OutlineButton from "../../components/OutlineButton/OutlineButton";
 
 class CartPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cart: [],
+      cartTotal: 0,
+    };
+    this.handleContinueShopping = this.handleContinueShopping.bind(this);
+    this.handleCheckOut = this.handleCheckOut.bind(this);
+  }
+
+  componentDidMount() {}
+
+  componentDidUpdate() {}
+
+  handleContinueShopping() {}
+
+  handleCheckOut() {}
+
   render() {
     return (
       <div className="container">
@@ -29,12 +47,12 @@ class CartPage extends Component {
           </div>
           <div className="buttons">
             <div className="left-button">
-              <OutlineButton onClick={onContinueShopping}>
+              <OutlineButton onClick={this.handleContinueShopping}>
                 CONTINUE SHOPPING
               </OutlineButton>
             </div>
             <div className="right-button">
-              <FillButton onClick={onCheckOut}>CHECK OUT</FillButton>
+              <FillButton onClick={this.handleCheckOut}>CHECK OUT</FillButton>
             </div>
           </div>
         </div>
