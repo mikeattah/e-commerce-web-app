@@ -19,7 +19,7 @@ class NavBar extends Component {
     this.toggleMiniCart = this.toggleMiniCart.bind(this);
   }
 
-  toggleMiniCart = () => {}
+  toggleMiniCart = () => {};
 
   render() {
     if (loading) return <p>Loading Categories...</p>;
@@ -29,7 +29,7 @@ class NavBar extends Component {
         <ul className="nav-group">
           {data.categories.map((category) => {
             return (
-              <li key={category.name}>
+              <li key={category.name} className="nav-item">
                 <a href="#">{category.name}</a>
               </li>
             );

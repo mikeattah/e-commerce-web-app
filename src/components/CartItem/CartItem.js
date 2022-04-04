@@ -3,6 +3,23 @@ import ProductSize from "../ProductSize/ProductSize";
 import ItemQuantity from "../ItemQuantity/ItemQuantity";
 
 class CartItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cartItem: {
+        product: {
+          id: props.id,
+          name: props.name,
+          type: props.type,
+          price: props.price,
+          image: props.image,
+        },
+        sizes: props.sizes,
+        quantity: props.quantity,
+      },
+    };
+  }
+
   render() {
     return (
       <div className="container">
@@ -11,7 +28,7 @@ class CartItem extends Component {
           <p className="product-type">{this.props.cartItem.product.type}</p>
           <p className="product-price">{this.props.cartItem.product.price}</p>
           <div className="product-sizes">
-            {this.props.cartItem.product.sizes.map((size, index) => {
+            {this.props.cartItem.sizes.map((size, index) => {
               return <ProductSize size={size} key={index} />;
             })}
           </div>
