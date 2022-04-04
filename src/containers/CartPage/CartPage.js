@@ -27,7 +27,7 @@ class CartPage extends Component {
       <div className="container">
         <h1 className="title">CART</h1>
         <div className="main-container">
-          {cart.map((item) => {
+          {this.state.cart.map((item) => {
             return (
               <CartItem
                 title={item.title}
@@ -43,7 +43,7 @@ class CartPage extends Component {
         <div className="bottom-container">
           <div className="total-price">
             <span>Total:</span>
-            <span>{cartTotal}</span>
+            <span>{this.state.cartTotal}</span>
           </div>
           <div className="buttons">
             <div className="left-button">

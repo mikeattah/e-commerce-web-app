@@ -23,6 +23,25 @@ const PRODUCT = gql`
   }
 `;
 
+const sizes = [
+  {
+    label: "S",
+    value: "S",
+  },
+  {
+    label: "M",
+    value: "M",
+  },
+  {
+    label: "L",
+    value: "L",
+  },
+  {
+    label: "XL",
+    value: "XL",
+  },
+];
+
 class ProductPage extends Component {
   constructor(props) {
     super(props);
@@ -49,6 +68,8 @@ class ProductPage extends Component {
     this.setState({ product: data.product });
   }
 
+  handleImageToggle() {}
+
   render() {
     return (
       <div className="container">
@@ -57,16 +78,17 @@ class ProductPage extends Component {
             return (
               <SmallImage
                 src={image.src}
-                alt="click to view image"
+                alt="click to view"
                 key={image.id}
                 className="small-image"
+                onClick={this.handleImageToggle}
               />
             );
           })}
         </div>
         <img
-          src={images[0].src}
-          alt="current in view image"
+          src={this.state.product.gallery[0].src}
+          alt="Enlarged product"
           className="large-image"
         />
         <div className="product-details">
@@ -75,14 +97,14 @@ class ProductPage extends Component {
           <div>
             <p className="product-size">SIZE:</p>
             {sizes.map((size) => {
-              return <ProductSize key={size.id} title={size.size} />;
+              return <ProductSize key={size.id} title={size.label} />;
             })}
           </div>
           <p className="product-price">PRICE:</p>
-          <p className="product-price">{product.price}</p>
+          <p className="product-price">{this.state.product.prices}</p>
         </div>
-        <FillButton>ADD TO CART</FillButton>
-        <p className="product-description">{product.description}</p>
+        <FillButton onClick={() => {}}>ADD TO CART</FillButton>
+        <p className="product-description">{this.state.product.description}</p>
       </div>
     );
   }

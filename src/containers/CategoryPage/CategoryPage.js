@@ -4,7 +4,7 @@ import { useQuery, gql } from "@apollo/client";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import Pagination from "../../components/Pagination/Pagination";
 
-const CATEGORIES = gql`
+const CATEGORY_PRODUCTS = gql`
   query GetCategories {
     name
     products {
@@ -23,7 +23,18 @@ const CATEGORIES = gql`
   }
 `;
 
-const { loading, error, data } = useQuery(CATEGORIES);
+const { loading, error, data } = useQuery(CATEGORY_PRODUCTS);
+
+// number of items per page
+const pageItems = 4;
+// number of pages
+let pageCount = Math.ceil(data.products.length / pageItems);
+// array of pages
+const pages = [];
+
+for (let i = 1; i <= pageCount; i++) {
+  pages.push(i);
+}
 class CategoryPage extends Component {
   render() {
     if (loading) return <p>Loading...</p>;
@@ -45,7 +56,7 @@ class CategoryPage extends Component {
             );
           })}
         </div>
-        <Pagination />
+        <Pagination pages={pages} />
       </div>
     );
   }

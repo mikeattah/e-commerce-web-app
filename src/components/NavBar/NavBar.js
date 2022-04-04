@@ -1,12 +1,39 @@
 import React, { Component } from "react";
+import { useQuery, gql } from "@apollo/client";
+
+const CATEGORIES = gql`
+  query {
+    categories {
+      name
+    }
+    currencies {
+      label
+      symbol
+    }
+  }
+`;
+
+const { loading, error, data } = useQuery(CATEGORIES);
 class NavBar extends Component {
+  constructor(props) {
+    this.toggleMiniCart = this.toggleMiniCart.bind(this);
+  }
+
+  toggleMiniCart = () => {}
+
   render() {
+    if (loading) return <p>Loading Categories...</p>;
+    if (error) return <p>Error :(</p>;
     return (
       <nav className="container">
         <ul className="nav-group">
-          <li className="nav-item">WOMEN</li>
-          <li className="nav-item">MEN</li>
-          <li className="nav-item">KIDS</li>
+          {data.categories.map((category) => {
+            return (
+              <li key={category.name}>
+                <a href="#">{category.name}</a>
+              </li>
+            );
+          })}
         </ul>
         <img
           src="../../assets/images/shopping-bag.png"
@@ -20,15 +47,19 @@ class NavBar extends Component {
             className="currency"
             aria-label="Choose currency"
           >
-            <option value="">&#36;</option>
-            <option value="usd">&#36; USD</option>
-            <option value="eur">&#128; EUR</option>
-            <option value="jpy">&#165; JPY</option>
+            {data.currencies.map((currency) => {
+              return (
+                <option key={currency.label} value={currency.label}>
+                  {currency.symbol} {currency.label}
+                </option>
+              );
+            })}
           </select>
           <img
             src="../../assets/images/shopping-cart.png"
             alt="Toggle minicart, created by Kiranshastry - Flaticon https://www.flaticon.com/free-icons/shopping-cart"
             className="nav-image"
+            onClick={this.toggleMiniCart}
           />
         </div>
       </nav>

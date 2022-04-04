@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import ProductSize from "./ProductSize";
-import ItemQuantity from "./ItemQuantity";
+import ProductSize from "../ProductSize/ProductSize";
+import ItemQuantity from "../ItemQuantity/ItemQuantity";
 
 class CartItem extends Component {
   render() {
