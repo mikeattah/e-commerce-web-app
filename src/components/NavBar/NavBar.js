@@ -1,35 +1,33 @@
 import React, { Component } from "react";
-import { useQuery, gql } from "@apollo/client";
+import { nanoid } from "nanoid";
 
-const CATEGORIES = gql`
-  query {
-    categories {
-      name
-    }
-    currencies {
-      label
-      symbol
-    }
-  }
-`;
-
-const { loading, error, data } = useQuery(CATEGORIES);
+import { NavBarHOC } from "../../hoc/NavBarHOC";
 class NavBar extends Component {
   constructor(props) {
+    super(props);
     this.toggleMiniCart = this.toggleMiniCart.bind(this);
+    this.changeCategory = this.changeCategory.bind(this);
   }
 
   toggleMiniCart = () => {};
 
+  changeCategory = (category) => {};
+
   render() {
-    if (loading) return <p>Loading Categories...</p>;
-    if (error) return <p>Error :(</p>;
+    if (this.props.loading) return <p>Loading Categories...</p>;
+
+    if (this.props.error) return <p>Error :(</p>;
+
     return (
       <nav className="container">
         <ul className="nav-group">
-          {data.categories.map((category) => {
+          {this.props.data.categories.map((category) => {
             return (
-              <li key={category.name} className="nav-item">
+              <li
+                key={nanoid()}
+                className="nav-item"
+                onClick={this.changeCategory}
+              >
                 <a href="#">{category.name}</a>
               </li>
             );
@@ -47,9 +45,9 @@ class NavBar extends Component {
             className="currency"
             aria-label="Choose currency"
           >
-            {data.currencies.map((currency) => {
+            {this.props.data.currencies.map((currency) => {
               return (
-                <option key={currency.label} value={currency.label}>
+                <option key={nanoid()} value={currency.label}>
                   {currency.symbol} {currency.label}
                 </option>
               );
@@ -67,4 +65,4 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+export default NavBarHOC(NavBar);
