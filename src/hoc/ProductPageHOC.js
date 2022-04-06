@@ -3,7 +3,7 @@ import { useQuery, gql } from "@apollo/client";
 
 export const ProductPageHOC = (Component) => {
   const PRODUCT = gql`
-    query GetProduct($id: ID!) {
+    query GetProductDetails($id: ID!) {
       product(id: $id) {
         id
         name
@@ -45,16 +45,13 @@ export const ProductPageHOC = (Component) => {
     const { loading, error, data } = useQuery(PRODUCT, {
       variables: { id },
     });
+
     if (loading) return <p>Loading...</p>;
+
     if (error) return <p>Error :(</p>;
+
     const product = data.product;
-    return (
-      <Component
-        {...props}
-        product={product}
-        sizes={sizes}
-        onAddToCart={() => {}}
-      />
-    );
+
+    return <Component product={product} sizes={sizes} {...props} />;
   };
 };

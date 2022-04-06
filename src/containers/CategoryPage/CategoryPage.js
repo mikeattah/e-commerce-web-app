@@ -6,15 +6,11 @@ import { CategoryPageHOC } from "../../hoc/CategoryPageHOC";
 
 class CategoryPage extends Component {
   render() {
-    if (this.props.loading) return <p>Loading...</p>;
-
-    if (this.props.error) return <p>Error :(</p>;
-
     return (
       <div className="container">
-        <h1 className="title">Category Name</h1>
+        <h1 className="title">{this.props.name}</h1>
         <div className="main-container">
-          {this.props.data.map((product) => {
+          {this.props.products.map((product) => {
             return (
               <ProductCard
                 key={product.id}
@@ -27,7 +23,10 @@ class CategoryPage extends Component {
             );
           })}
         </div>
-        <Pagination pages={this.props.pages} />
+        <Pagination
+          pages={this.props.pages}
+          setPageIndex={this.props.setPageIndex}
+        />
       </div>
     );
   }

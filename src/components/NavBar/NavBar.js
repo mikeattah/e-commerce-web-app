@@ -5,6 +5,9 @@ import { NavBarHOC } from "../../hoc/NavBarHOC";
 class NavBar extends Component {
   constructor(props) {
     super(props);
+    this.categories = props.categories;
+    this.currencies = props.currencies;
+
     this.toggleMiniCart = this.toggleMiniCart.bind(this);
     this.changeCategory = this.changeCategory.bind(this);
   }
@@ -14,14 +17,10 @@ class NavBar extends Component {
   changeCategory = (category) => {};
 
   render() {
-    if (this.props.loading) return <p>Loading Categories...</p>;
-
-    if (this.props.error) return <p>Error :(</p>;
-
     return (
       <nav className="container">
         <ul className="nav-group">
-          {this.props.data.categories.map((category) => {
+          {this.categories.map((category) => {
             return (
               <li
                 key={nanoid()}
@@ -45,7 +44,7 @@ class NavBar extends Component {
             className="currency"
             aria-label="Choose currency"
           >
-            {this.props.data.currencies.map((currency) => {
+            {this.currencies.map((currency) => {
               return (
                 <option key={nanoid()} value={currency.label}>
                   {currency.symbol} {currency.label}
