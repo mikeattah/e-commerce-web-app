@@ -12,6 +12,7 @@ class CartPage extends Component {
     };
     this.handleContinueShopping = this.handleContinueShopping.bind(this);
     this.handleCheckOut = this.handleCheckOut.bind(this);
+    this.calculateCartTotal = this.calculateCartTotal.bind(this);
   }
 
   componentDidMount() {}
@@ -21,6 +22,8 @@ class CartPage extends Component {
   handleContinueShopping() {}
 
   handleCheckOut() {}
+
+  calculateCartTotal() {}
 
   render() {
     return (

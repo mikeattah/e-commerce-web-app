@@ -7,27 +7,27 @@ class NavBar extends Component {
     super(props);
     this.categories = props.categories;
     this.currencies = props.currencies;
+    this.category = props.category;
+    this.onClick = props.onClick;
 
     this.toggleMiniCart = this.toggleMiniCart.bind(this);
-    this.changeCategory = this.changeCategory.bind(this);
   }
 
   toggleMiniCart = () => {};
-
-  changeCategory = (category) => {};
 
   render() {
     return (
       <nav className="container">
         <ul className="nav-group">
           {this.categories.map((category) => {
+            let { name } = category;
             return (
               <li
                 key={nanoid()}
                 className="nav-item"
-                onClick={this.changeCategory}
+                onClick={this.onClick(name)}
               >
-                <a href="#">{category.name}</a>
+                <a href="#">{name}</a>
               </li>
             );
           })}
@@ -45,9 +45,10 @@ class NavBar extends Component {
             aria-label="Choose currency"
           >
             {this.currencies.map((currency) => {
+              let { label, symbol } = currency;
               return (
-                <option key={nanoid()} value={currency.label}>
-                  {currency.symbol} {currency.label}
+                <option key={nanoid()} value={label}>
+                  {symbol} {label}
                 </option>
               );
             })}

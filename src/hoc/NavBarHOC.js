@@ -3,7 +3,7 @@ import { useQuery, gql } from "@apollo/client";
 
 export const NavBarHOC = (Component) => {
   const CATEGORIES = gql`
-    query GetCategoriesAndCurrencies {
+    query {
       categories {
         name
       }
