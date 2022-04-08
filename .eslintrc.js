@@ -27,9 +27,9 @@ module.exports = {
   ],
   root: true, // For configuration cascading.
   rules: {
-    "comma-dangle": ["warn", "never"],
+    "comma-dangle": ["warn", "always-multiline"],
     "eol-last": "error",
-    "import/order": ["warn", { "newlines-between": "always" }],
+    // "import/order": ["warn", { "newlines-between": "always" }],
     indent: ["error", 2],
     "jsx-quotes": ["warn", "prefer-double"],
     "max-len": [
@@ -38,7 +38,7 @@ module.exports = {
         code: 120,
       },
     ],
-    "no-console": "warn",
+    "no-console": "",
     "no-duplicate-imports": "warn",
     "no-restricted-imports": [
       "error",
@@ -91,17 +91,17 @@ module.exports = {
     ],
     "react/jsx-indent": [
       "error",
-      4,
+      2,
       {
         checkAttributes: true,
         indentLogicalExpressions: true,
       },
     ],
-    "react/jsx-indent-props": ["error", 4],
+    "react/jsx-indent-props": ["error", 2],
     "react/prop-types": "warn",
     semi: "warn",
-    "sort-imports": ["warn"],
-    "sort-keys": ["warn", "asc"],
+    // "sort-imports": ["warn"],
+    // "sort-keys": ["warn", "asc"],
   },
   settings: {
     react: {

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import Pagination from "../../components/Pagination/Pagination";
 import { CategoryPageHOC } from "../../hoc/CategoryPageHOC";
@@ -9,6 +8,8 @@ class CategoryPage extends Component {
     super(props);
     this.categories = props.categories;
     this.category = props.category;
+    this.productClick = props.productClick;
+    this.currency = props.currency;
     this.state = {
       pageIndex: 0,
     };
@@ -17,7 +18,7 @@ class CategoryPage extends Component {
     // array of pages
     this.pages = [];
 
-    this.handlePageIndex = this.handlePageIndex.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   componentDidMount() {
@@ -41,7 +42,7 @@ class CategoryPage extends Component {
     }
   }
 
-  handlePageIndex(index) {
+  handlePageClick(index) {
     this.setState({ pageIndex: index });
   }
 
@@ -58,8 +59,14 @@ class CategoryPage extends Component {
         <div className="main-container">
           {products.map((product) => {
             let { id, name, inStock, gallery, prices } = product;
-            let { currency, amount } = prices;
-            let { label, symbol } = currency;
+            let label, symbol, amount;
+            for (let price of prices) {
+              if (price.currency.label === this.currency) {
+                label = price.currency.label;
+                symbol = price.currency.symbol;
+                amount = price.amount;
+              }
+            }
             return (
               <ProductCard
                 key={id}
@@ -70,12 +77,12 @@ class CategoryPage extends Component {
                 label={label}
                 symbol={symbol}
                 amount={amount}
-                onClick={() => {}}
+                onClick={this.productClick(id)}
               />
             );
           })}
         </div>
-        <Pagination pages={this.pages} onClick={this.handlePageIndex} />
+        <Pagination pages={this.pages} pageClick={this.handlePageClick} />
       </div>
     );
   }

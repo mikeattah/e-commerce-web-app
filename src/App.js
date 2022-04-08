@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import CategoryPage from "./containers/CategoryPage/CategoryPage";
 import ProductPage from "./containers/ProductPage/ProductPage";
@@ -11,20 +12,53 @@ class App extends Component {
     this.state = {
       category: "all",
       product: "",
+      currency: "USD",
       cart: [],
     };
-    this.handleCategory = this.handleCategory.bind(this);
+
+    this.handleCategoryClick = this.handleCategoryClick.bind(this);
+    this.handleProductClick = this.handleProductClick.bind(this);
+    this.handleCurrencyClick = this.handleCurrencyClick.bind(this);
+    this.handleAddToCart = this.handleAddToCart.bind(this);
   }
 
-  handleCategory = (category) => {
+  handleCategoryClick(category) {
     this.setState({ category: category });
-  };
+  }
+
+  handleProductClick(product) {
+    this.setState({ product: product });
+  }
+
+  handleCurrencyClick(currency) {
+    this.setState({ currency: currency });
+  }
+
+  handleAddToCart() {
+    this.setState({
+      cart: [...this.state.cart, { product: this.state.product, qty: 1 }],
+    });
+  }
 
   render() {
     return (
       <div className="App">
-        <NavBar category={this.state.category} onClick={this.handleCategory} />
-        <CategoryPage category={this.state.category} />
+        <NavBar
+          category={this.state.category}
+          categoryClick={this.handleCategoryClick}
+          currencyClick={this.handleCurrencyClick}
+        />
+        <CategoryPage
+          category={this.state.category}
+          currency={this.state.currency}
+          productClick={this.handleProductClick}
+        />
+        <ProductPage
+          product={this.state.product}
+          currency={this.state.currency}
+          addToCart={this.handleAddToCart}
+        />
+        <CartPage cart={this.state.cart} />
       </div>
     );
   }

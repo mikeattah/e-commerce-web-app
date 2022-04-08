@@ -3,13 +3,24 @@ import { useQuery, gql } from "@apollo/client";
 
 export const ProductPageHOC = (Component) => {
   const PRODUCT = gql`
-    query GetProductDetails($id: ID!) {
+    query ($id: String!) {
       product(id: $id) {
         id
         name
         inStock
         gallery
         description
+        category
+        attributes {
+          id
+          name
+          type
+          items {
+            displayValue
+            value
+            id
+          }
+        }
         prices {
           currency {
             label
@@ -17,28 +28,10 @@ export const ProductPageHOC = (Component) => {
           }
           amount
         }
+        brand
       }
     }
   `;
-
-  const sizes = [
-    {
-      label: "S",
-      value: "S",
-    },
-    {
-      label: "M",
-      value: "M",
-    },
-    {
-      label: "L",
-      value: "L",
-    },
-    {
-      label: "XL",
-      value: "XL",
-    },
-  ];
 
   return (props) => {
     const { id } = props;
@@ -52,6 +45,6 @@ export const ProductPageHOC = (Component) => {
 
     const product = data.product;
 
-    return <Component product={product} sizes={sizes} {...props} />;
+    return <Component product={product} {...props} />;
   };
 };

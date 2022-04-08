@@ -8,12 +8,13 @@ class NavBar extends Component {
     this.categories = props.categories;
     this.currencies = props.currencies;
     this.category = props.category;
-    this.onClick = props.onClick;
+    this.categoryClick = props.categoryClick;
+    this.currencyClick = props.currencyClick;
 
     this.toggleMiniCart = this.toggleMiniCart.bind(this);
   }
 
-  toggleMiniCart = () => {};
+  toggleMiniCart() {}
 
   render() {
     return (
@@ -25,7 +26,7 @@ class NavBar extends Component {
               <li
                 key={nanoid()}
                 className="nav-item"
-                onClick={this.onClick(name)}
+                onClick={this.categoryClick(name)}
               >
                 <a href="#">{name}</a>
               </li>
@@ -47,7 +48,11 @@ class NavBar extends Component {
             {this.currencies.map((currency) => {
               let { label, symbol } = currency;
               return (
-                <option key={nanoid()} value={label}>
+                <option
+                  key={nanoid()}
+                  value={label}
+                  onClick={this.currencyClick(label)}
+                >
                   {symbol} {label}
                 </option>
               );
