@@ -5,15 +5,12 @@ class ProductSize extends Component {
     super(props);
     this.displayValue = props.displayValue;
     this.value = props.value;
+    this.onClick = props.onClick;
   }
   render() {
     return (
-      <button
-        className="button"
-        onClick={this.props.onClick}
-        disabled={this.props.disabled}
-      >
-        {this.props.children}
+      <button className="button" onClick={() => this.onClick(this.value)}>
+        {this.displayValue}
       </button>
     );
   }

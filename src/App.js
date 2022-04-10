@@ -14,6 +14,7 @@ class App extends Component {
       product: "",
       currency: "USD",
       cart: [],
+      cartTotal: 0,
     };
 
     this.handleCategoryClick = this.handleCategoryClick.bind(this);
@@ -37,12 +38,13 @@ class App extends Component {
   handleAddToCart() {
     this.setState({
       cart: [...this.state.cart, { product: this.state.product, qty: 1 }],
+      cartTotal: this.state.cartTotal + 1,
     });
   }
 
   render() {
     return (
-      <div className="App">
+      <div className="app">
         <NavBar
           category={this.state.category}
           categoryClick={this.handleCategoryClick}
@@ -53,12 +55,12 @@ class App extends Component {
           currency={this.state.currency}
           productClick={this.handleProductClick}
         />
-        <ProductPage
+        {/* <ProductPage
           product={this.state.product}
           currency={this.state.currency}
           addToCart={this.handleAddToCart}
         />
-        <CartPage cart={this.state.cart} />
+        <CartPage cart={this.state.cart} cartTotal={this.state.cartTotal} /> */}
       </div>
     );
   }

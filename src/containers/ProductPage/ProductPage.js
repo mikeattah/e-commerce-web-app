@@ -8,23 +8,18 @@ import { ProductPageHOC } from "../../hoc/ProductPageHOC";
 class ProductPage extends Component {
   constructor(props) {
     super(props);
-    this.product = props.product;
-    this.currency = props.currency;
-    this.addToCart = props.addToCart;
     this.state = {
-      image: this.product.gallery[0],
+      image: this.props.product.gallery[0],
+      size: "",
     };
+
+    this.handleImageToggle = this.handleImageToggle.bind(this);
+    this.handleProductSize = this.handleProductSize.bind(this);
   }
 
-  // componentDidMount() {
-  //   const { id } = this.props;
-  //   const { loading, error, data } = useQuery(PRODUCT, {
-  //     variables: { id },
-  //   });
-  //   if (loading) return <p>Loading...</p>;
-  //   if (error) return <p>Error :(</p>;
-  //   this.setState({ product: data.product });
-  // }
+  addToCart = () => {
+    this.props.addToCart(this.props.product);
+  };
 
   handleImageToggle(image) {
     return () => {
@@ -32,10 +27,14 @@ class ProductPage extends Component {
     };
   }
 
+  handleProductSize(size) {
+    this.setState({ size: size });
+  }
+
   render() {
     let label, symbol, amount;
-    for (let price of this.product.prices) {
-      if (price.currency.label === this.currency) {
+    for (let price of this.props.product.prices) {
+      if (price.currency.label === this.props.currency) {
         label = price.currency.label;
         symbol = price.currency.symbol;
         amount = price.amount;
@@ -45,14 +44,14 @@ class ProductPage extends Component {
     return (
       <div className="container">
         <div className="small-images-container">
-          {this.product.gallery.map((image) => {
+          {this.props.product.gallery.map((image) => {
             return (
               <SmallImage
                 key={nanoid()}
                 src={image}
                 alt="click to view"
                 className="small-image"
-                onClick={this.handleImageToggle(image)}
+                onClick={() => this.handleImageToggle(image)}
               />
             );
           })}
@@ -63,16 +62,17 @@ class ProductPage extends Component {
           className="large-image"
         />
         <div className="product-details">
-          <h3 className="product-title">{this.product.name}</h3>
-          <p className="product-brand">{this.product.brand}</p>
+          <h3 className="product-title">{this.props.product.name}</h3>
+          <p className="product-brand">{this.props.product.brand}</p>
           <div>
             <p className="product-size">SIZE:</p>
-            {this.product.attributes.items.map((item) => {
+            {this.props.product.attributes.items.map((item) => {
               return (
                 <ProductSize
                   displayValue={item.displayValue}
                   value={item.value}
                   key={item.id}
+                  onClick={() => this.handleProductSize(item.value)}
                 />
               );
             })}
@@ -82,11 +82,14 @@ class ProductPage extends Component {
             {symbol} {amount}
           </p>
         </div>
-        <FillButton onClick={this.addToCart} disabled={!this.product.inStock}>
+        <FillButton
+          onClick={() => this.addToCart()}
+          disabled={!this.props.product.inStock}
+        >
           ADD TO CART
         </FillButton>
         <div className="product-description">
-          <Markup content={this.product.description} />
+          <Markup content={this.props.product.description} />
         </div>
       </div>
     );

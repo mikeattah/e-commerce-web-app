@@ -1,0 +1,23 @@
+.category-page {
+  height: 900px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.category-page-title {
+  height: 10%;
+  width: 100%;
+}
+
+.category-page-main {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}

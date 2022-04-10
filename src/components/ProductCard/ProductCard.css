@@ -1,0 +1,23 @@
+.product-card {
+  height: 200px;
+  width: 120px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.product-card-image {
+  height: 80%;
+  width: 100%;
+}
+
+.product-card-title {
+  height: 10%;
+  width: 100%;
+  text-align: left;
+}
+
+.product-card-price {
+  height: 10%;
+  width: 100%;
+  text-align: left;
+}
