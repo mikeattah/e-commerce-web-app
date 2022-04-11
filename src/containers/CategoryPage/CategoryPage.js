@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import Pagination from "../../components/Pagination/Pagination";
 import { CategoryPageHOC } from "../../hoc/CategoryPageHOC";
-
+import "./CategoryPage.css";
 class CategoryPage extends Component {
   constructor(props) {
     super(props);
@@ -12,10 +12,6 @@ class CategoryPage extends Component {
 
     this.handlePageClick = this.handlePageClick.bind(this);
   }
-
-  productClick = (id) => {
-    this.props.productClick(id);
-  };
 
   handlePageClick(index) {
     this.setState({ pageIndex: index });
@@ -28,7 +24,7 @@ class CategoryPage extends Component {
     });
 
     // number of items per page
-    let pageItems = 4;
+    let pageItems = 6;
 
     // array of pages
     const pages = [];
@@ -50,7 +46,9 @@ class CategoryPage extends Component {
 
     return (
       <div className="category-page">
-        <h1 className="category-page-title">{this.props.category.toUpperCase()}</h1>
+        <h1 className="category-page-title">
+          {this.props.category.toUpperCase()}
+        </h1>
         <div className="category-page-main">
           {[
             ...this.props.categories[i].products.slice(
@@ -77,7 +75,7 @@ class CategoryPage extends Component {
                 label={label}
                 symbol={symbol}
                 amount={amount}
-                onClick={() => this.productClick(id)}
+                productClick={this.props.productClick}
               />
             );
           })}

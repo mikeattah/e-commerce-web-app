@@ -10,6 +10,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      page: "categorypage",
       category: "all",
       product: "",
       currency: "USD",
@@ -24,11 +25,11 @@ class App extends Component {
   }
 
   handleCategoryClick(category) {
-    this.setState({ category: category });
+    this.setState({ category: category, page: "categorypage" });
   }
 
   handleProductClick(product) {
-    this.setState({ product: product });
+    this.setState({ product: product, page: "productpage" });
   }
 
   handleCurrencyClick(currency) {
@@ -50,17 +51,35 @@ class App extends Component {
           categoryClick={this.handleCategoryClick}
           currencyClick={this.handleCurrencyClick}
         />
-        <CategoryPage
-          category={this.state.category}
-          currency={this.state.currency}
-          productClick={this.handleProductClick}
-        />
-        {/* <ProductPage
-          product={this.state.product}
-          currency={this.state.currency}
-          addToCart={this.handleAddToCart}
-        />
-        <CartPage cart={this.state.cart} cartTotal={this.state.cartTotal} /> */}
+        {(() => {
+          switch (this.state.page) {
+            case "categorypage":
+              return (
+                <CategoryPage
+                  category={this.state.category}
+                  currency={this.state.currency}
+                  productClick={this.handleProductClick}
+                />
+              );
+            case "productpage":
+              return (
+                <ProductPage
+                  product={this.state.product}
+                  currency={this.state.currency}
+                  addToCart={this.handleAddToCart}
+                />
+              );
+            case "cartpage":
+              return (
+                <CartPage
+                  cart={this.state.cart}
+                  cartTotal={this.state.cartTotal}
+                />
+              );
+            default:
+              return null;
+          }
+        })()}
       </div>
     );
   }

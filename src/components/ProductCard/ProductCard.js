@@ -5,8 +5,10 @@ class ProductCard extends Component {
   render() {
     return (
       <div
-        className="product-card"
-        onClick={() => this.props.onClick(this.props.id)}
+        className={`product-card ${
+          this.props.inStock ? "" : "product-card-disabled"
+        }`}
+        onClick={() => this.props.productClick(this.props.id)}
       >
         <img
           src={this.props.gallery[0]}
@@ -16,6 +18,13 @@ class ProductCard extends Component {
         <p className="product-card-title">{this.props.name}</p>
         <p className="product-card-price">
           {this.props.symbol} {this.props.amount}
+        </p>
+        <p
+          className={`product-card-overlay-hidden ${
+            this.props.inStock ? "" : "product-card-overlay-visible"
+          }`}
+        >
+          OUT OF STOCK
         </p>
       </div>
     );
