@@ -1,17 +1,9 @@
 import React, { Component } from "react";
 import { nanoid } from "nanoid";
 import { NavBarHOC } from "../../hoc/NavBarHOC";
+import MiniCart from "../MiniCart/MiniCart";
 import "./NavBar.css";
 class NavBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isMiniCartOpen: false,
-    };
-
-    this.toggleMiniCart = this.toggleMiniCart.bind(this);
-  }
-
   categoryClick = (name) => {
     this.props.categoryClick(name);
   };
@@ -21,10 +13,6 @@ class NavBar extends Component {
     const currency = selectTag.options[selectTag.selectedIndex].value;
     this.props.currencyClick(currency);
   };
-
-  toggleMiniCart() {
-    this.setState({ isMiniCartOpen: !this.state.isMiniCartOpen });
-  }
 
   render() {
     return (
@@ -79,9 +67,16 @@ class NavBar extends Component {
             alt="Toggle minicart, created by Kiranshastry - Flaticon https://www.flaticon.com/free-icons/shopping-cart"
             className="nav-bar-image"
             aria-label="Toggle minicart"
-            onClick={() => this.toggleMiniCart()}
+            onClick={() => this.props.miniCartToggle()}
           />
         </div>
+        <MiniCart
+          cart={this.props.cart}
+          cartTotal={this.props.cartTotal}
+          miniCartOpen={this.props.isMiniCartOpen}
+          viewBagClick={this.props.viewBagClick}
+          checkOutClick={this.props.checkOutClick}
+        />
       </nav>
     );
   }

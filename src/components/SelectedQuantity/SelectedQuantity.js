@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import "./SelectedQuantity.css";
 
-class ItemQuantity extends Component {
+class SelectedQuantity extends Component {
   render() {
     return (
       <button
-        className="button"
+        className="selected-quantity-button"
         onClick={this.props.onClick}
         disabled={this.props.disabled}
       >
@@ -14,4 +15,4 @@ class ItemQuantity extends Component {
   }
 }
 
-export default ItemQuantity;
+export default SelectedQuantity;

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { nanoid } from "nanoid";
 import { Markup } from "interweave";
 import SmallImage from "../../components/SmallImage/SmallImage";
-import ProductSize from "../../components/ProductSize/ProductSize";
+import SelectedSize from "../../components/SelectedSize/SelectedSize";
 import FillButton from "../../components/FillButton/FillButton";
 import { ProductPageHOC } from "../../hoc/ProductPageHOC";
 class ProductPage extends Component {
@@ -10,23 +10,17 @@ class ProductPage extends Component {
     super(props);
     this.state = {
       image: this.props.product.gallery[0],
-      selectedSize: "",
     };
 
     this.handleImageToggle = this.handleImageToggle.bind(this);
-    this.handleProductSize = this.handleProductSize.bind(this);
   }
 
   addToCart = () => {
-    this.props.addToCart(this.props.product);
+    this.props.addToCart();
   };
 
   handleImageToggle(image) {
     this.setState({ image: image });
-  }
-
-  handleProductSize(value) {
-    this.setState({ selectedSize: value });
   }
 
   render() {
@@ -65,11 +59,11 @@ class ProductPage extends Component {
             <p className="product-page-size">SIZES:</p>
             {this.props.product.attributes.items.map((item) => {
               return (
-                <ProductSize
+                <SelectedSize
                   displayValue={item.displayValue}
                   value={item.value}
                   key={item.id}
-                  onClick={() => this.handleProductSize(item.value)}
+                  onClick={() => this.selectedSize(item.value)}
                 />
               );
             })}

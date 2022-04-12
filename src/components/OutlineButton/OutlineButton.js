@@ -1,12 +1,12 @@
 import React, { Component } from "react";
+import "./OutlineButton.css";
 
 class OutlineButton extends Component {
   render() {
     return (
       <button
-        className="button"
-        onClick={this.props.onClick}
-        disabled={this.props.disabled}
+        className="outline-button"
+        onClick={() => this.props.buttonClick()}
       >
         {this.props.children}
       </button>

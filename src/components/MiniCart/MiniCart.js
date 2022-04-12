@@ -1,28 +1,40 @@
 import React, { Component } from "react";
-import CartItem from "./CartItem";
 import FillButton from "../FillButton/FillButton";
 import OutlineButton from "../OutlineButton/OutlineButton";
+import CartItem from "../CartItem/CartItem";
+import "./MiniCart.css";
 
 class MiniCart extends Component {
   render() {
     return (
-      <div className="container">
-        <h3 className="title">My Bag, {this.props.cartItem.listTotal} items</h3>
-        <div className="cart-item-container">
-          {this.props.cartItem.cartItems.map((cartItem, index) => {
-            return <CartItem cartItem={cartItem} key={index} />;
+      <div
+        className={`mini-cart ${
+          this.props.isMiniCartOpen ? "" : "mini-cart-hidden"
+        }`}
+      >
+        <h3 className="mini-cart-title">
+          <span className="mini-cart-title-bold">My Bag,</span>{" "}
+          {this.props.cart.length} items
+        </h3>
+        <div className="mini-cart-item-container">
+          {this.props.cart.map((item, index) => {
+            return <CartItem cartItem={item} key={index} />;
           })}
         </div>
-        <div className="total-price">
-          <span>Total:</span>
-          <span>{this.props.cartItem.priceTotal}</span>
+        <div className="mini-cart-total-price">
+          <span>Total</span>
+          <span>{this.props.cartTotal}</span>
         </div>
-        <div className="buttons">
-          <div className="left-button">
-            <OutlineButton onClick={onViewBag}>VIEW BAG</OutlineButton>
+        <div className="mini-cart-buttons">
+          <div className="mini-cart-left">
+            <OutlineButton onClick={() => this.props.viewBagClick()}>
+              VIEW BAG
+            </OutlineButton>
           </div>
-          <div className="right-button">
-            <FillButton onClick={onCheckout}>CHECK OUT</FillButton>
+          <div className="mini-cart-right">
+            <FillButton onClick={() => this.props.checkOutClick()}>
+              CHECK OUT
+            </FillButton>
           </div>
         </div>
       </div>
