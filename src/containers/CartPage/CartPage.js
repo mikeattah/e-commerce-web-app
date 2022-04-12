@@ -11,7 +11,9 @@ class CartPage extends Component {
     this.handleCheckOut = this.handleCheckOut.bind(this);
   }
 
-  handleContinueShopping() {}
+  handleContinueShopping() {
+    this.setState({ page: "categorypage" });
+  }
 
   handleCheckOut() {}
 

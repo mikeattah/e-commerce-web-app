@@ -10,7 +10,7 @@ class ProductPage extends Component {
     super(props);
     this.state = {
       image: this.props.product.gallery[0],
-      size: "",
+      selectedSize: "",
     };
 
     this.handleImageToggle = this.handleImageToggle.bind(this);
@@ -22,35 +22,32 @@ class ProductPage extends Component {
   };
 
   handleImageToggle(image) {
-    return () => {
-      this.setState({ image: image });
-    };
+    this.setState({ image: image });
   }
 
-  handleProductSize(size) {
-    this.setState({ size: size });
+  handleProductSize(value) {
+    this.setState({ selectedSize: value });
   }
 
   render() {
-    let label, symbol, amount;
+    let symbol, amount;
     for (let price of this.props.product.prices) {
       if (price.currency.label === this.props.currency) {
-        label = price.currency.label;
         symbol = price.currency.symbol;
         amount = price.amount;
       }
     }
 
     return (
-      <div className="container">
-        <div className="small-images-container">
+      <div className="product-page">
+        <div className="product-page-small-images-container">
           {this.props.product.gallery.map((image) => {
             return (
               <SmallImage
                 key={nanoid()}
                 src={image}
                 alt="click to view"
-                className="small-image"
+                className="product-page-small-image"
                 onClick={() => this.handleImageToggle(image)}
               />
             );
@@ -59,13 +56,13 @@ class ProductPage extends Component {
         <img
           src={this.state.image}
           alt="Enlarged product"
-          className="large-image"
+          className="product-page-large-image"
         />
-        <div className="product-details">
-          <h3 className="product-title">{this.props.product.name}</h3>
-          <p className="product-brand">{this.props.product.brand}</p>
+        <div className="product-page-details">
+          <h3 className="product-page-title">{this.props.product.name}</h3>
+          <p className="product-page-brand">{this.props.product.brand}</p>
           <div>
-            <p className="product-size">SIZE:</p>
+            <p className="product-page-size">SIZES:</p>
             {this.props.product.attributes.items.map((item) => {
               return (
                 <ProductSize
@@ -77,8 +74,8 @@ class ProductPage extends Component {
               );
             })}
           </div>
-          <p className="product-price">PRICE:</p>
-          <p className="product-price">
+          <p className="product-page-price">PRICE:</p>
+          <p className="product-page-price">
             {symbol} {amount}
           </p>
         </div>
@@ -88,7 +85,7 @@ class ProductPage extends Component {
         >
           ADD TO CART
         </FillButton>
-        <div className="product-description">
+        <div className="product-page-description">
           <Markup content={this.props.product.description} />
         </div>
       </div>

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import CategoryPage from "./containers/CategoryPage/CategoryPage";
 import ProductPage from "./containers/ProductPage/ProductPage";
@@ -38,9 +37,24 @@ class App extends Component {
 
   handleAddToCart() {
     this.setState({
-      cart: [...this.state.cart, { product: this.state.product, qty: 1 }],
-      cartTotal: this.state.cartTotal + 1,
+      cart: [
+        ...this.state.cart,
+        {
+          product: this.state.product,
+          selectedSize: "",
+          selectedQuantity: 1,
+        },
+      ],
     });
+    this.handleCartTotal(this.state.currency);
+  }
+
+  handleCartTotal(currency) {
+    let total = 0;
+    for (let item of this.state.cart) {
+      total += item.product.prices[i].amount;
+    }
+    this.setState({ cartTotal: total });
   }
 
   render() {

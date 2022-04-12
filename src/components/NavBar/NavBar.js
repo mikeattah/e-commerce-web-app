@@ -63,7 +63,7 @@ class NavBar extends Component {
             id="currency"
             className="nav-bar-currency"
             aria-label="Choose currency"
-            onChange={() => this.currencyClick}
+            onChange={() => this.currencyClick()}
           >
             {this.props.currencies.map((currency) => {
               let { label, symbol } = currency;

@@ -42,8 +42,6 @@ class CategoryPage extends Component {
       pages.push(j);
     }
 
-    console.log(categoryNames, pages);
-
     return (
       <div className="category-page">
         <h1 className="category-page-title">

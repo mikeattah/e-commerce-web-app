@@ -7,7 +7,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  border: 0.01px solid #ccc;
   position: relative;
 }
 
@@ -25,7 +24,7 @@
   box-shadow: none;
 }
 
-.product-card-overlay-hidden {
+.product-card-text-overlay-hidden {
   position: absolute;
   top: 150px;
   left: 0 auto;
@@ -34,7 +33,7 @@
   visibility: hidden;
 }
 
-.product-card-overlay-visible {
+.product-card-text-overlay-visible {
   visibility: visible;
 }
 
@@ -43,6 +42,16 @@
   width: 100%;
   padding: 0;
   margin: 0 0 15px 0;
+}
+
+.product-card-color-overlay {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  height: 360px;
+  width: 400px;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 10;
 }
 
 .product-card-title {

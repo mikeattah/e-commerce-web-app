@@ -2,7 +2,7 @@
 
 .app {
   text-align: center;
-  max-height: 2500px;
+  max-height: 1500px;
   max-width: 100%;
   display: flex;
   flex-direction: column;

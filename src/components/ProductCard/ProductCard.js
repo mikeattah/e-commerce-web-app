@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./ProductCard.css";
 class ProductCard extends Component {
   render() {
@@ -15,13 +14,14 @@ class ProductCard extends Component {
           alt={this.props.name}
           className="product-card-image"
         />
+        <div className="product-card-color-overlay"></div>
         <p className="product-card-title">{this.props.name}</p>
         <p className="product-card-price">
           {this.props.symbol} {this.props.amount}
         </p>
         <p
-          className={`product-card-overlay-hidden ${
-            this.props.inStock ? "" : "product-card-overlay-visible"
+          className={`product-card-text-overlay-hidden ${
+            this.props.inStock ? "" : "product-card-text-overlay-visible"
           }`}
         >
           OUT OF STOCK
