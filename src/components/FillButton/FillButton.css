@@ -1,4 +1,4 @@
-.fill-button {
+.fill-button-large {
   width: 100%;
   background-color: #5ece7b;
   color: #fff;
@@ -12,7 +12,22 @@
   transition: 0.5s ease-in-out;
 }
 
-.fill-button:hover {
+.fill-button-small {
+  width: 100%;
+  background-color: #5ece7b;
+  color: #fff;
+  margin: 8px 0;
+  padding: 14px 20px;
+  border: 2px solid #5ece7b;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.5s ease-in-out;
+}
+
+.fill-button-large:hover,
+.fill-button-small:hover {
   background-color: #fff;
   color: #5ece7b;
 }

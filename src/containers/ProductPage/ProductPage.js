@@ -5,6 +5,8 @@ import SmallImage from "../../components/SmallImage/SmallImage";
 import SelectedSize from "../../components/SelectedSize/SelectedSize";
 import FillButton from "../../components/FillButton/FillButton";
 import { ProductPageHOC } from "../../hoc/ProductPageHOC";
+import "./ProductPage.css";
+
 class ProductPage extends Component {
   constructor(props) {
     super(props);
@@ -63,7 +65,8 @@ class ProductPage extends Component {
                   displayValue={item.displayValue}
                   value={item.value}
                   key={item.id}
-                  onClick={() => this.selectedSize(item.value)}
+                  selectedSize={this.props.selectedSize}
+                  compSize="large"
                 />
               );
             })}
@@ -74,8 +77,9 @@ class ProductPage extends Component {
           </p>
         </div>
         <FillButton
-          onClick={() => this.addToCart()}
+          buttonClick={this.addToCart}
           disabled={!this.props.product.inStock}
+          compSize="large"
         >
           ADD TO CART
         </FillButton>

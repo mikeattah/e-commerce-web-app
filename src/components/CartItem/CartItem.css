@@ -1,4 +1,7 @@
-.cart-item {
+.cart-item-large {
+}
+
+.cart-item-small {
 }
 
 .cart-item-left {
@@ -19,10 +22,10 @@
 .cart-item-right {
 }
 
-.cart-item-quantity-container {
+.cart-item-quantity {
 }
 
-.cart-item-quantity {
+.cart-item-quantity-text {
 }
 
 .cart-item-image {

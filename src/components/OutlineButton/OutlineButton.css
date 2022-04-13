@@ -1,4 +1,4 @@
-.outline-button {
+.outline-button-large {
   width: 100%;
   background-color: #fff;
   color: #8d8f9a;
@@ -12,7 +12,22 @@
   transition: 0.5s ease-in-out;
 }
 
-.outline-button:hover {
+.outline-button-small {
+  width: 100%;
+  background-color: #fff;
+  color: #8d8f9a;
+  margin: 8px 0;
+  padding: 14px 20px;
+  border: 2px solid #8d8f9a;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.5s ease-in-out;
+}
+
+.outline-button-large:hover,
+.outline-button-small:hover {
   background-color: #8d8f9a;
   color: #fff;
 }

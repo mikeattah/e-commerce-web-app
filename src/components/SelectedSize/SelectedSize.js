@@ -1,19 +1,22 @@
 import React, { Component } from "react";
+import "./SelectedSize.css";
 
-class ProductSize extends Component {
-  constructor(props) {
-    super(props);
-    this.displayValue = props.displayValue;
-    this.value = props.value;
-    this.onClick = props.onClick;
-  }
+class SelectedSize extends Component {
   render() {
     return (
-      <button className="button" onClick={() => this.onClick(this.value)}>
-        {this.displayValue}
+      <button
+        className={
+          this.props.compSize === "large"
+            ? "selected-size-large"
+            : "selected-size-small"
+        }
+        onClick={() => this.props.selectedSize(this.props.value)}
+        disabled={this.props.disabled}
+      >
+        {this.props.displayValue}
       </button>
     );
   }
 }
 
-export default ProductSize;
+export default SelectedSize;

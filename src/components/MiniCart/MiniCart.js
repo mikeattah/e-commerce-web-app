@@ -18,7 +18,7 @@ class MiniCart extends Component {
         </h3>
         <div className="mini-cart-item-container">
           {this.props.cart.map((item, index) => {
-            return <CartItem cartItem={item} key={index} />;
+            return <CartItem cartItem={item} key={index} compSize="small" />;
           })}
         </div>
         <div className="mini-cart-total-price">
@@ -26,16 +26,12 @@ class MiniCart extends Component {
           <span>{this.props.cartTotal}</span>
         </div>
         <div className="mini-cart-buttons">
-          <div className="mini-cart-left">
-            <OutlineButton onClick={() => this.props.viewBagClick()}>
-              VIEW BAG
-            </OutlineButton>
-          </div>
-          <div className="mini-cart-right">
-            <FillButton onClick={() => this.props.checkOutClick()}>
-              CHECK OUT
-            </FillButton>
-          </div>
+          <OutlineButton buttonClick={this.props.viewBag} compSize="small">
+            VIEW BAG
+          </OutlineButton>
+          <FillButton buttonClick={this.props.checkOut} compSize="small">
+            CHECK OUT
+          </FillButton>
         </div>
       </div>
     );

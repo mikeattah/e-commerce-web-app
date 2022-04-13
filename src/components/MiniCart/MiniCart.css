@@ -49,9 +49,3 @@
   justify-content: space-between;
   align-items: center;
 }
-
-.mini-cart-left,
-.mini-cart-right {
-  height: 100%;
-  width: 45%;
-}

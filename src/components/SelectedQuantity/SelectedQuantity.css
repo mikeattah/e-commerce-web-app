@@ -1,5 +1,9 @@
-.selected-quantity-button {
+.selected-quantity-large {
 }
 
-.selected-quantity-button:hover {
+.selected-quantity-small {
+}
+
+.selected-quantity-large:hover,
+.selected-quantity-small:hover {
 }

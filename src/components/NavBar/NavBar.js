@@ -74,8 +74,8 @@ class NavBar extends Component {
           cart={this.props.cart}
           cartTotal={this.props.cartTotal}
           miniCartOpen={this.props.isMiniCartOpen}
-          viewBagClick={this.props.viewBagClick}
-          checkOutClick={this.props.checkOutClick}
+          viewBag={this.props.viewBag}
+          checkOut={this.props.checkOut}
         />
       </nav>
     );

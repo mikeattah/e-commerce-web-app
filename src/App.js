@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: "cartpage",
+      page: "categorypage",
       category: "all",
       product: "",
       selectedSize: "",
@@ -23,11 +23,13 @@ class App extends Component {
     this.handleCategoryClick = this.handleCategoryClick.bind(this);
     this.handleProductClick = this.handleProductClick.bind(this);
     this.handleSelectedSize = this.handleSelectedSize.bind(this);
+    this.handleSelectedQuantity = this.handleSelectedQuantity.bind(this);
     this.handleCurrencyClick = this.handleCurrencyClick.bind(this);
     this.handleAddToCart = this.handleAddToCart.bind(this);
     this.handleCartTotal = this.handleCartTotal.bind(this);
     this.handleMiniCartToggle = this.handleMiniCartToggle.bind(this);
     this.handleViewBag = this.handleViewBag.bind(this);
+    this.handleContinueShopping = this.handleContinueShopping.bind(this);
     this.handleCheckOut = this.handleCheckOut.bind(this);
   }
 
@@ -84,6 +86,10 @@ class App extends Component {
     });
   }
 
+  handleContinueShopping() {
+    this.setState({ page: "categorypage" });
+  }
+
   handleCheckOut() {}
 
   render() {
@@ -97,8 +103,8 @@ class App extends Component {
           cartTotal={this.state.cartTotal}
           miniCartToggle={this.handleMiniCartToggle}
           miniCartOpen={this.state.isMiniCartOpen}
-          viewBagClick={this.handleViewBag}
-          checkOutClick={this.handleCheckOut}
+          viewBag={this.handleViewBag}
+          checkOut={this.handleCheckOut}
         />
         {(() => {
           switch (this.state.page) {
@@ -124,6 +130,9 @@ class App extends Component {
                 <CartPage
                   cart={this.state.cart}
                   cartTotal={this.state.cartTotal}
+                  selectedQuantity={this.handleSelectedQuantity}
+                  continueShopping={this.handleContinueShopping}
+                  checkOut={this.handleCheckOut}
                 />
               );
             default:

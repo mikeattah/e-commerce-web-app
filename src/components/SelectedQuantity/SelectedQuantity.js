@@ -5,8 +5,12 @@ class SelectedQuantity extends Component {
   render() {
     return (
       <button
-        className="selected-quantity-button"
-        onClick={this.props.onClick}
+        className={
+          this.props.compSize === "large"
+            ? "selected-quantity-large"
+            : "selected-quantity-small"
+        }
+        onClick={() => this.props.buttonClick()}
         disabled={this.props.disabled}
       >
         {this.props.children}

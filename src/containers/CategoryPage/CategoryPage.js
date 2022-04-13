@@ -3,6 +3,7 @@ import ProductCard from "../../components/ProductCard/ProductCard";
 import Pagination from "../../components/Pagination/Pagination";
 import { CategoryPageHOC } from "../../hoc/CategoryPageHOC";
 import "./CategoryPage.css";
+
 class CategoryPage extends Component {
   constructor(props) {
     super(props);
