@@ -1,10 +1,10 @@
 .outline-button-large {
-  width: 100%;
+  width: 200px;
   background-color: #fff;
-  color: #8d8f9a;
-  margin: 8px 0;
-  padding: 14px 20px;
-  border: 2px solid #8d8f9a;
+  color: #000;
+  margin: 0 0 0 24px;
+  padding: 14px 0;
+  border: 2px solid #000;
   outline: none;
   cursor: pointer;
   font-size: 16px;
@@ -13,21 +13,21 @@
 }
 
 .outline-button-small {
-  width: 100%;
+  width: 100px;
   background-color: #fff;
-  color: #8d8f9a;
-  margin: 8px 0;
-  padding: 14px 20px;
-  border: 2px solid #8d8f9a;
+  color: #000;
+  margin: 0 0 0 24px;
+  padding: 14px 0;
+  border: 2px solid #000;
   outline: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 10px;
   font-weight: bold;
   transition: 0.5s ease-in-out;
 }
 
 .outline-button-large:hover,
 .outline-button-small:hover {
-  background-color: #8d8f9a;
+  background-color: #000;
   color: #fff;
 }

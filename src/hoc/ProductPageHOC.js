@@ -36,7 +36,7 @@ export const ProductPageHOC = (Component) => {
   return (props) => {
     const { id } = props;
     const { loading, error, data } = useQuery(PRODUCT, {
-      variables: { id: id },
+      variables: { id: "huarache-x-stussy-le" },
     });
 
     if (loading) return <p>Loading...</p>;

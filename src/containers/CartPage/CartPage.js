@@ -26,8 +26,10 @@ class CartPage extends Component {
         </div>
         <div className="cart-page-section">
           <div className="cart-page-total">
-            <span className="cart-page-total-text">Total</span>
-            <span className="cart-page-total-text">{this.props.cartTotal}</span>
+            <span className="cart-page-total-text-one">Total</span>
+            <span className="cart-page-total-text-two">
+              {this.props.cartTotal}
+            </span>
           </div>
           <div className="cart-page-buttons">
             <OutlineButton

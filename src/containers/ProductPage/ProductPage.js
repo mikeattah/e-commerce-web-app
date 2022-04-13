@@ -36,30 +36,32 @@ class ProductPage extends Component {
 
     return (
       <div className="product-page">
-        <div className="product-page-small-images-container">
+        <div className="product-page-small-images">
           {this.props.product.gallery.map((image) => {
             return (
               <SmallImage
                 key={nanoid()}
                 src={image}
                 alt="click to view"
-                className="product-page-small-image"
-                onClick={() => this.handleImageToggle(image)}
+                imageClick={this.handleImageToggle}
               />
             );
           })}
         </div>
-        <img
-          src={this.state.image}
-          alt="Enlarged product"
-          className="product-page-large-image"
-        />
+        <div className="product-page-large-image-box">
+          <img
+            src={this.state.image}
+            alt="Enlarged product"
+            className="product-page-large-image"
+          />
+          <div className="product-page-large-image-overlay"></div>
+        </div>
         <div className="product-page-details">
           <h3 className="product-page-title">{this.props.product.name}</h3>
           <p className="product-page-brand">{this.props.product.brand}</p>
-          <div>
+          <div className="product-page-size-container">
             <p className="product-page-size">SIZES:</p>
-            {this.props.product.attributes.items.map((item) => {
+            {this.props.product.attributes[0].items.map((item) => {
               return (
                 <SelectedSize
                   displayValue={item.displayValue}
@@ -75,16 +77,16 @@ class ProductPage extends Component {
           <p className="product-page-price">
             {symbol} {amount}
           </p>
-        </div>
-        <FillButton
-          buttonClick={this.addToCart}
-          disabled={!this.props.product.inStock}
-          compSize="large"
-        >
-          ADD TO CART
-        </FillButton>
-        <div className="product-page-description">
-          <Markup content={this.props.product.description} />
+          <FillButton
+            buttonClick={this.addToCart}
+            disabled={!this.props.product.inStock}
+            compSize="large"
+          >
+            ADD TO CART
+          </FillButton>
+          <div className="product-page-description">
+            <Markup content={this.props.product.description} />
+          </div>
         </div>
       </div>
     );

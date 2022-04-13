@@ -1,5 +1,29 @@
-.small-image {
+.small-image-box {
+  position: relative;
+  height: 150px;
+  width: 150px;
+  margin: 10px 0;
+  padding: 0;
 }
 
-.small-image:hover {
+.small-image-box:hover {
+  cursor: pointer;
+}
+
+.small-image {
+  height: 100%;
+  width: 100%;
+}
+
+.small-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.small-image-overlay:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }

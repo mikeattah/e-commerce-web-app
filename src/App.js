@@ -9,15 +9,15 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: "categorypage",
+      page: "productpage",
       category: "all",
-      product: "",
+      productId: "",
       selectedSize: "",
       selectedQuantity: 1,
       currency: "USD",
       cart: [],
       cartTotal: 1000000,
-      isMiniCartOpen: true,
+      isMiniCartOpen: false,
     };
 
     this.handleCategoryClick = this.handleCategoryClick.bind(this);
@@ -119,7 +119,7 @@ class App extends Component {
             case "productpage":
               return (
                 <ProductPage
-                  product={this.state.product}
+                  productId={this.state.productId}
                   currency={this.state.currency}
                   selectedSize={this.handleSelectedSize}
                   addToCart={this.handleAddToCart}
