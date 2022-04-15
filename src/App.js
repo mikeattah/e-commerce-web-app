@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NavBar from "./components/NavBar/NavBar";
+import MiniCart from "./components/MiniCart/MiniCart";
 import CategoryPage from "./containers/CategoryPage/CategoryPage";
 import ProductPage from "./containers/ProductPage/ProductPage";
 import CartPage from "./containers/CartPage/CartPage";
@@ -11,13 +12,14 @@ class App extends Component {
     this.state = {
       page: "productpage",
       category: "all",
-      productId: "",
-      selectedSize: "",
-      selectedQuantity: 1,
+      id: "",
+      product: {},
+      size: "",
+      quantity: 1,
       currency: "USD",
       cart: [],
       cartTotal: 1000000,
-      isMiniCartOpen: false,
+      isMiniCartOpen: true,
     };
 
     this.handleCategoryClick = this.handleCategoryClick.bind(this);
@@ -26,6 +28,7 @@ class App extends Component {
     this.handleSelectedQuantity = this.handleSelectedQuantity.bind(this);
     this.handleCurrencyClick = this.handleCurrencyClick.bind(this);
     this.handleAddToCart = this.handleAddToCart.bind(this);
+    this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this);
     this.handleCartTotal = this.handleCartTotal.bind(this);
     this.handleMiniCartToggle = this.handleMiniCartToggle.bind(this);
     this.handleViewBag = this.handleViewBag.bind(this);
@@ -37,15 +40,23 @@ class App extends Component {
     this.setState({ category: category, page: "categorypage" });
   }
 
-  handleProductClick(product) {
-    this.setState({ product: product, page: "productpage" });
+  handleProductClick(id) {
+    this.setState({ id: id, page: "productpage" });
   }
 
   handleSelectedSize(value) {
-    this.setState({ selectedSize: value });
+    this.setState({ size: value });
   }
 
-  handleSelectedQuantity(product) {}
+  handleSelectedQuantity(type) {
+    if (type === "increase") {
+      this.setState({ quantity: this.state.quantity + 1 });
+    } else if (type === "decrease") {
+      if (this.state.quantity > 1) {
+        this.setState({ quantity: this.state.quantity - 1 });
+      }
+    }
+  }
 
   handleCurrencyClick(currency) {
     this.setState({ currency: currency });
@@ -57,11 +68,22 @@ class App extends Component {
         ...this.state.cart,
         {
           product: this.state.product,
-          selectedSize: this.state.selectedSize,
-          selectedQuantity: this.state.selectedQuantity,
+          size: this.state.size,
+          quantity: this.state.quantity,
         },
       ],
     });
+    this.handleCartTotal(this.state.currency);
+  }
+
+  handleRemoveFromCart(id) {
+    let cart = this.state.cart;
+    for (let item of cart) {
+      if (item.product.id === id) {
+        cart.splice(cart.indexOf(item), 1);
+      }
+    }
+    this.setState({ cart: cart });
     this.handleCartTotal(this.state.currency);
   }
 
@@ -97,12 +119,20 @@ class App extends Component {
       <div className="app">
         <NavBar
           category={this.state.category}
-          categoryClick={this.handleCategoryClick}
-          currencyClick={this.handleCurrencyClick}
           cart={this.state.cart}
           cartTotal={this.state.cartTotal}
-          miniCartToggle={this.handleMiniCartToggle}
           miniCartOpen={this.state.isMiniCartOpen}
+          categoryClick={this.handleCategoryClick}
+          currencyClick={this.handleCurrencyClick}
+          miniCartToggle={this.handleMiniCartToggle}
+          viewBag={this.handleViewBag}
+          checkOut={this.handleCheckOut}
+        />
+        <MiniCart
+          cart={this.state.cart}
+          cartTotal={this.state.cartTotal}
+          miniCartOpen={this.state.isMiniCartOpen}
+          removeFromCart={this.handleRemoveFromCart}
           viewBag={this.handleViewBag}
           checkOut={this.handleCheckOut}
         />
@@ -113,24 +143,36 @@ class App extends Component {
                 <CategoryPage
                   category={this.state.category}
                   currency={this.state.currency}
+                  miniCartOpen={this.state.isMiniCartOpen}
                   productClick={this.handleProductClick}
+                  miniCartToggle={this.handleMiniCartToggle}
                 />
               );
             case "productpage":
               return (
                 <ProductPage
-                  productId={this.state.productId}
+                  id={this.state.id}
+                  size={this.state.size}
                   currency={this.state.currency}
+                  miniCartOpen={this.state.isMiniCartOpen}
                   selectedSize={this.handleSelectedSize}
                   addToCart={this.handleAddToCart}
+                  miniCartToggle={this.handleMiniCartToggle}
                 />
               );
             case "cartpage":
               return (
                 <CartPage
+                  size={this.state.size}
+                  quantity={this.state.quantity}
+                  currency={this.state.currency}
                   cart={this.state.cart}
                   cartTotal={this.state.cartTotal}
+                  miniCartOpen={this.state.isMiniCartOpen}
+                  selectedSize={this.handleSelectedSize}
                   selectedQuantity={this.handleSelectedQuantity}
+                  removeFromCart={this.handleRemoveFromCart}
+                  miniCartToggle={this.handleMiniCartToggle}
                   continueShopping={this.handleContinueShopping}
                   checkOut={this.handleCheckOut}
                 />

@@ -1,51 +1,63 @@
 .mini-cart {
   position: absolute;
   top: 60px;
-  right: 10px;
-  height: 200px;
-  width: 100px;
+  right: 60px;
+  height: 400px;
+  width: 240px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  border: 1px solid #000;
+  margin: 0;
+  padding: 8px;
+  background: #fff;
+  z-index: 100;
 }
 
 .mini-cart-hidden {
-  visibility: hidden;
+  display: none;
 }
 
 .mini-cart-title {
+  height: 7.5%;
+  width: 100%;
+  text-align: left;
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
 }
 
 .mini-cart-title-bold {
   font-weight: bold;
 }
 
-.mini-cart-item-container {
-  height: 80%;
+.mini-cart-items-container {
+  height: 70%;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: scroll;
+  overflow-y: auto;
+  border: 1px solid #000;
 }
 
 .mini-cart-total-price {
-  height: 10%;
+  height: 7.5%;
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .mini-cart-buttons {
-  height: 10%;
+  height: 15%;
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
 }

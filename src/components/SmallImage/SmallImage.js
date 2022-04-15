@@ -13,7 +13,13 @@ class SmallImage extends Component {
           alt={this.props.alt}
           className="small-image"
         />
-        <div className="small-image-overlay"></div>
+        <div
+          className={`small-image-overlay ${
+            this.props.currentImage === this.props.src
+              ? "small-image-overlay-active"
+              : ""
+          }`}
+        ></div>
       </div>
     );
   }

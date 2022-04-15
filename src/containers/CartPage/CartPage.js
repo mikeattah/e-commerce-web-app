@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { nanoid } from "nanoid";
 import CartItem from "../../components/CartItem/CartItem";
 import FillButton from "../../components/FillButton/FillButton";
 import OutlineButton from "../../components/OutlineButton/OutlineButton";
@@ -13,12 +14,11 @@ class CartPage extends Component {
           {this.props.cart.map((item) => {
             return (
               <CartItem
-                name={item.name}
-                brand={item.brand}
-                gallery={item.gallery}
-                prices={item.prices}
-                selectedSize={item.selectedSize}
-                selectedQuantity={item.selectedQuantity}
+                key={nanoid()}
+                product={item.product}
+                size={item.size}
+                quantity={item.quantity}
+                currency={this.props.currency}
                 compSize="large"
               />
             );
@@ -43,6 +43,14 @@ class CartPage extends Component {
             </FillButton>
           </div>
         </div>
+        <div
+          className={
+            this.props.miniCartOpen
+              ? "cart-page-overlay"
+              : "cart-page-overlay-hidden"
+          }
+          onClick={() => this.props.miniCartToggle()}
+        ></div>
       </div>
     );
   }

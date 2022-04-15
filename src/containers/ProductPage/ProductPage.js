@@ -44,6 +44,7 @@ class ProductPage extends Component {
                 src={image}
                 alt="click to view"
                 imageClick={this.handleImageToggle}
+                currentImage={this.state.image}
               />
             );
           })}
@@ -59,22 +60,23 @@ class ProductPage extends Component {
         <div className="product-page-details">
           <h3 className="product-page-title">{this.props.product.name}</h3>
           <p className="product-page-brand">{this.props.product.brand}</p>
+          <p className="product-page-size">SIZES:</p>
           <div className="product-page-size-container">
-            <p className="product-page-size">SIZES:</p>
             {this.props.product.attributes[0].items.map((item) => {
               return (
                 <SelectedSize
                   displayValue={item.displayValue}
                   value={item.value}
                   key={item.id}
+                  size={this.props.size}
                   selectedSize={this.props.selectedSize}
                   compSize="large"
                 />
               );
             })}
           </div>
-          <p className="product-page-price">PRICE:</p>
-          <p className="product-page-price">
+          <p className="product-page-price-desc">PRICE:</p>
+          <p className="product-page-price-amnt">
             {symbol} {amount}
           </p>
           <FillButton
@@ -88,6 +90,14 @@ class ProductPage extends Component {
             <Markup content={this.props.product.description} />
           </div>
         </div>
+        <div
+          className={
+            this.props.miniCartOpen
+              ? "product-page-overlay"
+              : "product-page-overlay-hidden"
+          }
+          onClick={() => this.props.miniCartToggle()}
+        ></div>
       </div>
     );
   }

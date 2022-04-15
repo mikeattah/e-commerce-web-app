@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { nanoid } from "nanoid";
 import FillButton from "../FillButton/FillButton";
 import OutlineButton from "../OutlineButton/OutlineButton";
 import CartItem from "../CartItem/CartItem";
@@ -9,16 +10,26 @@ class MiniCart extends Component {
     return (
       <div
         className={`mini-cart ${
-          this.props.isMiniCartOpen ? "" : "mini-cart-hidden"
+          this.props.miniCartOpen ? "" : "mini-cart-hidden"
         }`}
       >
-        <h3 className="mini-cart-title">
+        <p className="mini-cart-title">
           <span className="mini-cart-title-bold">My Bag,</span>{" "}
-          {this.props.cart.length} items
-        </h3>
-        <div className="mini-cart-item-container">
-          {this.props.cart.map((item, index) => {
-            return <CartItem cartItem={item} key={index} compSize="small" />;
+          {this.props.cart.length}{" "}
+          {this.props.cart.length > 1 ? "items" : "item"}
+        </p>
+        <div className="mini-cart-items-container">
+          {this.props.cart.map((item) => {
+            return (
+              <CartItem
+                key={nanoid()}
+                product={item.product}
+                size={item.size}
+                quantity={item.quantity}
+                currency={this.props.currency}
+                compSize="small"
+              />
+            );
           })}
         </div>
         <div className="mini-cart-total-price">

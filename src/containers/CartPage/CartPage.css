@@ -1,12 +1,27 @@
 .cart-page {
+  position: relative;
   max-height: 1300px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   margin: 0;
-  padding: 0;
+  padding: 0 50px;
+}
+
+.cart-page-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.cart-page-overlay-hidden {
+  display: none;
 }
 
 .cart-page-title {
@@ -16,7 +31,7 @@
 }
 
 .cart-page-main {
-  min-height: 300px;
+  min-height: 335px;
   width: 100%;
 }
 
@@ -45,7 +60,7 @@
 
 .cart-page-total-text-one {
   height: 100%;
-  width: 200px;
+  width: 250px;
   text-align: left;
   margin: 0;
   padding: 0;
@@ -53,7 +68,7 @@
 
 .cart-page-total-text-two {
   height: 100%;
-  width: 224px;
+  width: 274px;
   text-align: right;
   margin: 0;
   padding: 0;

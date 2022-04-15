@@ -85,6 +85,14 @@ class CategoryPage extends Component {
           pageItems={pageItems}
           pageClick={this.handlePageClick}
         />
+        <div
+          className={
+            this.props.miniCartOpen
+              ? "category-page-overlay"
+              : "category-page-overlay-hidden"
+          }
+          onClick={() => this.props.miniCartToggle()}
+        ></div>
       </div>
     );
   }

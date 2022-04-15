@@ -27,3 +27,7 @@
 .small-image-overlay:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
+
+.small-image-overlay-active {
+  background-color: rgba(0, 0, 0, 0.05);
+}

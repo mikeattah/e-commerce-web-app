@@ -1,14 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway&family=Roboto&display=swap");
 
 .app {
-  text-align: center;
+  position: relative;
   max-height: 1500px;
   max-width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 0 50px;
+  text-align: center;
   margin: 0;
-  font-family: "Raleway", "Roboto", sans-serif;
+  padding: 0;
 }

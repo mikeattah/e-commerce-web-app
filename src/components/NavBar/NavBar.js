@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { nanoid } from "nanoid";
 import { NavBarHOC } from "../../hoc/NavBarHOC";
-import MiniCart from "../MiniCart/MiniCart";
 import "./NavBar.css";
+
 class NavBar extends Component {
   categoryClick = (name) => {
     this.props.categoryClick(name);
@@ -69,14 +69,10 @@ class NavBar extends Component {
             aria-label="Toggle minicart"
             onClick={() => this.props.miniCartToggle()}
           />
+          <div className="nav-bar-counter">
+            <span>{this.props.cart.length}</span>
+          </div>
         </div>
-        <MiniCart
-          cart={this.props.cart}
-          cartTotal={this.props.cartTotal}
-          miniCartOpen={this.props.isMiniCartOpen}
-          viewBag={this.props.viewBag}
-          checkOut={this.props.checkOut}
-        />
       </nav>
     );
   }

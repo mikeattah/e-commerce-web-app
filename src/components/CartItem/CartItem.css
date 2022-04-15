@@ -10,7 +10,7 @@
 .cart-item-product-name {
 }
 
-.cart-item-product-type {
+.cart-item-product-brand {
 }
 
 .cart-item-product-price {
@@ -28,5 +28,11 @@
 .cart-item-quantity-text {
 }
 
-.cart-item-image {
+.cart-item-small-image-container {
+}
+
+.cart-item-image-left {
+}
+
+.cart-item-image-right {
 }
