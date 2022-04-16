@@ -16,7 +16,7 @@ class CartPage extends Component {
               <CartItem
                 key={nanoid()}
                 product={item.product}
-                size={item.size}
+                attributes={item.attributes}
                 quantity={item.quantity}
                 currency={this.props.currency}
                 compSize="large"

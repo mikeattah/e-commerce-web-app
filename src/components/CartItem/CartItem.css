@@ -7,16 +7,19 @@
 .cart-item-left {
 }
 
-.cart-item-product-name {
+.cart-item-name {
 }
 
-.cart-item-product-brand {
+.cart-item-brand {
 }
 
-.cart-item-product-price {
+.cart-item-price {
 }
 
-.cart-item-product-sizes {
+.cart-item-attributes-container {
+}
+
+.cart-item-attributes {
 }
 
 .cart-item-right {
@@ -28,11 +31,11 @@
 .cart-item-quantity-text {
 }
 
-.cart-item-small-image-container {
+.cart-item-image-container {
 }
 
-.cart-item-image-left {
+.cart-item-angle-left {
 }
 
-.cart-item-image-right {
+.cart-item-angle-right {
 }

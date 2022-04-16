@@ -1,4 +1,4 @@
-.small-image-box {
+.small-image-container {
   position: relative;
   height: 150px;
   width: 150px;
@@ -6,7 +6,7 @@
   padding: 0;
 }
 
-.small-image-box:hover {
+.small-image-container:hover {
   cursor: pointer;
 }
 

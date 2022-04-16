@@ -5,7 +5,7 @@ class SmallImage extends Component {
   render() {
     return (
       <div
-        className="small-image-box"
+        className="small-image-container"
         onClick={() => this.props.imageClick(this.props.src)}
       >
         <img

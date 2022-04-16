@@ -10,21 +10,20 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: "productpage",
-      category: "all",
-      id: "",
-      product: {},
-      size: "",
-      quantity: 1,
+      page: "categorypage",
       currency: "USD",
+      category: "all",
       cart: [],
       cartTotal: 1000000,
+      id: "",
+      attributes: [], // array of name:value pairs of attributes selected
+      quantity: 1,
       isMiniCartOpen: true,
     };
 
     this.handleCategoryClick = this.handleCategoryClick.bind(this);
     this.handleProductClick = this.handleProductClick.bind(this);
-    this.handleSelectedSize = this.handleSelectedSize.bind(this);
+    this.handleSelectedAttributes = this.handleSelectedAttributes.bind(this);
     this.handleSelectedQuantity = this.handleSelectedQuantity.bind(this);
     this.handleCurrencyClick = this.handleCurrencyClick.bind(this);
     this.handleAddToCart = this.handleAddToCart.bind(this);
@@ -44,8 +43,9 @@ class App extends Component {
     this.setState({ id: id, page: "productpage" });
   }
 
-  handleSelectedSize(value) {
-    this.setState({ size: value });
+  handleSelectedAttributes(name, value) {
+    // still work on this later
+    this.setState({ attributes: [...this.state.attributes, [name, value]] });
   }
 
   handleSelectedQuantity(type) {
@@ -62,13 +62,13 @@ class App extends Component {
     this.setState({ currency: currency });
   }
 
-  handleAddToCart() {
+  handleAddToCart(product) {
     this.setState({
       cart: [
         ...this.state.cart,
         {
-          product: this.state.product,
-          size: this.state.size,
+          product: product,
+          attributes: this.state.attributes,
           quantity: this.state.quantity,
         },
       ],
@@ -79,7 +79,7 @@ class App extends Component {
   handleRemoveFromCart(id) {
     let cart = this.state.cart;
     for (let item of cart) {
-      if (item.product.id === id) {
+      if (item.id === id) {
         cart.splice(cart.indexOf(item), 1);
       }
     }
@@ -120,18 +120,19 @@ class App extends Component {
         <NavBar
           category={this.state.category}
           cart={this.state.cart}
-          cartTotal={this.state.cartTotal}
           miniCartOpen={this.state.isMiniCartOpen}
           categoryClick={this.handleCategoryClick}
           currencyClick={this.handleCurrencyClick}
           miniCartToggle={this.handleMiniCartToggle}
-          viewBag={this.handleViewBag}
-          checkOut={this.handleCheckOut}
+          client={this.props.client}
         />
         <MiniCart
+          currency={this.state.currency}
           cart={this.state.cart}
           cartTotal={this.state.cartTotal}
           miniCartOpen={this.state.isMiniCartOpen}
+          selectedAttributes={this.handleSelectedAttributes}
+          selectedQuantity={this.handleSelectedQuantity}
           removeFromCart={this.handleRemoveFromCart}
           viewBag={this.handleViewBag}
           checkOut={this.handleCheckOut}
@@ -141,35 +142,35 @@ class App extends Component {
             case "categorypage":
               return (
                 <CategoryPage
-                  category={this.state.category}
                   currency={this.state.currency}
+                  category={this.state.category}
                   miniCartOpen={this.state.isMiniCartOpen}
                   productClick={this.handleProductClick}
                   miniCartToggle={this.handleMiniCartToggle}
+                  client={this.props.client}
                 />
               );
             case "productpage":
               return (
                 <ProductPage
-                  id={this.state.id}
-                  size={this.state.size}
                   currency={this.state.currency}
+                  id={this.state.id}
+                  attributes={this.state.attributes}
                   miniCartOpen={this.state.isMiniCartOpen}
-                  selectedSize={this.handleSelectedSize}
+                  selectedAttributes={this.handleSelectedAttributes}
                   addToCart={this.handleAddToCart}
                   miniCartToggle={this.handleMiniCartToggle}
+                  client={this.props.client}
                 />
               );
             case "cartpage":
               return (
                 <CartPage
-                  size={this.state.size}
-                  quantity={this.state.quantity}
                   currency={this.state.currency}
                   cart={this.state.cart}
                   cartTotal={this.state.cartTotal}
                   miniCartOpen={this.state.isMiniCartOpen}
-                  selectedSize={this.handleSelectedSize}
+                  selectedAttributes={this.handleSelectedAttributes}
                   selectedQuantity={this.handleSelectedQuantity}
                   removeFromCart={this.handleRemoveFromCart}
                   miniCartToggle={this.handleMiniCartToggle}

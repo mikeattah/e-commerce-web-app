@@ -1,35 +1,14 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import reportWebVitals from "./reportWebVitals";
-
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  gql,
-} from "@apollo/client";
+import App from "./App";
+import "./index.css";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000",
   cache: new InMemoryCache(),
 });
-
-client
-  .query({
-    query: gql`
-      query {
-        categories {
-          name
-          products {
-            id
-          }
-        }
-      }
-    `,
-  })
-  .then((result) => console.log(result));
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -37,7 +16,7 @@ const root = createRoot(container);
 root.render(
   <ApolloProvider client={client}>
     <React.StrictMode>
-      <App />
+      <App client={client} />
     </React.StrictMode>
   </ApolloProvider>
 );

@@ -1,14 +1,12 @@
 import React, { Component } from "react";
-import "./SelectedQuantity.css";
+import "./Quantity.css";
 
-class SelectedQuantity extends Component {
+class Quantity extends Component {
   render() {
     return (
       <button
         className={
-          this.props.compSize === "large"
-            ? "selected-quantity-large"
-            : "selected-quantity-small"
+          this.props.compSize === "large" ? "quantity-large" : "quantity-small"
         }
         onClick={() => this.props.buttonClick()}
         disabled={this.props.disabled}
@@ -19,4 +17,4 @@ class SelectedQuantity extends Component {
   }
 }
 
-export default SelectedQuantity;
+export default Quantity;

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import { gql } from "@apollo/client";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import Pagination from "../../components/Pagination/Pagination";
-import { CategoryPageHOC } from "../../hoc/CategoryPageHOC";
 import "./CategoryPage.css";
 
 class CategoryPage extends Component {
@@ -9,9 +9,41 @@ class CategoryPage extends Component {
     super(props);
     this.state = {
       pageIndex: 0,
+      categories: [],
     };
 
     this.handlePageClick = this.handlePageClick.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.client
+      .query({
+        query: gql`
+          {
+            categories {
+              name
+              products {
+                id
+                name
+                inStock
+                gallery
+                prices {
+                  currency {
+                    label
+                    symbol
+                  }
+                  amount
+                }
+              }
+            }
+          }
+        `,
+      })
+      .then((response) => {
+        this.setState({
+          categories: response.data.categories,
+        });
+      });
   }
 
   handlePageClick(index) {
@@ -20,9 +52,11 @@ class CategoryPage extends Component {
 
   render() {
     // array of all category names
-    const categoryNames = this.props.categories.map((category) => {
+    const categoryNames = [...this.state.categories].map((category) => {
       return category.name;
     });
+
+    console.log(categoryNames);
 
     // number of items per page
     let pageItems = 6;
@@ -35,7 +69,7 @@ class CategoryPage extends Component {
 
     // number of pages per category
     let pageCount = Math.ceil(
-      this.props.categories[i].products.length / pageItems
+      this.state.categories[i].products.length / pageItems
     );
 
     // collect page indexes into pages array
@@ -50,7 +84,7 @@ class CategoryPage extends Component {
         </h1>
         <div className="category-page-main">
           {[
-            ...this.props.categories[i].products.slice(
+            ...this.state.categories[i].products.slice(
               this.state.pageIndex,
               this.state.pageIndex + pageItems
             ),
@@ -98,4 +132,4 @@ class CategoryPage extends Component {
   }
 }
 
-export default CategoryPageHOC(CategoryPage);
+export default CategoryPage;

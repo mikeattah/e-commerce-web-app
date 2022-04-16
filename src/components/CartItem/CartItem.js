@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import SelectedSize from "../SelectedSize/SelectedSize";
-import SelectedQuantity from "../SelectedQuantity/SelectedQuantity";
+import Attributes from "../Attributes/Attributes";
+import Quantity from "../Quantity/Quantity";
 import SmallImage from "../SmallImage/SmallImage";
 import "./CartItem.css";
 
@@ -8,7 +8,7 @@ class CartItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      image: 0,
+      imageIndex: 0,
     };
 
     this.handleChangeImage = this.handleChangeImage.bind(this);
@@ -16,16 +16,16 @@ class CartItem extends Component {
 
   handleChangeImage(dir) {
     if (dir === "left") {
-      if (this.state.image === 0) {
-        this.setState({ image: this.props.product.gallery.length - 1 });
+      if (this.state.imageIndex === 0) {
+        this.setState({ imageIndex: this.props.product.gallery.length - 1 });
       } else {
-        this.setState({ image: this.state.image - 1 });
+        this.setState({ imageIndex: this.state.imageIndex - 1 });
       }
     } else if (dir === "right") {
-      if (this.state.image === this.props.product.gallery.length - 1) {
-        this.setState({ image: 0 });
+      if (this.state.imageIndex === this.props.product.gallery.length - 1) {
+        this.setState({ imageIndex: 0 });
       } else {
-        this.setState({ image: this.state.image + 1 });
+        this.setState({ imageIndex: this.state.imageIndex + 1 });
       }
     }
   }
@@ -48,48 +48,52 @@ class CartItem extends Component {
         }
       >
         <div className="cart-item-left">
-          <p className="cart-item-product-name">{this.props.product.name}</p>
-          <p className="cart-item-product-brand">{this.props.product.brand}</p>
-          <p className="cart-item-product-price">
+          <p className="cart-item-name">{this.props.product.name}</p>
+          <p className="cart-item-brand">{this.props.product.brand}</p>
+          <p className="cart-item-price">
             {symbol} {amount}
           </p>
-          <div className="cart-item-product-sizes">
-            {this.props.product.attributes[0].items.map((item) => {
+          <div className="cart-item-attributes-container">
+            {this.props.product.attributes.map((element) => {
               return (
-                <SelectedSize
-                  displayValue={item.value}
-                  value={item.value}
-                  key={item.id}
-                  compSize={this.props.compSize}
-                />
+                <div className="cart-item-attributes">
+                  {element.items.forEach((item) => {
+                    return (
+                      <Attributes
+                        displayValue={item.value}
+                        value={item.value}
+                        key={item.id}
+                        attributes={this.props.attributes}
+                        selectedAttributes={this.props.selectedAttributes}
+                        compSize={this.props.compSize}
+                      />
+                    );
+                  })}
+                </div>
               );
             })}
           </div>
         </div>
         <div className="cart-item-right">
           <div className="cart-item-quantity">
-            <SelectedQuantity compSize={this.props.compSize}>
-              +
-            </SelectedQuantity>
+            <Quantity compSize={this.props.compSize}>+</Quantity>
             <p className="cart-item-quantity-text">{this.props.quantity}</p>
-            <SelectedQuantity compSize={this.props.compSize}>
-              -
-            </SelectedQuantity>
+            <Quantity compSize={this.props.compSize}>-</Quantity>
           </div>
-          <div className="cart-item-small-image-container">
+          <div className="cart-item-image-container">
             <SmallImage
-              src={this.props.product.gallery[this.state.image]}
+              src={this.props.product.gallery[this.state.imageIndex]}
               alt={this.props.product.name}
               currentImage={null}
             />
             <div
-              className="cart-item-image-left"
+              className="cart-item-angle-left"
               onClick={() => this.handleChangeImage("left")}
             >
               &#12296;
             </div>
             <div
-              className="cart-item-image-right"
+              className="cart-item-angle-right"
               onClick={() => this.handleChangeImage("right")}
             >
               &#12297;

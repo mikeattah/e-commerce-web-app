@@ -1,20 +1,70 @@
 import React, { Component } from "react";
+import { gql } from "@apollo/client";
 import { nanoid } from "nanoid";
 import { Markup } from "interweave";
 import SmallImage from "../../components/SmallImage/SmallImage";
-import SelectedSize from "../../components/SelectedSize/SelectedSize";
+import Attributes from "../../components/Attributes/Attributes";
 import FillButton from "../../components/FillButton/FillButton";
-import { ProductPageHOC } from "../../hoc/ProductPageHOC";
 import "./ProductPage.css";
 
 class ProductPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      image: this.props.product.gallery[0],
+      product: {},
+      image: "",
     };
 
     this.handleImageToggle = this.handleImageToggle.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.client
+      .query(
+        {
+          query: gql`
+            query ($id: String!) {
+              product(id: $id) {
+                id
+                name
+                inStock
+                gallery
+                description
+                category
+                attributes {
+                  id
+                  name
+                  type
+                  items {
+                    displayValue
+                    value
+                    id
+                  }
+                }
+                prices {
+                  currency {
+                    label
+                    symbol
+                  }
+                  amount
+                }
+                brand
+              }
+            }
+          `,
+        },
+        {
+          variables: {
+            id: this.props.id,
+          },
+        }
+      )
+      .then((response) => {
+        this.setState({
+          product: response.data.product,
+          image: response.data.product.gallery[0],
+        });
+      });
   }
 
   addToCart = () => {
@@ -27,7 +77,7 @@ class ProductPage extends Component {
 
   render() {
     let symbol, amount;
-    for (let price of this.props.product.prices) {
+    for (let price of this.state.product.prices) {
       if (price.currency.label === this.props.currency) {
         symbol = price.currency.symbol;
         amount = price.amount;
@@ -36,8 +86,8 @@ class ProductPage extends Component {
 
     return (
       <div className="product-page">
-        <div className="product-page-small-images">
-          {this.props.product.gallery.map((image) => {
+        <div className="product-page-small-image-container">
+          {this.state.product.gallery.map((image) => {
             return (
               <SmallImage
                 key={nanoid()}
@@ -49,7 +99,7 @@ class ProductPage extends Component {
             );
           })}
         </div>
-        <div className="product-page-large-image-box">
+        <div className="product-page-large-image-container">
           <img
             src={this.state.image}
             alt="Enlarged product"
@@ -58,20 +108,29 @@ class ProductPage extends Component {
           <div className="product-page-large-image-overlay"></div>
         </div>
         <div className="product-page-details">
-          <h3 className="product-page-title">{this.props.product.name}</h3>
-          <p className="product-page-brand">{this.props.product.brand}</p>
-          <p className="product-page-size">SIZES:</p>
-          <div className="product-page-size-container">
-            {this.props.product.attributes[0].items.map((item) => {
+          <h3 className="product-page-title">{this.state.product.name}</h3>
+          <p className="product-page-brand">{this.state.product.brand}</p>
+          {/* adjust attributes */}
+          <div className="product-page-attributes-container">
+            {this.state.product.attributes.map((element) => {
               return (
-                <SelectedSize
-                  displayValue={item.displayValue}
-                  value={item.value}
-                  key={item.id}
-                  size={this.props.size}
-                  selectedSize={this.props.selectedSize}
-                  compSize="large"
-                />
+                <div className="product-page-attributes">
+                  <p className="product-page-attributes-text">
+                    {element.name.toUpperCase()}:
+                  </p>
+                  {element.items.forEach((item) => {
+                    return (
+                      <Attributes
+                        displayValue={item.displayValue}
+                        value={item.value}
+                        key={item.id}
+                        attributes={this.props.attributes}
+                        selectedAttributes={this.props.selectedAttributes}
+                        compSize="large"
+                      />
+                    );
+                  })}
+                </div>
               );
             })}
           </div>
@@ -81,13 +140,13 @@ class ProductPage extends Component {
           </p>
           <FillButton
             buttonClick={this.addToCart}
-            disabled={!this.props.product.inStock}
+            disabled={!this.state.product.inStock}
             compSize="large"
           >
             ADD TO CART
           </FillButton>
           <div className="product-page-description">
-            <Markup content={this.props.product.description} />
+            <Markup content={this.state.product.description} />
           </div>
         </div>
         <div
@@ -103,4 +162,4 @@ class ProductPage extends Component {
   }
 }
 
-export default ProductPageHOC(ProductPage);
+export default ProductPage;

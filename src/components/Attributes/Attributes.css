@@ -1,4 +1,4 @@
-.selected-size-large {
+.attributes-large {
   margin: 0 10px 0 0;
   padding: 8px 16px;
   font-size: 16px;
@@ -8,7 +8,7 @@
   background-color: #fff;
 }
 
-.selected-size-large-active {
+.attributes-large-active {
   margin: 0 10px 0 0;
   padding: 8px 16px;
   font-size: 16px;
@@ -18,7 +18,7 @@
   background-color: #000;
 }
 
-.selected-size-small {
+.attributes-small {
   margin: 0 8px 0 0;
   padding: 8px 8px;
   font-size: 9px;
@@ -28,7 +28,7 @@
   background-color: #fff;
 }
 
-.selected-size-small-active {
+.attributes-small-active {
   margin: 0 8px 0 0;
   padding: 8px 8px;
   font-size: 9px;
@@ -38,15 +38,15 @@
   background-color: #000;
 }
 
-.selected-size-large:hover,
-.selected-size-small:hover {
+.attributes-large:hover,
+.attributes-small:hover {
   cursor: pointer;
   color: #fff;
   background-color: #000;
 }
 
-.selected-size-large-active:hover,
-.selected-size-small-active:hover {
+.attributes-large-active:hover,
+.attributes-small-active:hover {
   cursor: pointer;
   color: #000;
   background-color: #fff;

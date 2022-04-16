@@ -1,9 +1,40 @@
 import React, { Component } from "react";
+import { gql } from "@apollo/client";
 import { nanoid } from "nanoid";
-import { NavBarHOC } from "../../hoc/NavBarHOC";
 import "./NavBar.css";
 
 class NavBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      categories: [],
+      currencies: [],
+    };
+  }
+
+  componentDidMount() {
+    this.props.client
+      .query({
+        query: gql`
+          {
+            categories {
+              name
+            }
+            currencies {
+              label
+              symbol
+            }
+          }
+        `,
+      })
+      .then((response) => {
+        this.setState({
+          categories: response.data.categories,
+          currencies: response.data.currencies,
+        });
+      });
+  }
+
   categoryClick = (name) => {
     this.props.categoryClick(name);
   };
@@ -18,7 +49,7 @@ class NavBar extends Component {
     return (
       <nav className="nav-bar">
         <ul className="nav-bar-group">
-          {this.props.categories.map((category) => {
+          {this.state.categories.map((category) => {
             let { name } = category;
             return (
               <li
@@ -53,7 +84,7 @@ class NavBar extends Component {
             aria-label="Choose currency"
             onChange={() => this.currencyClick()}
           >
-            {this.props.currencies.map((currency) => {
+            {this.state.currencies.map((currency) => {
               let { label, symbol } = currency;
               return (
                 <option key={nanoid()} value={label}>
@@ -78,4 +109,4 @@ class NavBar extends Component {
   }
 }
 
-export default NavBarHOC(NavBar);
+export default NavBar;
