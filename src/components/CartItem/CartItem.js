@@ -60,12 +60,14 @@ class CartItem extends Component {
                   {element.items.forEach((item) => {
                     return (
                       <Attributes
+                        name={element.name}
                         displayValue={item.value}
                         value={item.value}
                         key={item.id}
                         attributes={this.props.attributes}
-                        selectedAttributes={this.props.selectedAttributes}
+                        cartItemAttributes={this.props.cartItemAttributes}
                         compSize={this.props.compSize}
+                        container="cart"
                       />
                     );
                   })}
@@ -76,9 +78,21 @@ class CartItem extends Component {
         </div>
         <div className="cart-item-right">
           <div className="cart-item-quantity">
-            <Quantity compSize={this.props.compSize}>+</Quantity>
+            <Quantity
+              compSize={this.props.compSize}
+              type="increase"
+              cartItemQuantity={this.props.cartItemQuantity}
+            >
+              +
+            </Quantity>
             <p className="cart-item-quantity-text">{this.props.quantity}</p>
-            <Quantity compSize={this.props.compSize}>-</Quantity>
+            <Quantity
+              compSize={this.props.compSize}
+              type="decrease"
+              cartItemQuantity={this.props.cartItemQuantity}
+            >
+              -
+            </Quantity>
           </div>
           <div className="cart-item-image-container">
             <SmallImage

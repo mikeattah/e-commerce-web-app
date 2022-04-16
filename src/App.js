@@ -17,14 +17,14 @@ class App extends Component {
       cartTotal: 1000000,
       id: "",
       attributes: [], // array of name:value pairs of attributes selected
-      quantity: 1,
       isMiniCartOpen: true,
     };
 
     this.handleCategoryClick = this.handleCategoryClick.bind(this);
     this.handleProductClick = this.handleProductClick.bind(this);
-    this.handleSelectedAttributes = this.handleSelectedAttributes.bind(this);
-    this.handleSelectedQuantity = this.handleSelectedQuantity.bind(this);
+    this.handleProductAttributes = this.handleProductAttributes.bind(this);
+    this.handleCartItemAttributes = this.handleCartItemAttributes.bind(this);
+    this.handleCartItemQuantity = this.handleCartItemQuantity.bind(this);
     this.handleCurrencyClick = this.handleCurrencyClick.bind(this);
     this.handleAddToCart = this.handleAddToCart.bind(this);
     this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this);
@@ -43,17 +43,55 @@ class App extends Component {
     this.setState({ id: id, page: "productpage" });
   }
 
-  handleSelectedAttributes(name, value) {
-    // still work on this later
-    this.setState({ attributes: [...this.state.attributes, [name, value]] });
+  handleProductAttributes(name, value) {
+    let chk = false;
+    let attributes = this.state.attributes;
+    for (let i = 0; i < attributes.length; i++) {
+      if (attributes[i][0] === name) {
+        attributes[i][1] = value;
+        chk = true;
+      } else if (
+        attributes[i][0] !== name &&
+        chk === false &&
+        i === attributes.length - 1
+      ) {
+        attributes.push([name, value]);
+      }
+    }
+    this.setState({ attributes: attributes });
   }
 
-  handleSelectedQuantity(type) {
-    if (type === "increase") {
-      this.setState({ quantity: this.state.quantity + 1 });
-    } else if (type === "decrease") {
-      if (this.state.quantity > 1) {
-        this.setState({ quantity: this.state.quantity - 1 });
+  handleCartItemAttributes(id, name, value) {
+    for (let item of cart) {
+      if (item.product.id === id) {
+        let chk = false;
+        let attributes = item.attributes;
+        for (let i = 0; i < attributes.length; i++) {
+          if (attributes[i][0] === name) {
+            attributes[i][1] = value;
+            chk = true;
+          } else if (
+            attributes[i][0] !== name &&
+            chk === false &&
+            i === attributes.length - 1
+          ) {
+            attributes.push([name, value]);
+          }
+        }
+      }
+    }
+  }
+
+  handleCartItemQuantity(id, type) {
+    for (let item of cart) {
+      if (item.product.id === id) {
+        if (type === "increase") {
+          item.quantity += 1;
+        } else if (type === "decrease") {
+          if (item.quantity > 1) {
+            item.quantity -= 1;
+          }
+        }
       }
     }
   }
@@ -69,7 +107,7 @@ class App extends Component {
         {
           product: product,
           attributes: this.state.attributes,
-          quantity: this.state.quantity,
+          quantity: 1,
         },
       ],
     });
@@ -79,7 +117,7 @@ class App extends Component {
   handleRemoveFromCart(id) {
     let cart = this.state.cart;
     for (let item of cart) {
-      if (item.id === id) {
+      if (item.product.id === id) {
         cart.splice(cart.indexOf(item), 1);
       }
     }
@@ -87,9 +125,11 @@ class App extends Component {
     this.handleCartTotal(this.state.currency);
   }
 
+  // use currency value in state instead??
   handleCartTotal(currency) {
     let total = 0;
-    for (let item of this.state.cart) {
+    let cart = this.state.cart;
+    for (let item of cart) {
       let i = 0;
       while (currency !== item.product.prices[i].currency.label) i++;
       total += item.product.prices[i].amount;
@@ -119,7 +159,7 @@ class App extends Component {
       <div className="app">
         <NavBar
           category={this.state.category}
-          cart={this.state.cart}
+          cartLength={this.state.cart.length}
           miniCartOpen={this.state.isMiniCartOpen}
           categoryClick={this.handleCategoryClick}
           currencyClick={this.handleCurrencyClick}
@@ -131,8 +171,8 @@ class App extends Component {
           cart={this.state.cart}
           cartTotal={this.state.cartTotal}
           miniCartOpen={this.state.isMiniCartOpen}
-          selectedAttributes={this.handleSelectedAttributes}
-          selectedQuantity={this.handleSelectedQuantity}
+          cartItemAttributes={this.handleCartItemAttributes}
+          cartItemQuantity={this.handleCartItemQuantity}
           removeFromCart={this.handleRemoveFromCart}
           viewBag={this.handleViewBag}
           checkOut={this.handleCheckOut}
@@ -157,7 +197,7 @@ class App extends Component {
                   id={this.state.id}
                   attributes={this.state.attributes}
                   miniCartOpen={this.state.isMiniCartOpen}
-                  selectedAttributes={this.handleSelectedAttributes}
+                  productAttributes={this.handleProductAttributes}
                   addToCart={this.handleAddToCart}
                   miniCartToggle={this.handleMiniCartToggle}
                   client={this.props.client}
@@ -170,8 +210,8 @@ class App extends Component {
                   cart={this.state.cart}
                   cartTotal={this.state.cartTotal}
                   miniCartOpen={this.state.isMiniCartOpen}
-                  selectedAttributes={this.handleSelectedAttributes}
-                  selectedQuantity={this.handleSelectedQuantity}
+                  cartItemAttributes={this.handleCartItemAttributes}
+                  cartItemQuantity={this.handleCartItemQuantity}
                   removeFromCart={this.handleRemoveFromCart}
                   miniCartToggle={this.handleMiniCartToggle}
                   continueShopping={this.handleContinueShopping}

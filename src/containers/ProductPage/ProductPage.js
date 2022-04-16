@@ -110,7 +110,6 @@ class ProductPage extends Component {
         <div className="product-page-details">
           <h3 className="product-page-title">{this.state.product.name}</h3>
           <p className="product-page-brand">{this.state.product.brand}</p>
-          {/* adjust attributes */}
           <div className="product-page-attributes-container">
             {this.state.product.attributes.map((element) => {
               return (
@@ -125,8 +124,9 @@ class ProductPage extends Component {
                         value={item.value}
                         key={item.id}
                         attributes={this.props.attributes}
-                        selectedAttributes={this.props.selectedAttributes}
+                        productAttributes={this.props.productAttributes}
                         compSize="large"
+                        container="productpage"
                       />
                     );
                   })}

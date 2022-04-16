@@ -101,7 +101,7 @@ class NavBar extends Component {
             onClick={() => this.props.miniCartToggle()}
           />
           <div className="nav-bar-counter">
-            <span>{this.props.cart.length}</span>
+            <span>{this.props.cartLength}</span>
           </div>
         </div>
       </nav>
