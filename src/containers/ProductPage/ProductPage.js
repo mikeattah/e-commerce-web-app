@@ -3,8 +3,9 @@ import { gql } from "@apollo/client";
 import { nanoid } from "nanoid";
 import { Markup } from "interweave";
 import SmallImage from "../../components/SmallImage/SmallImage";
-import Attributes from "../../components/Attributes/Attributes";
+import Attribute from "../../components/Attribute/Attribute";
 import FillButton from "../../components/FillButton/FillButton";
+import Swatch from "../../components/Swatch/Swatch";
 import "./ProductPage.css";
 
 class ProductPage extends Component {
@@ -13,9 +14,8 @@ class ProductPage extends Component {
     this.state = {
       product: {},
       image: "",
+      attributes: [],
     };
-
-    this.handleImageToggle = this.handleImageToggle.bind(this);
   }
 
   componentDidMount() {
@@ -64,16 +64,45 @@ class ProductPage extends Component {
           product: response.data.product,
           image: response.data.product.gallery[0],
         });
+      })
+      .catch((error) => {
+        console.log(error);
       });
+
+    let attributes = this.state.product.attributes;
+    let name,
+      value,
+      temp = [];
+    for (let attribute of attributes) {
+      name = attribute.name;
+      value = attribute.items[0].value;
+      temp.push([name, value]);
+    }
+
+    this.setState({
+      attributes: temp,
+    });
   }
 
   addToCart = () => {
-    this.props.addToCart();
+    this.props.addToCart(this.state.product, this.state.attributes);
   };
 
-  handleImageToggle(image) {
+  handleImageToggle = (image) => {
     this.setState({ image: image });
-  }
+  };
+
+  handleProductPageAttributes = (name, value) => {
+    let attributes = this.state.attributes;
+
+    for (let i = 0; i < attributes.length; i++) {
+      if (attributes[i][0] === name) {
+        attributes[i][1] = value;
+      }
+    }
+
+    this.setState({ attributes: attributes });
+  };
 
   render() {
     let symbol, amount;
@@ -117,19 +146,34 @@ class ProductPage extends Component {
                   <p className="product-page-attributes-text">
                     {element.name.toUpperCase()}:
                   </p>
-                  {element.items.forEach((item) => {
-                    return (
-                      <Attributes
-                        displayValue={item.displayValue}
-                        value={item.value}
-                        key={item.id}
-                        attributes={this.props.attributes}
-                        productAttributes={this.props.productAttributes}
-                        compSize="large"
-                        container="productpage"
-                      />
-                    );
-                  })}
+                  {element.type !== "swatch" &&
+                    element.items.forEach((item) => {
+                      return (
+                        <Attribute
+                          name={element.name}
+                          displayValue={item.displayValue}
+                          value={item.value}
+                          key={item.id}
+                          attributes={this.state.attributes}
+                          attributeClick={this.handleProductPageAttributes}
+                          compSize="large"
+                        />
+                      );
+                    })}
+                  {element.type === "swatch" &&
+                    element.items.forEach((item) => {
+                      return (
+                        <Swatch
+                          name={element.name}
+                          displayValue={item.displayValue}
+                          value={item.value}
+                          key={item.id}
+                          attributes={this.state.attributes}
+                          swatchClick={this.handleProductPageAttributes}
+                          compSize="large"
+                        />
+                      );
+                    })}
                 </div>
               );
             })}

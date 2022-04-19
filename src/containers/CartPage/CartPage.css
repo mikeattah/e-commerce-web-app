@@ -8,6 +8,7 @@
   align-items: center;
   margin: 0;
   padding: 0 50px;
+  border: 1px solid black;
 }
 
 .cart-page-overlay {
@@ -31,7 +32,7 @@
 }
 
 .cart-page-main {
-  min-height: 335px;
+  height: 335px;
   width: 100%;
 }
 

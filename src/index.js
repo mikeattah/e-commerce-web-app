@@ -1,24 +1,16 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 import "./index.css";
-
-const client = new ApolloClient({
-  uri: "http://localhost:4000",
-  cache: new InMemoryCache(),
-});
 
 const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
-  <ApolloProvider client={client}>
-    <React.StrictMode>
-      <App client={client} />
-    </React.StrictMode>
-  </ApolloProvider>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import Attributes from "../Attributes/Attributes";
+import Attribute from "../Attribute/Attribute";
 import Quantity from "../Quantity/Quantity";
 import SmallImage from "../SmallImage/SmallImage";
+import Swatch from "../Swatch/Swatch";
 import "./CartItem.css";
 
 class CartItem extends Component {
@@ -10,11 +11,9 @@ class CartItem extends Component {
     this.state = {
       imageIndex: 0,
     };
-
-    this.handleChangeImage = this.handleChangeImage.bind(this);
   }
 
-  handleChangeImage(dir) {
+  handleChangeImage = (dir) => {
     if (dir === "left") {
       if (this.state.imageIndex === 0) {
         this.setState({ imageIndex: this.props.product.gallery.length - 1 });
@@ -28,7 +27,7 @@ class CartItem extends Component {
         this.setState({ imageIndex: this.state.imageIndex + 1 });
       }
     }
-  }
+  };
 
   render() {
     let symbol, amount;
@@ -57,20 +56,34 @@ class CartItem extends Component {
             {this.props.product.attributes.map((element) => {
               return (
                 <div className="cart-item-attributes">
-                  {element.items.forEach((item) => {
-                    return (
-                      <Attributes
-                        name={element.name}
-                        displayValue={item.value}
-                        value={item.value}
-                        key={item.id}
-                        attributes={this.props.attributes}
-                        cartItemAttributes={this.props.cartItemAttributes}
-                        compSize={this.props.compSize}
-                        container="cart"
-                      />
-                    );
-                  })}
+                  {element.type !== "swatch" &&
+                    element.items.forEach((item) => {
+                      return (
+                        <Attribute
+                          name={element.name}
+                          displayValue={item.displayValue}
+                          value={item.value}
+                          key={item.id}
+                          attributes={this.props.attributes}
+                          attributeClick={this.props.cartItemAttributes}
+                          compSize={this.props.compSize}
+                        />
+                      );
+                    })}
+                  {element.type === "swatch" &&
+                    element.items.forEach((item) => {
+                      return (
+                        <Swatch
+                          name={element.name}
+                          displayValue={item.displayValue}
+                          value={item.value}
+                          key={item.id}
+                          attributes={this.props.attributes}
+                          swatchClick={this.props.cartItemAttributes}
+                          compSize={this.props.compSize}
+                        />
+                      );
+                    })}
                 </div>
               );
             })}
@@ -81,7 +94,7 @@ class CartItem extends Component {
             <Quantity
               compSize={this.props.compSize}
               type="increase"
-              cartItemQuantity={this.props.cartItemQuantity}
+              quantityClick={this.props.cartItemQuantity}
             >
               +
             </Quantity>
@@ -89,7 +102,7 @@ class CartItem extends Component {
             <Quantity
               compSize={this.props.compSize}
               type="decrease"
-              cartItemQuantity={this.props.cartItemQuantity}
+              quantityClick={this.props.cartItemQuantity}
             >
               -
             </Quantity>
@@ -99,6 +112,7 @@ class CartItem extends Component {
               src={this.props.product.gallery[this.state.imageIndex]}
               alt={this.props.product.name}
               currentImage={null}
+              imageClick={null}
             />
             <div
               className="cart-item-angle-left"

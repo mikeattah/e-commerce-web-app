@@ -15,8 +15,8 @@ class MiniCart extends Component {
       >
         <p className="mini-cart-title">
           <span className="mini-cart-title-bold">My Bag,</span>{" "}
-          {this.props.cart.length}{" "}
-          {this.props.cart.length > 1 ? "items" : "item"}
+          {this.props.cartQuantity}{" "}
+          {this.props.cartQuantity > 1 ? "items" : "item"}
         </p>
         <div className="mini-cart-items-container">
           {this.props.cart.map((item) => {

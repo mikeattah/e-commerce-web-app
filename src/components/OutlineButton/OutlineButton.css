@@ -6,7 +6,7 @@
   padding: 14px 0;
   border: 2px solid #000;
   outline: none;
-  cursor: pointer;
+  font-family: "Raleway", "Roboto", sans-serif;
   font-size: 16px;
   font-weight: bold;
   transition: 0.5s ease-in-out;
@@ -20,7 +20,7 @@
   padding: 14px 0;
   border: 2px solid #000;
   outline: none;
-  cursor: pointer;
+  font-family: "Raleway", "Roboto", sans-serif;
   font-size: 12px;
   font-weight: bold;
   transition: 0.5s ease-in-out;
@@ -28,6 +28,7 @@
 
 .outline-button-large:hover,
 .outline-button-small:hover {
+  cursor: pointer;
   background-color: #000;
   color: #fff;
 }

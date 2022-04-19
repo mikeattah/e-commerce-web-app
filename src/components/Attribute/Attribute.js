@@ -1,29 +1,29 @@
 import React, { Component } from "react";
-import "./Attributes.css";
+import "./Attribute.css";
 
-class Attributes extends Component {
+class Attribute extends Component {
   render() {
     let style;
     if (this.props.compSize === "large") {
       for (let attribute of this.props.attributes) {
         if (
           this.props.name === attribute[0] &&
-          this.props.value === attribute[1]
+          this.props.displayValue === attribute[1]
         ) {
-          style = "attributes-large-active";
+          style = "attribute-large-active";
         } else {
-          style = "attributes-large";
+          style = "attribute-large";
         }
       }
     } else {
       for (let attribute of this.props.attributes) {
         if (
           this.props.name === attribute[0] &&
-          this.props.value === attribute[1]
+          this.props.displayValue === attribute[1]
         ) {
-          style = "attributes-small-active";
+          style = "attribute-small-active";
         } else {
-          style = "attributes-small";
+          style = "attribute-small";
         }
       }
     }
@@ -32,9 +32,7 @@ class Attributes extends Component {
       <button
         className={style}
         onClick={() =>
-          this.props.container === "productpage"
-            ? this.props.productAttributes(this.props.value)
-            : this.props.cartItemAttributes(this.props.value)
+          this.props.attributeClick(this.props.name, this.props.displayValue)
         }
         disabled={this.props.disabled}
       >
@@ -44,4 +42,4 @@ class Attributes extends Component {
   }
 }
 
-export default Attributes;
+export default Attribute;

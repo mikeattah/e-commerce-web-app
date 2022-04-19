@@ -1,4 +1,4 @@
-.attributes-large {
+.attribute-large {
   margin: 0 10px 0 0;
   padding: 8px 16px;
   font-size: 16px;
@@ -8,7 +8,7 @@
   background-color: #fff;
 }
 
-.attributes-large-active {
+.attribute-large-active {
   margin: 0 10px 0 0;
   padding: 8px 16px;
   font-size: 16px;
@@ -18,7 +18,7 @@
   background-color: #000;
 }
 
-.attributes-small {
+.attribute-small {
   margin: 0 8px 0 0;
   padding: 8px 8px;
   font-size: 9px;
@@ -28,7 +28,7 @@
   background-color: #fff;
 }
 
-.attributes-small-active {
+.attribute-small-active {
   margin: 0 8px 0 0;
   padding: 8px 8px;
   font-size: 9px;
@@ -38,15 +38,15 @@
   background-color: #000;
 }
 
-.attributes-large:hover,
-.attributes-small:hover {
+.attribute-large:hover,
+.attribute-small:hover {
   cursor: pointer;
   color: #fff;
   background-color: #000;
 }
 
-.attributes-large-active:hover,
-.attributes-small-active:hover {
+.attribute-large-active:hover,
+.attribute-small-active:hover {
   cursor: pointer;
   color: #000;
   background-color: #fff;

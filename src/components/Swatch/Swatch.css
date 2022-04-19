@@ -1,0 +1,29 @@
+.swatch-large {
+  position: relative;
+  margin: 0 10px 0 0;
+  padding: 8px 16px;
+  font-size: 16px;
+}
+
+.swatch-small {
+  position: relative;
+  margin: 0 8px 0 0;
+  padding: 8px 8px;
+  font-size: 9px;
+}
+
+.swatch-large:hover,
+.swatch-small:hover {
+  cursor: pointer;
+}
+
+.swatch-overlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  visibility: hidden;
+}
+
+.swatch-overlay-visible {
+  visibility: visible;
+}

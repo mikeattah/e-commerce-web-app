@@ -8,7 +8,7 @@ class Quantity extends Component {
         className={
           this.props.compSize === "large" ? "quantity-large" : "quantity-small"
         }
-        onClick={() => this.props.cartItemQuantity(this.props.type)}
+        onClick={() => this.props.quantityClick(this.props.type)}
         disabled={this.props.disabled}
       >
         {this.props.children}

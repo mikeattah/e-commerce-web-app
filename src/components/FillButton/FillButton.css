@@ -6,7 +6,7 @@
   padding: 14px 0;
   border: 2px solid #5ece7b;
   outline: none;
-  cursor: pointer;
+  font-family: "Raleway", "Roboto", sans-serif;
   font-size: 16px;
   font-weight: bold;
   transition: 0.5s ease-in-out;
@@ -20,7 +20,7 @@
   padding: 14px 0;
   border: 2px solid #5ece7b;
   outline: none;
-  cursor: pointer;
+  font-family: "Raleway", "Roboto", sans-serif;
   font-size: 12px;
   font-weight: bold;
   transition: 0.5s ease-in-out;
@@ -28,6 +28,7 @@
 
 .fill-button-large:hover,
 .fill-button-small:hover {
+  cursor: pointer;
   background-color: #fff;
   color: #5ece7b;
 }

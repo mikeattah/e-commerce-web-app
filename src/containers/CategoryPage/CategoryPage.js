@@ -11,11 +11,10 @@ class CategoryPage extends Component {
       pageIndex: 0,
       categories: [],
     };
-
-    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   componentDidMount() {
+    // problem area
     this.props.client
       .query({
         query: gql`
@@ -27,6 +26,16 @@ class CategoryPage extends Component {
                 name
                 inStock
                 gallery
+                attributes {
+                  id
+                  name
+                  type
+                  items {
+                    displayValue
+                    value
+                    id
+                  }
+                }
                 prices {
                   currency {
                     label
@@ -43,20 +52,33 @@ class CategoryPage extends Component {
         this.setState({
           categories: response.data.categories,
         });
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }
 
-  handlePageClick(index) {
+  handlePageClick = (index) => {
     this.setState({ pageIndex: index });
-  }
+  };
+
+  handleCategoryPageAddToCart = (id, attributes) => {
+    let categories = this.state.categories;
+    for (let category of categories) {
+      for (let product of category.products) {
+        if (product.id === id) {
+          this.props.addToCart(product, attributes);
+          return;
+        }
+      }
+    }
+  };
 
   render() {
     // array of all category names
-    const categoryNames = [...this.state.categories].map((category) => {
+    const categoryNames = this.state.categories.map((category) => {
       return category.name;
     });
-
-    console.log(categoryNames);
 
     // number of items per page
     let pageItems = 6;
@@ -66,6 +88,8 @@ class CategoryPage extends Component {
 
     // index of category in categoryNames array
     let i = categoryNames.indexOf(this.props.category);
+
+    console.log(categoryNames, i);
 
     // number of pages per category
     let pageCount = Math.ceil(
@@ -89,7 +113,7 @@ class CategoryPage extends Component {
               this.state.pageIndex + pageItems
             ),
           ].map((product) => {
-            let { id, name, inStock, gallery, prices } = product;
+            let { id, name, inStock, gallery, attributes, prices } = product;
             let label, symbol, amount;
             for (let price of prices) {
               if (price.currency.label === this.props.currency) {
@@ -105,10 +129,13 @@ class CategoryPage extends Component {
                 name={name}
                 inStock={inStock}
                 gallery={gallery}
+                attributes={attributes}
                 label={label}
                 symbol={symbol}
                 amount={amount}
                 productClick={this.props.productClick}
+                productAttributes={this.props.productAttributes}
+                categoryPageAddToCart={this.handleCategoryPageAddToCart}
               />
             );
           })}

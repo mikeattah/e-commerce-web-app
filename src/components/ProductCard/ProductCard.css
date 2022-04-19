@@ -1,4 +1,5 @@
 .product-card {
+  position: relative;
   height: 450px;
   width: 400px;
   padding: 12px;
@@ -7,7 +8,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  position: relative;
 }
 
 .product-card:hover {
@@ -60,6 +60,21 @@
   text-align: left;
   font-size: 20px;
   margin: 5px 0 10px 0;
+  padding: 0;
+}
+
+.product-card-attributes {
+}
+
+.product-card-add-to-cart {
+  position: absolute;
+  top: 360px;
+  right: 25px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: #5ece7b;
+  margin: 0;
   padding: 0;
 }
 

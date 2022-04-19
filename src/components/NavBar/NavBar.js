@@ -32,6 +32,9 @@ class NavBar extends Component {
           categories: response.data.categories,
           currencies: response.data.currencies,
         });
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }
 
@@ -94,14 +97,14 @@ class NavBar extends Component {
             })}
           </select>
           <img
-            src={require("../../assets/images/shopping-cart.png")}
+            src={require("../../assets/images/shopping-cart-black.png")}
             alt="Toggle minicart, created by Kiranshastry - Flaticon https://www.flaticon.com/free-icons/shopping-cart"
             className="nav-bar-image"
             aria-label="Toggle minicart"
             onClick={() => this.props.miniCartToggle()}
           />
           <div className="nav-bar-counter">
-            <span>{this.props.cartLength}</span>
+            <span>{this.props.cartQuantity}</span>
           </div>
         </div>
       </nav>
