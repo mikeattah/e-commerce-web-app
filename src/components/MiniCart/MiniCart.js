@@ -3,10 +3,50 @@ import { nanoid } from "nanoid";
 import FillButton from "../FillButton/FillButton";
 import OutlineButton from "../OutlineButton/OutlineButton";
 import CartItem from "../CartItem/CartItem";
+import { gql } from "@apollo/client";
 import "./MiniCart.css";
 
+const GET_CURRENCIES = gql`
+  query GetCurrencies {
+    currencies {
+      label
+      symbol
+    }
+  }
+`;
+
 class MiniCart extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currencies: [],
+    };
+  }
+
+  componentDidMount() {
+    this.props.client
+      .query({
+        query: GET_CURRENCIES,
+      })
+      .then((response) => {
+        this.setState({
+          currencies: response.data.currencies,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   render() {
+    let currencies = this.state.currencies;
+    let symbol;
+    for (let currency of currencies) {
+      if (currency.label === this.props.currency) {
+        symbol = currency.symbol;
+      }
+    }
+
     return (
       <div
         className={`mini-cart ${
@@ -36,13 +76,23 @@ class MiniCart extends Component {
         </div>
         <div className="mini-cart-total-price">
           <span>Total</span>
-          <span>{this.props.cartTotal}</span>
+          <span>
+            {symbol} {this.props.cartTotal}
+          </span>
         </div>
         <div className="mini-cart-buttons">
-          <OutlineButton buttonClick={this.props.viewBag} compSize="small">
+          <OutlineButton
+            buttonClick={this.props.viewBag}
+            compSize="small"
+            disabled={false}
+          >
             VIEW BAG
           </OutlineButton>
-          <FillButton buttonClick={this.props.checkOut} compSize="small">
+          <FillButton
+            buttonClick={this.props.checkOut}
+            compSize="small"
+            disabled={false}
+          >
             CHECK OUT
           </FillButton>
         </div>

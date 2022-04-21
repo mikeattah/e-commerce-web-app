@@ -8,6 +8,36 @@ import FillButton from "../../components/FillButton/FillButton";
 import Swatch from "../../components/Swatch/Swatch";
 import "./ProductPage.css";
 
+const GET_PRODUCT = gql`
+  query GetProduct($id: String!) {
+    product(id: $id) {
+      id
+      name
+      inStock
+      gallery
+      description
+      category
+      attributes {
+        id
+        name
+        type
+        items {
+          displayValue
+          value
+          id
+        }
+      }
+      prices {
+        currency {
+          label
+          symbol
+        }
+        amount
+      }
+      brand
+    }
+  }
+`;
 class ProductPage extends Component {
   constructor(props) {
     super(props);
@@ -19,46 +49,14 @@ class ProductPage extends Component {
   }
 
   componentDidMount() {
+    // problem area
     this.props.client
-      .query(
-        {
-          query: gql`
-            query ($id: String!) {
-              product(id: $id) {
-                id
-                name
-                inStock
-                gallery
-                description
-                category
-                attributes {
-                  id
-                  name
-                  type
-                  items {
-                    displayValue
-                    value
-                    id
-                  }
-                }
-                prices {
-                  currency {
-                    label
-                    symbol
-                  }
-                  amount
-                }
-                brand
-              }
-            }
-          `,
+      .query({
+        query: GET_PRODUCT,
+        variables: {
+          id: this.props.id,
         },
-        {
-          variables: {
-            id: this.props.id,
-          },
-        }
-      )
+      })
       .then((response) => {
         this.setState({
           product: response.data.product,
@@ -150,10 +148,11 @@ class ProductPage extends Component {
                     element.items.forEach((item) => {
                       return (
                         <Attribute
+                          key={item.id}
                           name={element.name}
                           displayValue={item.displayValue}
                           value={item.value}
-                          key={item.id}
+                          id={item.id}
                           attributes={this.state.attributes}
                           attributeClick={this.handleProductPageAttributes}
                           compSize="large"
@@ -164,10 +163,11 @@ class ProductPage extends Component {
                     element.items.forEach((item) => {
                       return (
                         <Swatch
+                          key={item.id}
                           name={element.name}
                           displayValue={item.displayValue}
                           value={item.value}
-                          key={item.id}
+                          id={item.id}
                           attributes={this.state.attributes}
                           swatchClick={this.handleProductPageAttributes}
                           compSize="large"

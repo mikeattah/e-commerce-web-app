@@ -60,10 +60,11 @@ class CartItem extends Component {
                     element.items.forEach((item) => {
                       return (
                         <Attribute
+                          key={item.id}
                           name={element.name}
                           displayValue={item.displayValue}
                           value={item.value}
-                          key={item.id}
+                          id={item.id}
                           attributes={this.props.attributes}
                           attributeClick={this.props.cartItemAttributes}
                           compSize={this.props.compSize}
@@ -74,10 +75,11 @@ class CartItem extends Component {
                     element.items.forEach((item) => {
                       return (
                         <Swatch
+                          key={item.id}
                           name={element.name}
                           displayValue={item.displayValue}
                           value={item.value}
-                          key={item.id}
+                          id={item.id}
                           attributes={this.props.attributes}
                           swatchClick={this.props.cartItemAttributes}
                           compSize={this.props.compSize}

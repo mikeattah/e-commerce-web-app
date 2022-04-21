@@ -16,14 +16,13 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: "cartpage",
+      page: "categorypage",
       currency: "USD",
       category: "all",
       cart: [],
       cartTotal: 1000000,
       cartQuantity: 0,
       id: "",
-      attributes: [], // 2d array of [name, value] pairs of attributes selected; Remove??
       isMiniCartOpen: true,
     };
   }
@@ -40,17 +39,12 @@ class App extends Component {
     let cart = this.state.cart;
     for (let item of cart) {
       if (item.product.id === id) {
-        let chk = false;
         let attributes = item.attributes;
         for (let i = 0; i < attributes.length; i++) {
           if (attributes[i][0] === name) {
             attributes[i][1] = value;
-            chk = true;
-          } else if (
-            attributes[i][0] !== name &&
-            chk === false &&
-            i === attributes.length - 1
-          ) {
+            break;
+          } else if (attributes[i][0] !== name && i === attributes.length - 1) {
             attributes.push([name, value]);
           }
         }
@@ -78,18 +72,30 @@ class App extends Component {
   };
 
   handleAddToCart = (product, attributes) => {
-    this.setState({
-      cart: [
-        ...this.state.cart,
-        {
-          product: product,
-          attributes: attributes,
-          quantity: 1,
-        },
-      ],
-      attributes: [],
-    });
-    this.handleCartTotal(this.state.currency);
+    let cart = this.state.cart;
+    let check = false;
+    for (let item of cart) {
+      if (item.product.id === product.id) {
+        item.attributes = attributes;
+        item.quantity += 1;
+        check = true;
+      }
+    }
+
+    if (!check) {
+      this.setState({
+        cart: [
+          ...this.state.cart,
+          {
+            product: product,
+            attributes: attributes,
+            quantity: 1,
+          },
+        ],
+      });
+    }
+
+    this.handleCartTotal();
     this.handleCartQuantity();
   };
 
@@ -100,8 +106,9 @@ class App extends Component {
         cart.splice(cart.indexOf(item), 1);
       }
     }
+
     this.setState({ cart: cart });
-    this.handleCartTotal(this.state.currency);
+    this.handleCartTotal();
     this.handleCartQuantity();
   };
 
@@ -166,6 +173,7 @@ class App extends Component {
             removeFromCart={this.handleRemoveFromCart}
             viewBag={this.handleViewBag}
             checkOut={this.handleCheckOut}
+            client={client}
           />
           {(() => {
             switch (this.state.page) {
@@ -206,6 +214,7 @@ class App extends Component {
                     miniCartToggle={this.handleMiniCartToggle}
                     continueShopping={this.handleContinueShopping}
                     checkOut={this.handleCheckOut}
+                    client={client}
                   />
                 );
               default:

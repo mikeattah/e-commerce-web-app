@@ -2,11 +2,11 @@
   position: relative;
   height: 450px;
   width: 400px;
-  padding: 12px;
-  margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  margin: 0;
+  padding: 12px;
   align-items: center;
 }
 
@@ -30,11 +30,11 @@
   left: 0 auto;
   font-size: 30px;
   color: rgba(141, 143, 154, 1);
-  display: none;
+  visibility: hidden;
 }
 
 .product-card-text-overlay-visible {
-  display: block;
+  visibility: visible;
 }
 
 .product-card-image {
@@ -76,6 +76,11 @@
   background-color: #5ece7b;
   margin: 0;
   padding: 0;
+}
+
+.product-card-add-to-cart:hover {
+  cursor: pointer;
+  transform: scale(1.05);
 }
 
 .product-card-price {

@@ -21,7 +21,7 @@
 }
 
 .product-page-overlay-hidden {
-  display: none;
+  visibility: hidden;
 }
 
 .product-page-small-image-container {
@@ -62,10 +62,10 @@
 }
 
 .product-page-title {
+  font-size: 20px;
+  font-weight: bold;
   margin: 12px 0 12px 24px;
   padding: 0;
-  font-weight: bold;
-  font-size: 20px;
 }
 
 .product-page-brand {
@@ -89,23 +89,23 @@
 }
 
 .product-page-attributes-text {
-  margin: 0 12px;
-  font-weight: bold;
   font-size: 16px;
+  font-weight: bold;
+  margin: 0 12px;
 }
 
 .product-page-price-desc {
+  font-size: 16px;
+  font-weight: bold;
   margin: 12px 0 0 24px;
   padding: 0;
-  font-weight: bold;
-  font-size: 16px;
 }
 
 .product-page-price-amnt {
+  font-size: 16px;
+  font-weight: bold;
   margin: 12px 0 24px 24px;
   padding: 0;
-  font-weight: bold;
-  font-size: 16px;
 }
 
 .product-page-description {
@@ -114,8 +114,8 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 12px 0 12px 24px;
-  padding: 0;
   text-align: left;
   overflow-y: auto;
+  margin: 12px 0 12px 24px;
+  padding: 0;
 }

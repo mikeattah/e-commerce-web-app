@@ -33,8 +33,10 @@ class ProductCard extends Component {
     for (let i = 0; i < attributes.length; i++) {
       if (attributes[i][0] === name) {
         attributes[i][1] = value;
+        break;
       }
     }
+
     this.setState({ attributes: attributes });
   };
 
@@ -60,10 +62,11 @@ class ProductCard extends Component {
                 element.items.forEach((item) => {
                   return (
                     <Attribute
+                      key={item.id}
                       name={element.name}
                       displayValue={item.displayValue}
                       value={item.value}
-                      key={item.id}
+                      id={item.id}
                       attributes={this.state.attributes}
                       attributeClick={this.handleProductCardAttributes}
                       compSize="small"
@@ -74,10 +77,11 @@ class ProductCard extends Component {
                 element.items.forEach((item) => {
                   return (
                     <Swatch
+                      key={item.id}
                       name={element.name}
                       displayValue={item.displayValue}
                       value={item.value}
-                      key={item.id}
+                      id={item.id}
                       attributes={this.state.attributes}
                       swatchClick={this.handleProductCardAttributes}
                       compSize="small"

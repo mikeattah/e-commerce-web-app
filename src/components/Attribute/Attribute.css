@@ -1,53 +1,53 @@
 .attribute-large {
+  font-size: 16px;
   margin: 0 10px 0 0;
   padding: 8px 16px;
-  font-size: 16px;
-  outline: none;
   border: 1px solid #000;
-  color: #000;
+  outline: none;
   background-color: #fff;
+  color: #000;
 }
 
 .attribute-large-active {
+  font-size: 16px;
   margin: 0 10px 0 0;
   padding: 8px 16px;
-  font-size: 16px;
-  outline: none;
   border: 1px solid #000;
-  color: #fff;
+  outline: none;
   background-color: #000;
+  color: #fff;
 }
 
 .attribute-small {
+  font-size: 9px;
   margin: 0 8px 0 0;
   padding: 8px 8px;
-  font-size: 9px;
-  outline: none;
   border: 1px solid #000;
-  color: #000;
+  outline: none;
   background-color: #fff;
+  color: #000;
 }
 
 .attribute-small-active {
+  font-size: 9px;
   margin: 0 8px 0 0;
   padding: 8px 8px;
-  font-size: 9px;
-  outline: none;
   border: 1px solid #000;
-  color: #fff;
+  outline: none;
   background-color: #000;
+  color: #fff;
 }
 
 .attribute-large:hover,
 .attribute-small:hover {
-  cursor: pointer;
-  color: #fff;
   background-color: #000;
+  color: #fff;
+  cursor: pointer;
 }
 
 .attribute-large-active:hover,
 .attribute-small-active:hover {
-  cursor: pointer;
-  color: #000;
   background-color: #fff;
+  color: #000;
+  cursor: pointer;
 }

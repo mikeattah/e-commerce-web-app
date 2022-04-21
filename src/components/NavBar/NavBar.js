@@ -3,6 +3,18 @@ import { gql } from "@apollo/client";
 import { nanoid } from "nanoid";
 import "./NavBar.css";
 
+const GET_CATEGORIES_AND_CURRENCIES = gql`
+  query GetCategoriesAndCurrencies {
+    categories {
+      name
+    }
+    currencies {
+      label
+      symbol
+    }
+  }
+`;
+
 class NavBar extends Component {
   constructor(props) {
     super(props);
@@ -15,17 +27,7 @@ class NavBar extends Component {
   componentDidMount() {
     this.props.client
       .query({
-        query: gql`
-          {
-            categories {
-              name
-            }
-            currencies {
-              label
-              symbol
-            }
-          }
-        `,
+        query: GET_CATEGORIES_AND_CURRENCIES,
       })
       .then((response) => {
         this.setState({
@@ -34,7 +36,7 @@ class NavBar extends Component {
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   }
 

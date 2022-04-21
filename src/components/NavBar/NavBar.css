@@ -6,8 +6,7 @@
   justify-content: space-between;
   align-items: center;
   margin: 0;
-  padding: 0 50px;
-  border: 1px solid black;
+  padding: 0; /* add LR padding of 50px later */
 }
 
 .nav-bar-group {
@@ -23,7 +22,8 @@
 }
 
 .nav-bar-item {
-  width: 75px;
+  width: 90px;
+  text-align: center;
   font-size: 16px;
   margin: 0 10px 0 0;
   padding: 20px 0;
@@ -32,13 +32,13 @@
 .nav-bar-item:hover {
   cursor: pointer;
   font-weight: bold;
-  color: rgba(94, 206, 123, 1);
+  color: #5ece7b;
   border-bottom: 3px solid #5ece7b;
 }
 
 .nav-bar-item-active {
   font-weight: bold;
-  color: rgba(94, 206, 123, 1);
+  color: #5ece7b;
   border-bottom: 3px solid #5ece7b;
 }
 

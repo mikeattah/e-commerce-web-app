@@ -8,7 +8,7 @@ class Attribute extends Component {
       for (let attribute of this.props.attributes) {
         if (
           this.props.name === attribute[0] &&
-          this.props.displayValue === attribute[1]
+          this.props.value === attribute[1]
         ) {
           style = "attribute-large-active";
         } else {
@@ -19,7 +19,7 @@ class Attribute extends Component {
       for (let attribute of this.props.attributes) {
         if (
           this.props.name === attribute[0] &&
-          this.props.displayValue === attribute[1]
+          this.props.value === attribute[1]
         ) {
           style = "attribute-small-active";
         } else {
@@ -32,9 +32,8 @@ class Attribute extends Component {
       <button
         className={style}
         onClick={() =>
-          this.props.attributeClick(this.props.name, this.props.displayValue)
+          this.props.attributeClick(this.props.name, this.props.value)
         }
-        disabled={this.props.disabled}
       >
         {this.props.displayValue}
       </button>

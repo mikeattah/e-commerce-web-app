@@ -4,6 +4,37 @@ import ProductCard from "../../components/ProductCard/ProductCard";
 import Pagination from "../../components/Pagination/Pagination";
 import "./CategoryPage.css";
 
+const GET_ALL_CATEGORIES_PRODUCTS = gql`
+  query GetAllCategoriesProducts {
+    categories {
+      name
+      products {
+        id
+        name
+        inStock
+        gallery
+        attributes {
+          id
+          name
+          type
+          items {
+            displayValue
+            value
+            id
+          }
+        }
+        prices {
+          currency {
+            label
+            symbol
+          }
+          amount
+        }
+      }
+    }
+  }
+`;
+
 class CategoryPage extends Component {
   constructor(props) {
     super(props);
@@ -14,39 +45,9 @@ class CategoryPage extends Component {
   }
 
   componentDidMount() {
-    // problem area
     this.props.client
       .query({
-        query: gql`
-          {
-            categories {
-              name
-              products {
-                id
-                name
-                inStock
-                gallery
-                attributes {
-                  id
-                  name
-                  type
-                  items {
-                    displayValue
-                    value
-                    id
-                  }
-                }
-                prices {
-                  currency {
-                    label
-                    symbol
-                  }
-                  amount
-                }
-              }
-            }
-          }
-        `,
+        query: GET_ALL_CATEGORIES_PRODUCTS,
       })
       .then((response) => {
         this.setState({
@@ -54,7 +55,7 @@ class CategoryPage extends Component {
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   }
 
@@ -76,7 +77,9 @@ class CategoryPage extends Component {
 
   render() {
     // array of all category names
-    const categoryNames = this.state.categories.map((category) => {
+    const test = [];
+    const categoryNames = this.state.categories.map((category, index) => {
+      test.push(index);
       return category.name;
     });
 
