@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { gql } from "@apollo/client";
 import { nanoid } from "nanoid";
+import DropDown from "../DropDown/DropDown";
 import "./NavBar.css";
 
 const GET_CATEGORIES_AND_CURRENCIES = gql`
@@ -40,16 +41,6 @@ class NavBar extends Component {
       });
   }
 
-  categoryClick = (name) => {
-    this.props.categoryClick(name);
-  };
-
-  currencyClick = () => {
-    const selectTag = document.getElementById("currency");
-    const currency = selectTag.options[selectTag.selectedIndex].value;
-    this.props.currencyClick(currency);
-  };
-
   render() {
     return (
       <nav className="nav-bar">
@@ -60,9 +51,9 @@ class NavBar extends Component {
               <li
                 key={nanoid()}
                 className={`nav-bar-item ${
-                  this.props.category === name ? "nav-bar-item-active" : ""
+                  this.props.category === name ? "nav-bar-item-selected" : ""
                 }`}
-                onClick={() => this.categoryClick(name)}
+                onClick={() => this.props.categoryClick(name)}
               >
                 {name.toUpperCase()}
               </li>
@@ -82,22 +73,6 @@ class NavBar extends Component {
           }
         />
         <div className="nav-bar-toggles">
-          <select
-            name="currency"
-            id="currency"
-            className="nav-bar-currency"
-            aria-label="Choose currency"
-            onChange={() => this.currencyClick()}
-          >
-            {this.state.currencies.map((currency) => {
-              let { label, symbol } = currency;
-              return (
-                <option key={nanoid()} value={label}>
-                  {symbol} {label}
-                </option>
-              );
-            })}
-          </select>
           <img
             src={require("../../assets/images/shopping-cart-black.png")}
             alt="Toggle minicart, created by Kiranshastry - Flaticon https://www.flaticon.com/free-icons/shopping-cart"
@@ -109,6 +84,10 @@ class NavBar extends Component {
             <span>{this.props.cartQuantity}</span>
           </div>
         </div>
+        <DropDown
+          items={this.state.currencies}
+          dropDownClick={this.props.currencyClick}
+        />
       </nav>
     );
   }

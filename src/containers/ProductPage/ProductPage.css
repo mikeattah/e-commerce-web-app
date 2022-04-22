@@ -1,13 +1,13 @@
 .product-page {
   position: relative;
-  height: 575px;
+  height: 695px;
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin: 0;
-  padding: 50px;
+  padding: 50px 0;
 }
 
 .product-page-overlay {

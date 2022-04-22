@@ -58,28 +58,24 @@ class ProductPage extends Component {
         },
       })
       .then((response) => {
+        let attributes = response.data.product.attributes;
+        let name,
+          value,
+          temp = [];
+        for (let attribute of attributes) {
+          name = attribute.name;
+          value = attribute.items[0].value;
+          temp.push([name, value]);
+        }
         this.setState({
           product: response.data.product,
           image: response.data.product.gallery[0],
+          attributes: temp,
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
-
-    let attributes = this.state.product.attributes;
-    let name,
-      value,
-      temp = [];
-    for (let attribute of attributes) {
-      name = attribute.name;
-      value = attribute.items[0].value;
-      temp.push([name, value]);
-    }
-
-    this.setState({
-      attributes: temp,
-    });
   }
 
   addToCart = () => {
@@ -92,25 +88,23 @@ class ProductPage extends Component {
 
   handleProductPageAttributes = (name, value) => {
     let attributes = this.state.attributes;
-
     for (let i = 0; i < attributes.length; i++) {
       if (attributes[i][0] === name) {
         attributes[i][1] = value;
       }
     }
-
     this.setState({ attributes: attributes });
   };
 
   render() {
+    let prices = this.state.product.prices;
     let symbol, amount;
-    for (let price of this.state.product.prices) {
+    for (let price of prices) {
       if (price.currency.label === this.props.currency) {
         symbol = price.currency.symbol;
         amount = price.amount;
       }
     }
-
     return (
       <div className="product-page">
         <div className="product-page-small-image-container">

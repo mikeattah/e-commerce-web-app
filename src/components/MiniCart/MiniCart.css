@@ -1,7 +1,7 @@
 .mini-cart {
   position: absolute;
   top: 60px;
-  right: 60px;
+  right: 30px;
   height: 400px;
   width: 240px;
   display: flex;
@@ -12,6 +12,7 @@
   padding: 8px;
   background: #fff;
   z-index: 100;
+  /* border: 1px solid #000; */
 }
 
 .mini-cart-hidden {

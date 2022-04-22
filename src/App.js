@@ -16,11 +16,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: "categorypage",
+      page: "cartpage",
       currency: "USD",
       category: "all",
       cart: [],
-      cartTotal: 1000000,
+      cartTotal: 1000000.21,
       cartQuantity: 0,
       id: "",
       isMiniCartOpen: true,
@@ -81,7 +81,6 @@ class App extends Component {
         check = true;
       }
     }
-
     if (!check) {
       this.setState({
         cart: [
@@ -94,7 +93,6 @@ class App extends Component {
         ],
       });
     }
-
     this.handleCartTotal();
     this.handleCartQuantity();
   };
@@ -106,7 +104,6 @@ class App extends Component {
         cart.splice(cart.indexOf(item), 1);
       }
     }
-
     this.setState({ cart: cart });
     this.handleCartTotal();
     this.handleCartQuantity();
@@ -150,6 +147,11 @@ class App extends Component {
   handleCheckOut = () => {};
 
   render() {
+    const formattedCartTotal = parseFloat(
+      parseFloat(this.state.cartTotal).toFixed(2)
+    ).toLocaleString("en-US", {
+      useGrouping: true,
+    });
     return (
       <ApolloProvider client={client}>
         <div className="app">
@@ -165,7 +167,7 @@ class App extends Component {
           <MiniCart
             currency={this.state.currency}
             cart={this.state.cart}
-            cartTotal={this.state.cartTotal}
+            cartTotal={formattedCartTotal}
             cartQuantity={this.state.cartQuantity}
             miniCartOpen={this.state.isMiniCartOpen}
             cartItemAttributes={this.handleCartItemAttributes}
@@ -205,7 +207,7 @@ class App extends Component {
                   <CartPage
                     currency={this.state.currency}
                     cart={this.state.cart}
-                    cartTotal={this.state.cartTotal}
+                    cartTotal={formattedCartTotal}
                     cartQuantity={this.state.cartQuantity}
                     miniCartOpen={this.state.isMiniCartOpen}
                     cartItemAttributes={this.handleCartItemAttributes}

@@ -50,9 +50,9 @@ class CategoryPage extends Component {
         query: GET_ALL_CATEGORIES_PRODUCTS,
       })
       .then((response) => {
-        this.setState({
-          categories: response.data.categories,
-        });
+        this.setState((prevState) => ({
+          categories: [...prevState.categories, ...response.data.categories],
+        }));
       })
       .catch((error) => {
         console.error(error);
@@ -77,33 +77,24 @@ class CategoryPage extends Component {
 
   render() {
     // array of all category names
-    const test = [];
-    const categoryNames = this.state.categories.map((category, index) => {
-      test.push(index);
-      return category.name;
-    });
-
+    const categoryNames = this.state.categories.map(
+      (category) => category.name
+    );
     // number of items per page
     let pageItems = 6;
-
     // array of pages
     const pages = [];
-
     // index of category in categoryNames array
     let i = categoryNames.indexOf(this.props.category);
-
     console.log(categoryNames, i);
-
     // number of pages per category
     let pageCount = Math.ceil(
       this.state.categories[i].products.length / pageItems
     );
-
     // collect page indexes into pages array
     for (let j = 0; j < pageCount; j++) {
       pages.push(j);
     }
-
     return (
       <div className="category-page">
         <h1 className="category-page-title">
@@ -137,7 +128,6 @@ class CategoryPage extends Component {
                 symbol={symbol}
                 amount={amount}
                 productClick={this.props.productClick}
-                productAttributes={this.props.productAttributes}
                 categoryPageAddToCart={this.handleCategoryPageAddToCart}
               />
             );

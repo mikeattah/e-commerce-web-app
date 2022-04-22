@@ -8,6 +8,7 @@
   align-items: center;
   margin: 0;
   padding: 0; /* add LR padding of 50px later */
+  /* border: 1px solid #000; */
 }
 
 .category-page-overlay {

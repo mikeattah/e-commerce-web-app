@@ -16,7 +16,7 @@ class SmallImage extends Component {
         <div
           className={`small-image-overlay ${
             this.props.currentImage === this.props.src
-              ? "small-image-overlay-active"
+              ? "small-image-overlay-selected"
               : ""
           }`}
         ></div>

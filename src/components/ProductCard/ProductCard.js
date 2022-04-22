@@ -21,7 +21,6 @@ class ProductCard extends Component {
       value = attribute.items[0].value;
       temp.push([name, value]);
     }
-
     this.setState({
       attributes: temp,
     });
@@ -29,14 +28,12 @@ class ProductCard extends Component {
 
   handleProductCardAttributes = (name, value) => {
     let attributes = this.state.attributes;
-
     for (let i = 0; i < attributes.length; i++) {
       if (attributes[i][0] === name) {
         attributes[i][1] = value;
         break;
       }
     }
-
     this.setState({ attributes: attributes });
   };
 
