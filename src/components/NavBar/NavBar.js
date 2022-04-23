@@ -80,6 +80,10 @@ class NavBar extends Component {
           }
         />
         <div className="nav-bar-toggles">
+          <DropDown
+            items={this.state.currencies}
+            dropDownClick={this.props.currencyClick}
+          />
           <img
             src={require("../../assets/images/shopping-cart-black.png")}
             alt="Toggle minicart, created by Kiranshastry - Flaticon https://www.flaticon.com/free-icons/shopping-cart"
@@ -91,10 +95,6 @@ class NavBar extends Component {
             <span>{this.props.cartQuantity}</span>
           </div>
         </div>
-        <DropDown
-          items={this.state.currencies}
-          dropDownClick={this.props.currencyClick}
-        />
       </nav>
     );
   }

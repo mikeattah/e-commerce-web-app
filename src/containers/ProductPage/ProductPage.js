@@ -145,7 +145,7 @@ class ProductPage extends Component {
                     {element.name.toUpperCase()}:
                   </p>
                   {element.type !== "swatch" &&
-                    element.items.forEach((item) => {
+                    element.items.map((item) => {
                       return (
                         <Attribute
                           key={item.id}
@@ -160,7 +160,7 @@ class ProductPage extends Component {
                       );
                     })}
                   {element.type === "swatch" &&
-                    element.items.forEach((item) => {
+                    element.items.map((item) => {
                       return (
                         <Swatch
                           key={item.id}

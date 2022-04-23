@@ -20,10 +20,10 @@ class App extends Component {
       currency: "USD",
       category: "all",
       cart: [],
-      cartTotal: 1000000.21,
+      cartTotal: 0,
       cartQuantity: 0,
       id: "",
-      miniCartOpen: true,
+      miniCartOpen: false,
     };
   }
 
@@ -71,44 +71,6 @@ class App extends Component {
     this.setState({ currency: currency });
   };
 
-  handleAddToCart = (product, attributes) => {
-    let cart = this.state.cart;
-    let check = false;
-    for (let item of cart) {
-      if (item.product.id === product.id) {
-        item.attributes = attributes;
-        item.quantity += 1;
-        check = true;
-      }
-    }
-    if (!check) {
-      this.setState({
-        cart: [
-          ...this.state.cart,
-          {
-            product: product,
-            attributes: attributes,
-            quantity: 1,
-          },
-        ],
-      });
-    }
-    this.handleCartTotal();
-    this.handleCartQuantity();
-  };
-
-  handleRemoveFromCart = (id) => {
-    let cart = this.state.cart;
-    for (let item of cart) {
-      if (item.product.id === id) {
-        cart.splice(cart.indexOf(item), 1);
-      }
-    }
-    this.setState({ cart: cart });
-    this.handleCartTotal();
-    this.handleCartQuantity();
-  };
-
   handleCartTotal = () => {
     let total = 0;
     let cart = this.state.cart;
@@ -127,6 +89,44 @@ class App extends Component {
       quantity += item.quantity;
     }
     this.setState({ cartQuantity: quantity });
+  };
+
+  handleAddToCart = (product, attributes) => {
+    let cart = this.state.cart;
+    let check = false;
+    for (let item of cart) {
+      if (item.product.id === product.id) {
+        item.attributes = attributes;
+        item.quantity += 1;
+        check = true;
+      }
+    }
+    if (!check) {
+      this.setState((prevState) => ({
+        cart: [
+          ...prevState.cart,
+          {
+            product: product,
+            attributes: attributes,
+            quantity: 1,
+          },
+        ],
+      }));
+    }
+    this.handleCartQuantity();
+    this.handleCartTotal();
+  };
+
+  handleRemoveFromCart = (id) => {
+    let cart = this.state.cart;
+    for (let item of cart) {
+      if (item.product.id === id) {
+        cart.splice(cart.indexOf(item), 1);
+      }
+    }
+    this.setState({ cart: cart });
+    this.handleCartQuantity();
+    this.handleCartTotal();
   };
 
   handleMiniCartToggle = () => {
@@ -191,6 +191,7 @@ class App extends Component {
                     productClick={this.handleProductClick}
                     addToCart={this.handleAddToCart}
                     miniCartToggle={this.handleMiniCartToggle}
+                    numberFormat={this.handleNumberFormat}
                     client={client}
                   />
                 );

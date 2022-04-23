@@ -119,7 +119,7 @@ class CategoryPage extends Component {
               if (price.currency.label === this.props.currency) {
                 label = price.currency.label;
                 symbol = price.currency.symbol;
-                amount = price.amount;
+                amount = this.props.numberFormat(price.amount);
               }
             }
             return (

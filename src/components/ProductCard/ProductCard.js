@@ -44,75 +44,84 @@ class ProductCard extends Component {
         className={`product-card ${
           this.props.inStock ? "" : "product-card-disabled"
         }`}
-        onClick={() => this.props.productClick(this.props.id)}
       >
         <img
           src={this.props.gallery[0]}
           alt={this.props.name}
           className="product-card-image"
         />
-        <div className="product-card-color-overlay"></div>
+        <div
+          className="product-card-color-overlay"
+          onClick={() => this.props.productClick(this.props.id)}
+        ></div>
         <p className="product-card-title">{this.props.name}</p>
-        {this.props.attributes.map((element) => {
-          return (
-            <div key={nanoid()} className="product-card-attributes">
-              {element.type !== "swatch" &&
-                element.items.forEach((item) => {
-                  return (
-                    <Attribute
-                      key={item.id}
-                      name={element.name}
-                      displayValue={item.displayValue}
-                      value={item.value}
-                      id={item.id}
-                      attributes={this.state.attributes}
-                      attributeClick={this.handleProductCardAttributes}
-                      compSize="small"
-                    />
-                  );
-                })}
-              {element.type === "swatch" &&
-                element.items.forEach((item) => {
-                  return (
-                    <Swatch
-                      key={item.id}
-                      name={element.name}
-                      displayValue={item.displayValue}
-                      value={item.value}
-                      id={item.id}
-                      attributes={this.state.attributes}
-                      swatchClick={this.handleProductCardAttributes}
-                      compSize="small"
-                    />
-                  );
-                })}
-            </div>
-          );
-        })}
-        <div className="product-card-add-to-cart">
+        <div className="product-card-attributes-container">
+          {this.props.attributes.map((attribute) => {
+            return (
+              <div key={nanoid()} className="product-card-attributes">
+                <p className="product-card-attributes-text">
+                  {attribute.name}:
+                </p>
+                {attribute.type !== "swatch" &&
+                  attribute.items.map((item) => {
+                    return (
+                      <Attribute
+                        key={item.id}
+                        name={attribute.name}
+                        displayValue={item.displayValue}
+                        value={item.value}
+                        id={item.id}
+                        attributes={this.state.attributes}
+                        attributeClick={this.handleProductCardAttributes}
+                        compSize="small"
+                      />
+                    );
+                  })}
+                {attribute.type === "swatch" &&
+                  attribute.items.map((item) => {
+                    return (
+                      <Swatch
+                        key={item.id}
+                        name={attribute.name}
+                        displayValue={item.displayValue}
+                        value={item.value}
+                        id={item.id}
+                        attributes={this.state.attributes}
+                        swatchClick={this.handleProductCardAttributes}
+                        compSize="small"
+                      />
+                    );
+                  })}
+              </div>
+            );
+          })}
+        </div>
+        <div
+          className="product-card-add-to-cart"
+          onClick={() =>
+            this.props.categoryPageAddToCart(
+              this.props.id,
+              this.state.attributes
+            )
+          }
+        >
           <img
             src={require("../../assets/images/shopping-cart-white.png")}
             alt="Click icon to add product to cart, created by Kiranshastry - Flaticon https://www.flaticon.com/free-icons/shopping-cart"
             className="nav-bar-image"
             aria-label="Click icon to add product to cart"
-            onClick={() =>
-              this.props.categoryPageAddToCart(
-                this.props.id,
-                this.state.attributes
-              )
-            }
           />
         </div>
         <p className="product-card-price">
           {this.props.symbol} {this.props.amount}
         </p>
-        <p
-          className={`product-card-text-overlay-hidden ${
-            this.props.inStock ? "" : "product-card-text-overlay-visible"
+        <div
+          className={`product-card-overlay-hidden ${
+            this.props.inStock ? "" : "product-card-overlay-visible"
           }`}
         >
-          OUT OF STOCK
-        </p>
+          <p>OUT OF STOCK</p>
+        </div>
       </div>
     );
   }

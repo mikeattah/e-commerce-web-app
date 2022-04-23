@@ -1,6 +1,6 @@
 .category-page {
   position: relative;
-  height: 1300px;
+  min-height: 1500px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -26,17 +26,17 @@
 }
 
 .category-page-title {
-  height: 5%;
+  height: 75px;
   width: 100%;
   text-align: left;
 }
 
 .category-page-main {
-  height: 85%;
+  min-height: 1275px;
   width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: flex-start;
 }
