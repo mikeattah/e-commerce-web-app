@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { nanoid } from "nanoid";
 import Attribute from "../Attribute/Attribute";
 import Quantity from "../Quantity/Quantity";
 import SmallImage from "../SmallImage/SmallImage";
@@ -37,7 +38,6 @@ class CartItem extends Component {
         amount = price.amount;
       }
     }
-
     return (
       <div
         className={
@@ -55,7 +55,7 @@ class CartItem extends Component {
           <div className="cart-item-attributes-container">
             {this.props.product.attributes.map((element) => {
               return (
-                <div className="cart-item-attributes">
+                <div key={nanoid()} className="cart-item-attributes">
                   {element.type !== "swatch" &&
                     element.items.forEach((item) => {
                       return (

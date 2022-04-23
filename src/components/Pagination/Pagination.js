@@ -13,7 +13,7 @@ class Pagination extends Component {
         <button
           onClick={() => this.pageClick(this.props.pages[0])}
           className="pagination-button"
-          disabled={this.props.pageIndex === this.props.pages[0] ? "true" : ""}
+          disabled={this.props.pageIndex === this.props.pages[0] ? true : false}
         >
           &#8810;
         </button>
@@ -22,7 +22,7 @@ class Pagination extends Component {
             this.pageClick(this.props.pageIndex - this.props.pageItems)
           }
           className="pagination-button"
-          disabled={this.props.pageIndex === this.props.pages[0] ? "true" : ""}
+          disabled={this.props.pageIndex === this.props.pages[0] ? true : false}
         >
           &#60;
         </button>

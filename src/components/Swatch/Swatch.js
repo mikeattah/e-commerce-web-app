@@ -13,13 +13,13 @@ const StyledCheck = styled.span`
 
 class Swatch extends Component {
   render() {
-    let check;
-    for (let attribute of this.props.attributes) {
+    let check,
+      attributes = this.props.attributes;
+    for (let attribute of attributes) {
       if (attribute[0] === "Color") {
         check = attribute[1];
       }
     }
-
     return (
       <div
         className={

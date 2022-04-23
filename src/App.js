@@ -16,14 +16,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: "cartpage",
+      page: "categorypage",
       currency: "USD",
       category: "all",
       cart: [],
       cartTotal: 1000000.21,
       cartQuantity: 0,
       id: "",
-      isMiniCartOpen: true,
+      miniCartOpen: true,
     };
   }
 
@@ -115,7 +115,7 @@ class App extends Component {
     for (let item of cart) {
       let i = 0;
       while (this.state.currency !== item.product.prices[i].currency.label) i++;
-      total += item.product.prices[i].amount;
+      total += item.product.prices[i].amount * item.quantity;
     }
     this.setState({ cartTotal: total });
   };
@@ -130,35 +130,38 @@ class App extends Component {
   };
 
   handleMiniCartToggle = () => {
-    this.setState({ isMiniCartOpen: !this.state.isMiniCartOpen });
+    this.setState({ miniCartOpen: !this.state.miniCartOpen });
   };
 
   handleViewBag = () => {
     this.setState({
       page: "cartpage",
-      isMiniCartOpen: !this.state.isMiniCartOpen,
+      miniCartOpen: !this.state.miniCartOpen,
     });
   };
 
-  handleContinueShopping = () => {
-    this.setState({ page: "categorypage" });
-  };
+  handlePlaceOrder = () => {};
 
-  handleCheckOut = () => {};
-
-  render() {
-    const formattedCartTotal = parseFloat(
-      parseFloat(this.state.cartTotal).toFixed(2)
-    ).toLocaleString("en-US", {
+  handleNumberFormat = (number) => {
+    return parseFloat(parseFloat(number).toFixed(2)).toLocaleString("en-US", {
       useGrouping: true,
     });
+  };
+
+  render() {
+    const taxRate = 0.075;
+    const subTotal = this.handleNumberFormat(this.state.cartTotal);
+    const tax = this.handleNumberFormat(this.state.cartTotal * taxRate);
+    const total = this.handleNumberFormat(
+      this.state.cartTotal + this.state.cartTotal * taxRate
+    );
     return (
       <ApolloProvider client={client}>
         <div className="app">
           <NavBar
             category={this.state.category}
             cartQuantity={this.state.cartQuantity}
-            miniCartOpen={this.state.isMiniCartOpen}
+            miniCartOpen={this.state.miniCartOpen}
             categoryClick={this.handleCategoryClick}
             currencyClick={this.handleCurrencyClick}
             miniCartToggle={this.handleMiniCartToggle}
@@ -167,14 +170,14 @@ class App extends Component {
           <MiniCart
             currency={this.state.currency}
             cart={this.state.cart}
-            cartTotal={formattedCartTotal}
+            total={total}
             cartQuantity={this.state.cartQuantity}
-            miniCartOpen={this.state.isMiniCartOpen}
+            miniCartOpen={this.state.miniCartOpen}
             cartItemAttributes={this.handleCartItemAttributes}
             cartItemQuantity={this.handleCartItemQuantity}
             removeFromCart={this.handleRemoveFromCart}
             viewBag={this.handleViewBag}
-            checkOut={this.handleCheckOut}
+            placeOrder={this.handlePlaceOrder}
             client={client}
           />
           {(() => {
@@ -184,7 +187,7 @@ class App extends Component {
                   <CategoryPage
                     currency={this.state.currency}
                     category={this.state.category}
-                    miniCartOpen={this.state.isMiniCartOpen}
+                    miniCartOpen={this.state.miniCartOpen}
                     productClick={this.handleProductClick}
                     addToCart={this.handleAddToCart}
                     miniCartToggle={this.handleMiniCartToggle}
@@ -196,7 +199,7 @@ class App extends Component {
                   <ProductPage
                     currency={this.state.currency}
                     id={this.state.id}
-                    miniCartOpen={this.state.isMiniCartOpen}
+                    miniCartOpen={this.state.miniCartOpen}
                     addToCart={this.handleAddToCart}
                     miniCartToggle={this.handleMiniCartToggle}
                     client={client}
@@ -207,15 +210,16 @@ class App extends Component {
                   <CartPage
                     currency={this.state.currency}
                     cart={this.state.cart}
-                    cartTotal={formattedCartTotal}
+                    subTotal={subTotal}
+                    tax={tax}
+                    total={total}
                     cartQuantity={this.state.cartQuantity}
-                    miniCartOpen={this.state.isMiniCartOpen}
+                    miniCartOpen={this.state.miniCartOpen}
                     cartItemAttributes={this.handleCartItemAttributes}
                     cartItemQuantity={this.handleCartItemQuantity}
                     removeFromCart={this.handleRemoveFromCart}
                     miniCartToggle={this.handleMiniCartToggle}
-                    continueShopping={this.handleContinueShopping}
-                    checkOut={this.handleCheckOut}
+                    placeOrder={this.handlePlaceOrder}
                     client={client}
                   />
                 );

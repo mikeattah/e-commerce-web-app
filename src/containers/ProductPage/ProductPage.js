@@ -45,11 +45,12 @@ class ProductPage extends Component {
       product: {},
       image: "",
       attributes: [],
+      loading: true,
+      error: null,
     };
   }
 
   componentDidMount() {
-    // problem area
     this.props.client
       .query({
         query: GET_PRODUCT,
@@ -71,10 +72,13 @@ class ProductPage extends Component {
           product: response.data.product,
           image: response.data.product.gallery[0],
           attributes: temp,
+          loading: false,
         });
       })
       .catch((error) => {
-        console.error(error);
+        this.setState({
+          error: error,
+        });
       });
   }
 
@@ -97,6 +101,8 @@ class ProductPage extends Component {
   };
 
   render() {
+    if (this.state.loading) return <p>Loading...</p>;
+    if (this.state.error) return <p>Error: {this.state.error}</p>;
     let prices = this.state.product.prices;
     let symbol, amount;
     for (let price of prices) {
@@ -134,7 +140,7 @@ class ProductPage extends Component {
           <div className="product-page-attributes-container">
             {this.state.product.attributes.map((element) => {
               return (
-                <div className="product-page-attributes">
+                <div key={nanoid()} className="product-page-attributes">
                   <p className="product-page-attributes-text">
                     {element.name.toUpperCase()}:
                   </p>

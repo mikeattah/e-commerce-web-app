@@ -1,9 +1,9 @@
 import React, { Component } from "react";
+import { gql } from "@apollo/client";
 import { nanoid } from "nanoid";
 import FillButton from "../FillButton/FillButton";
 import OutlineButton from "../OutlineButton/OutlineButton";
 import CartItem from "../CartItem/CartItem";
-import { gql } from "@apollo/client";
 import "./MiniCart.css";
 
 const GET_CURRENCIES = gql`
@@ -46,7 +46,6 @@ class MiniCart extends Component {
         symbol = currency.symbol;
       }
     }
-
     return (
       <div
         className={`mini-cart ${
@@ -77,7 +76,7 @@ class MiniCart extends Component {
         <div className="mini-cart-total-price">
           <span>Total</span>
           <span>
-            {symbol} {this.props.cartTotal}
+            {symbol} {this.props.total}
           </span>
         </div>
         <div className="mini-cart-buttons">
@@ -89,7 +88,7 @@ class MiniCart extends Component {
             VIEW BAG
           </OutlineButton>
           <FillButton
-            buttonClick={this.props.checkOut}
+            buttonClick={this.props.placeOrder}
             compSize="small"
             disabled={false}
           >

@@ -41,6 +41,8 @@ class CategoryPage extends Component {
     this.state = {
       pageIndex: 0,
       categories: [],
+      loading: true,
+      error: null,
     };
   }
 
@@ -52,10 +54,13 @@ class CategoryPage extends Component {
       .then((response) => {
         this.setState((prevState) => ({
           categories: [...prevState.categories, ...response.data.categories],
+          loading: false,
         }));
       })
       .catch((error) => {
-        console.error(error);
+        this.setState({
+          error: error,
+        });
       });
   }
 
@@ -76,6 +81,8 @@ class CategoryPage extends Component {
   };
 
   render() {
+    if (this.state.loading) return <p>Loading...</p>;
+    if (this.state.error) return <p>Error: {this.state.error}</p>;
     // array of all category names
     const categoryNames = this.state.categories.map(
       (category) => category.name
@@ -86,7 +93,6 @@ class CategoryPage extends Component {
     const pages = [];
     // index of category in categoryNames array
     let i = categoryNames.indexOf(this.props.category);
-    console.log(categoryNames, i);
     // number of pages per category
     let pageCount = Math.ceil(
       this.state.categories[i].products.length / pageItems

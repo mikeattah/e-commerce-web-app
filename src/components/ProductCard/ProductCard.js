@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { nanoid } from "nanoid";
 import Attribute from "../Attribute/Attribute";
 import Swatch from "../Swatch/Swatch";
 import "./ProductCard.css";
@@ -54,7 +55,7 @@ class ProductCard extends Component {
         <p className="product-card-title">{this.props.name}</p>
         {this.props.attributes.map((element) => {
           return (
-            <div className="product-card-attributes">
+            <div key={nanoid()} className="product-card-attributes">
               {element.type !== "swatch" &&
                 element.items.forEach((item) => {
                   return (

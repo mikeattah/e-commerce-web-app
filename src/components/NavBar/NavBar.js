@@ -22,6 +22,8 @@ class NavBar extends Component {
     this.state = {
       categories: [],
       currencies: [],
+      loading: true,
+      error: null,
     };
   }
 
@@ -34,14 +36,19 @@ class NavBar extends Component {
         this.setState({
           categories: response.data.categories,
           currencies: response.data.currencies,
+          loading: false,
         });
       })
       .catch((error) => {
-        console.error(error);
+        this.setState({
+          error: error,
+        });
       });
   }
 
   render() {
+    if (this.state.loading) return <p>Loading...</p>;
+    if (this.state.error) return <p>Error: {this.state.error}</p>;
     return (
       <nav className="nav-bar">
         <ul className="nav-bar-group">

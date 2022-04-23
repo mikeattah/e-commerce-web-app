@@ -3,7 +3,6 @@ import { gql } from "@apollo/client";
 import { nanoid } from "nanoid";
 import CartItem from "../../components/CartItem/CartItem";
 import FillButton from "../../components/FillButton/FillButton";
-import OutlineButton from "../../components/OutlineButton/OutlineButton";
 import "./CartPage.css";
 
 const GET_CURRENCIES = gql`
@@ -20,6 +19,8 @@ class CartPage extends Component {
     super(props);
     this.state = {
       currencies: [],
+      loading: true,
+      error: null,
     };
   }
 
@@ -31,14 +32,19 @@ class CartPage extends Component {
       .then((response) => {
         this.setState({
           currencies: response.data.currencies,
+          loading: false,
         });
       })
       .catch((error) => {
-        console.error(error);
+        this.setState({
+          error: error,
+        });
       });
   }
 
   render() {
+    if (this.state.loading) return <p>Loading...</p>;
+    if (this.state.error) return <p>Error: {this.state.error}</p>;
     let currencies = this.state.currencies;
     let symbol;
     for (let currency of currencies) {
@@ -46,7 +52,6 @@ class CartPage extends Component {
         symbol = currency.symbol;
       }
     }
-
     return (
       <div className="cart-page">
         <h1 className="cart-page-title">CART</h1>
@@ -67,26 +72,40 @@ class CartPage extends Component {
           })}
         </div>
         <div className="cart-page-section">
-          <div className="cart-page-total">
-            <span className="cart-page-total-text-one">Total</span>
-            <span className="cart-page-total-text-two">
-              {symbol} {this.props.cartTotal}
+          <div className="cart-page-summary">
+            <span className="cart-page-summary-text-one">Qty:</span>
+            <span className="cart-page-summary-text-three">
+              {this.props.cartQuantity}
             </span>
           </div>
-          <div className="cart-page-buttons">
-            <OutlineButton
-              buttonClick={this.props.continueShopping}
-              disabled={false}
-              compSize="large"
-            >
-              CONTINUE SHOPPING
-            </OutlineButton>
+          <div className="cart-page-summary">
+            <span className="cart-page-summary-text-one">Sub-Total:</span>
+            <span className="cart-page-summary-text-two">{symbol}</span>
+            <span className="cart-page-summary-text-three">
+              {this.props.subTotal}
+            </span>
+          </div>
+          <div className="cart-page-summary">
+            <span className="cart-page-summary-text-one">Tax:</span>
+            <span className="cart-page-summary-text-two">{symbol}</span>
+            <span className="cart-page-summary-text-three">
+              {this.props.tax}
+            </span>
+          </div>
+          <div className="cart-page-summary cart-page-summary-extra">
+            <span className="cart-page-summary-text-one">Total:</span>
+            <span className="cart-page-summary-text-two">{symbol}</span>
+            <span className="cart-page-summary-text-three">
+              {this.props.total}
+            </span>
+          </div>
+          <div className="cart-page-button-container">
             <FillButton
-              buttonClick={this.props.checkOut}
+              buttonClick={this.props.placeOrder}
               disabled={this.props.cart.length === 0}
               compSize="large"
             >
-              CHECK OUT
+              ORDER
             </FillButton>
           </div>
         </div>

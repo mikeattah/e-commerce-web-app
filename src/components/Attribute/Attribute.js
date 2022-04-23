@@ -10,7 +10,7 @@ class Attribute extends Component {
           this.props.name === attribute[0] &&
           this.props.value === attribute[1]
         ) {
-          style = "attribute-large-active";
+          style = "attribute-large-selected";
         } else {
           style = "attribute-large";
         }
@@ -21,7 +21,7 @@ class Attribute extends Component {
           this.props.name === attribute[0] &&
           this.props.value === attribute[1]
         ) {
-          style = "attribute-small-active";
+          style = "attribute-small-selected";
         } else {
           style = "attribute-small";
         }
