@@ -1,27 +1,33 @@
 .attribute-large {
-  font-size: 16px;
-  margin: 0 10px 0 0;
-  padding: 8px 16px;
-  border: 1px solid #000;
+  height: 45px;
+  width: 60px;
+  font-size: 15px;
+  margin: 0 12px 0 0;
+  padding: 0;
+  border: 1.5px solid #000;
   outline: none;
   background-color: #fff;
   color: #000;
 }
 
 .attribute-large-selected {
-  font-size: 16px;
-  margin: 0 10px 0 0;
-  padding: 8px 16px;
-  border: 1px solid #000;
+  height: 45px;
+  width: 60px;
+  font-size: 15px;
+  margin: 0 12px 0 0;
+  padding: 0;
+  border: 1.5px solid #000;
   outline: none;
   background-color: #000;
   color: #fff;
 }
 
 .attribute-small {
-  font-size: 9px;
+  height: 30px;
+  width: 40px;
+  font-size: 10px;
   margin: 0 8px 0 0;
-  padding: 8px 8px;
+  padding: 0;
   border: 1px solid #000;
   outline: none;
   background-color: #fff;
@@ -29,9 +35,11 @@
 }
 
 .attribute-small-selected {
-  font-size: 9px;
+  height: 30px;
+  width: 40px;
+  font-size: 10px;
   margin: 0 8px 0 0;
-  padding: 8px 8px;
+  padding: 0;
   border: 1px solid #000;
   outline: none;
   background-color: #000;

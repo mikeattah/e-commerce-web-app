@@ -51,7 +51,7 @@ class ProductCard extends Component {
           className="product-card-image"
         />
         <div
-          className="product-card-color-overlay"
+          className="product-card-image-overlay"
           onClick={() => this.props.productClick(this.props.id)}
         ></div>
         <p className="product-card-title">{this.props.name}</p>

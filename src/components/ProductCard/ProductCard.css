@@ -1,7 +1,7 @@
 .product-card {
   position: relative;
   max-height: 700px;
-  width: 400px;
+  width: 425px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -9,6 +9,7 @@
   margin: 0;
   padding: 12px;
   z-index: auto;
+  border: 0.5px solid #e6e6e6;
 }
 
 .product-card:hover {
@@ -51,17 +52,17 @@
   padding: 0;
 }
 
-.product-card-color-overlay {
+.product-card-image-overlay {
   position: absolute;
   top: 12px;
   left: 12px;
   height: 400px;
-  width: 400px;
+  width: 425px;
   background-color: rgba(0, 0, 0, 0.1);
   z-index: 10;
 }
 
-.product-card-color-overlay:hover {
+.product-card-image-overlay:hover {
   background-color: rgba(0, 0, 0, 0.15);
   cursor: pointer;
 }

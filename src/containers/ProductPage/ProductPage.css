@@ -1,11 +1,13 @@
 .product-page {
   position: relative;
-  height: 695px;
+  height: 595px;
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  font-size: 16px;
+  font-weight: bold;
   margin: 0;
   padding: 50px 0;
 }
@@ -21,7 +23,7 @@
 }
 
 .product-page-overlay-hidden {
-  visibility: hidden;
+  display: none;
 }
 
 .product-page-small-image-container {
@@ -62,21 +64,19 @@
 }
 
 .product-page-title {
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 24px;
   margin: 12px 0 12px 24px;
   padding: 0;
 }
 
 .product-page-brand {
-  margin: 12px 0 24px 24px;
+  margin: 12px 0 12px 24px;
   padding: 0;
-  font-size: 16px;
 }
 
 .product-page-attributes-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   margin: 12px 0 24px 24px;
@@ -84,26 +84,28 @@
 }
 
 .product-page-attributes {
-  margin: 12px 0 12px 24px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 12px 0;
   padding: 0;
 }
 
 .product-page-attributes-text {
-  font-size: 16px;
-  font-weight: bold;
-  margin: 0 12px;
+  width: 100%;
+  font-weight: normal;
+  margin: 0 0 12px 0;
+  padding: 0;
 }
 
 .product-page-price-desc {
-  font-size: 16px;
-  font-weight: bold;
   margin: 12px 0 0 24px;
   padding: 0;
 }
 
 .product-page-price-amnt {
-  font-size: 16px;
-  font-weight: bold;
   margin: 12px 0 24px 24px;
   padding: 0;
 }
@@ -115,6 +117,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   text-align: left;
+  font-weight: normal;
   overflow-y: auto;
   margin: 12px 0 12px 24px;
   padding: 0;

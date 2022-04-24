@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import "./Swatch.css";
 
 const StyledSwatch = styled.div`
   height: 100%;
   width: 100%;
-  background-color: ${(props) => props.value};
+  background: ${(props) => props.value};
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
 `;
 
 const StyledCheck = styled.span`
-  color: ${(props) => (props.id === "White" ? "#000" : "#fff")};
+  color: ${(props) => (props.id === "White" ? "black" : "white")};
 `;
 
 class Swatch extends Component {

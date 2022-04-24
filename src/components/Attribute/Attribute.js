@@ -3,9 +3,10 @@ import "./Attribute.css";
 
 class Attribute extends Component {
   render() {
-    let style;
+    let style,
+      attributes = this.props.attributes;
     if (this.props.compSize === "large") {
-      for (let attribute of this.props.attributes) {
+      for (let attribute of attributes) {
         if (
           this.props.name === attribute[0] &&
           this.props.value === attribute[1]
@@ -16,7 +17,7 @@ class Attribute extends Component {
         }
       }
     } else {
-      for (let attribute of this.props.attributes) {
+      for (let attribute of attributes) {
         if (
           this.props.name === attribute[0] &&
           this.props.value === attribute[1]

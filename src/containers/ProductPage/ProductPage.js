@@ -108,7 +108,7 @@ class ProductPage extends Component {
     for (let price of prices) {
       if (price.currency.label === this.props.currency) {
         symbol = price.currency.symbol;
-        amount = price.amount;
+        amount = this.props.numberFormat(price.amount);
       }
     }
     return (
@@ -138,18 +138,18 @@ class ProductPage extends Component {
           <h3 className="product-page-title">{this.state.product.name}</h3>
           <p className="product-page-brand">{this.state.product.brand}</p>
           <div className="product-page-attributes-container">
-            {this.state.product.attributes.map((element) => {
+            {this.state.product.attributes.map((attribute) => {
               return (
                 <div key={nanoid()} className="product-page-attributes">
                   <p className="product-page-attributes-text">
-                    {element.name.toUpperCase()}:
+                    {attribute.name}:
                   </p>
-                  {element.type !== "swatch" &&
-                    element.items.map((item) => {
+                  {attribute.type !== "swatch" &&
+                    attribute.items.map((item) => {
                       return (
                         <Attribute
                           key={item.id}
-                          name={element.name}
+                          name={attribute.name}
                           displayValue={item.displayValue}
                           value={item.value}
                           id={item.id}
@@ -159,12 +159,12 @@ class ProductPage extends Component {
                         />
                       );
                     })}
-                  {element.type === "swatch" &&
-                    element.items.map((item) => {
+                  {attribute.type === "swatch" &&
+                    attribute.items.map((item) => {
                       return (
                         <Swatch
                           key={item.id}
-                          name={element.name}
+                          name={attribute.name}
                           displayValue={item.displayValue}
                           value={item.value}
                           id={item.id}
@@ -178,7 +178,7 @@ class ProductPage extends Component {
               );
             })}
           </div>
-          <p className="product-page-price-desc">PRICE:</p>
+          <p className="product-page-price-desc">Price:</p>
           <p className="product-page-price-amnt">
             {symbol} {amount}
           </p>

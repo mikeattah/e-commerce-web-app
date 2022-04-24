@@ -203,6 +203,7 @@ class App extends Component {
                     miniCartOpen={this.state.miniCartOpen}
                     addToCart={this.handleAddToCart}
                     miniCartToggle={this.handleMiniCartToggle}
+                    numberFormat={this.handleNumberFormat}
                     client={client}
                   />
                 );
