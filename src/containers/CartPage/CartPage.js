@@ -65,6 +65,7 @@ class CartPage extends Component {
                 cartItemAttributes={this.props.cartItemAttributes}
                 quantity={item.quantity}
                 cartItemQuantity={this.props.cartItemQuantity}
+                removeFromCart={this.props.removeFromCart}
                 currency={this.props.currency}
                 compSize="large"
               />

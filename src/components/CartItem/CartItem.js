@@ -30,6 +30,10 @@ class CartItem extends Component {
     }
   };
 
+  handleImageClick = () => {
+    return;
+  };
+
   render() {
     let symbol, amount;
     for (let price of this.props.product.prices) {
@@ -46,22 +50,20 @@ class CartItem extends Component {
             : "cart-item-small"
         }
       >
-        <div className="cart-item-left">
+        <div className="cart-item-left-section">
           <p className="cart-item-name">{this.props.product.name}</p>
           <p className="cart-item-brand">{this.props.product.brand}</p>
-          <p className="cart-item-price">
-            {symbol} {amount}
-          </p>
           <div className="cart-item-attributes-container">
-            {this.props.product.attributes.map((element) => {
+            {this.props.product.attributes.map((attribute) => {
               return (
                 <div key={nanoid()} className="cart-item-attributes">
-                  {element.type !== "swatch" &&
-                    element.items.forEach((item) => {
+                  <p className="cart-item-attributes-text">{attribute.name}:</p>
+                  {attribute.type !== "swatch" &&
+                    attribute.items.map((item) => {
                       return (
                         <Attribute
                           key={item.id}
-                          name={element.name}
+                          name={attribute.name}
                           displayValue={item.displayValue}
                           value={item.value}
                           id={item.id}
@@ -71,12 +73,12 @@ class CartItem extends Component {
                         />
                       );
                     })}
-                  {element.type === "swatch" &&
-                    element.items.forEach((item) => {
+                  {attribute.type === "swatch" &&
+                    attribute.items.map((item) => {
                       return (
                         <Swatch
                           key={item.id}
-                          name={element.name}
+                          name={attribute.name}
                           displayValue={item.displayValue}
                           value={item.value}
                           id={item.id}
@@ -90,8 +92,11 @@ class CartItem extends Component {
               );
             })}
           </div>
+          <p className="cart-item-price">
+            {symbol} {amount}
+          </p>
         </div>
-        <div className="cart-item-right">
+        <div className="cart-item-right-section">
           <div className="cart-item-quantity">
             <Quantity
               compSize={this.props.compSize}
@@ -114,20 +119,28 @@ class CartItem extends Component {
               src={this.props.product.gallery[this.state.imageIndex]}
               alt={this.props.product.name}
               currentImage={null}
-              imageClick={null}
+              imageClick={this.handleImageClick}
             />
-            <div
+            <span
               className="cart-item-angle-left"
               onClick={() => this.handleChangeImage("left")}
             >
-              &#12296;
-            </div>
-            <div
+              &#10094;
+            </span>
+            <span
               className="cart-item-angle-right"
               onClick={() => this.handleChangeImage("right")}
             >
-              &#12297;
-            </div>
+              &#10095;
+            </span>
+          </div>
+          <div className="cart-item-remove-icon-container">
+            <span
+              className="cart-item-remove-icon"
+              onClick={() => this.props.removeFromCart(this.props.product.id)}
+            >
+              &#10005;
+            </span>
           </div>
         </div>
       </div>

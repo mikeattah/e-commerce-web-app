@@ -43,7 +43,6 @@ class App extends Component {
         for (let i = 0; i < attributes.length; i++) {
           if (attributes[i][0] === name) {
             attributes[i][1] = value;
-            break;
           } else if (attributes[i][0] !== name && i === attributes.length - 1) {
             attributes.push([name, value]);
           }
