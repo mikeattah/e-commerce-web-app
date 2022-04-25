@@ -23,6 +23,7 @@ class App extends Component {
       cartTotal: 0,
       cartQuantity: 0,
       id: "",
+      attributes: [],
       miniCartOpen: false,
     };
   }
@@ -31,8 +32,28 @@ class App extends Component {
     this.setState({ category: category, page: "categorypage" });
   };
 
-  handleProductClick = (id) => {
-    this.setState({ id: id, page: "productpage" });
+  handleProductClick = (id, attributes) => {
+    this.setState({ id: id, attributes: attributes, page: "productpage" });
+  };
+
+  handleCartQuantity = () => {
+    let cart = this.state.cart;
+    let quantity = 0;
+    for (let item of cart) {
+      quantity += item.quantity;
+    }
+    this.setState({ cartQuantity: quantity });
+  };
+
+  handleCartTotal = () => {
+    let total = 0;
+    let cart = this.state.cart;
+    for (let item of cart) {
+      let i = 0;
+      while (this.state.currency !== item.product.prices[i].currency.label) i++;
+      total += item.product.prices[i].amount * item.quantity;
+    }
+    this.setState({ cartTotal: total });
   };
 
   handleCartItemAttributes = (id, name, value) => {
@@ -47,8 +68,10 @@ class App extends Component {
             attributes.push([name, value]);
           }
         }
+        break;
       }
     }
+    this.setState({ cart: cart });
   };
 
   handleCartItemQuantity = (id, type) => {
@@ -62,58 +85,56 @@ class App extends Component {
             item.quantity -= 1;
           }
         }
+        break;
       }
     }
+    this.setState({ cart: cart }, () => {
+      this.handleCartQuantity();
+      this.handleCartTotal();
+    });
   };
 
   handleCurrencyClick = (currency) => {
-    this.setState({ currency: currency });
-  };
-
-  handleCartTotal = () => {
-    let total = 0;
-    let cart = this.state.cart;
-    for (let item of cart) {
-      let i = 0;
-      while (this.state.currency !== item.product.prices[i].currency.label) i++;
-      total += item.product.prices[i].amount * item.quantity;
-    }
-    this.setState({ cartTotal: total });
-  };
-
-  handleCartQuantity = () => {
-    let cart = this.state.cart;
-    let quantity = 0;
-    for (let item of cart) {
-      quantity += item.quantity;
-    }
-    this.setState({ cartQuantity: quantity });
+    this.setState({ currency: currency }, () => {
+      this.handleCartTotal();
+    });
   };
 
   handleAddToCart = (product, attributes) => {
     let cart = this.state.cart;
-    let check = false;
+    let check = true;
     for (let item of cart) {
       if (item.product.id === product.id) {
         item.attributes = attributes;
         item.quantity += 1;
-        check = true;
+        check = false;
+        break;
       }
     }
     if (!check) {
-      this.setState((prevState) => ({
-        cart: [
-          ...prevState.cart,
-          {
-            product: product,
-            attributes: attributes,
-            quantity: 1,
-          },
-        ],
-      }));
+      this.setState({ cart: cart }, () => {
+        this.handleCartQuantity();
+        this.handleCartTotal();
+      });
     }
-    this.handleCartQuantity();
-    this.handleCartTotal();
+    if (check) {
+      this.setState(
+        {
+          cart: [
+            ...this.state.cart,
+            {
+              product: product,
+              attributes: attributes,
+              quantity: 1,
+            },
+          ],
+        },
+        () => {
+          this.handleCartQuantity();
+          this.handleCartTotal();
+        }
+      );
+    }
   };
 
   handleRemoveFromCart = (id) => {
@@ -121,11 +142,13 @@ class App extends Component {
     for (let item of cart) {
       if (item.product.id === id) {
         cart.splice(cart.indexOf(item), 1);
+        break;
       }
     }
-    this.setState({ cart: cart });
-    this.handleCartQuantity();
-    this.handleCartTotal();
+    this.setState({ cart: cart }, () => {
+      this.handleCartQuantity();
+      this.handleCartTotal();
+    });
   };
 
   handleMiniCartToggle = () => {
@@ -199,6 +222,7 @@ class App extends Component {
                   <ProductPage
                     currency={this.state.currency}
                     id={this.state.id}
+                    attributes={this.state.attributes}
                     miniCartOpen={this.state.miniCartOpen}
                     addToCart={this.handleAddToCart}
                     miniCartToggle={this.handleMiniCartToggle}

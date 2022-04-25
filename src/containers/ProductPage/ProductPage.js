@@ -59,19 +59,10 @@ class ProductPage extends Component {
         },
       })
       .then((response) => {
-        let attributes = response.data.product.attributes;
-        let name,
-          value,
-          temp = [];
-        for (let attribute of attributes) {
-          name = attribute.name;
-          value = attribute.items[0].value;
-          temp.push([name, value]);
-        }
         this.setState({
           product: response.data.product,
           image: response.data.product.gallery[0],
-          attributes: temp,
+          attributes: this.props.attributes,
           loading: false,
         });
       })

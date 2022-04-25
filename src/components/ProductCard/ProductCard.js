@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { nanoid } from "nanoid";
+// import { nanoid } from "nanoid";
 import Attribute from "../Attribute/Attribute";
 import Swatch from "../Swatch/Swatch";
 import "./ProductCard.css";
@@ -52,40 +52,43 @@ class ProductCard extends Component {
         />
         <div
           className="product-card-image-overlay"
-          onClick={() => this.props.productClick(this.props.id)}
+          onClick={() =>
+            this.props.productClick(this.props.id, this.state.attributes)
+          }
         ></div>
         <p className="product-card-title">{this.props.name}</p>
         <div className="product-card-attributes-container">
           {this.props.attributes.map((attribute) => {
+            const { id, name, type, items } = attribute;
             return (
-              <div key={nanoid()} className="product-card-attributes">
-                <p className="product-card-attributes-text">
-                  {attribute.name}:
-                </p>
-                {attribute.type !== "swatch" &&
-                  attribute.items.map((item) => {
+              <div key={id} className="product-card-attributes">
+                <p className="product-card-attributes-text">{name}:</p>
+                {type !== "swatch" &&
+                  items.map((item) => {
+                    const { displayValue, value, id } = item;
                     return (
                       <Attribute
-                        key={item.id}
-                        name={attribute.name}
-                        displayValue={item.displayValue}
-                        value={item.value}
-                        id={item.id}
+                        key={id}
+                        name={name}
+                        displayValue={displayValue}
+                        value={value}
+                        id={id}
                         attributes={this.state.attributes}
                         attributeClick={this.handleProductCardAttributes}
                         compSize="small"
                       />
                     );
                   })}
-                {attribute.type === "swatch" &&
-                  attribute.items.map((item) => {
+                {type === "swatch" &&
+                  items.map((item) => {
+                    const { displayValue, value, id } = item;
                     return (
                       <Swatch
-                        key={item.id}
-                        name={attribute.name}
-                        displayValue={item.displayValue}
-                        value={item.value}
-                        id={item.id}
+                        key={id}
+                        name={name}
+                        displayValue={displayValue}
+                        value={value}
+                        id={id}
                         attributes={this.state.attributes}
                         swatchClick={this.handleProductCardAttributes}
                         compSize="small"

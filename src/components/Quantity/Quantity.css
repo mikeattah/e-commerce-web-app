@@ -1,9 +1,30 @@
 .quantity-large {
+  font-size: 20px;
+  height: 30px;
+  width: 30px;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 1px solid #000;
+  background-color: #fff;
+  color: #000;
 }
 
 .quantity-small {
+  font-size: 16px;
+  height: 20px;
+  width: 20px;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 1px solid #000;
+  background-color: #fff;
+  color: #000;
 }
 
 .quantity-large:hover,
 .quantity-small:hover {
+  cursor: pointer;
+  background-color: #000;
+  color: #fff;
 }

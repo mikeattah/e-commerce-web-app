@@ -16,7 +16,7 @@ code {
     monospace;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 8px;
 }
 
@@ -30,4 +30,4 @@ code {
   border: 2px solid transparent;
   background-clip: content-box;
   background-color: #5ece7b;
-}
+} */

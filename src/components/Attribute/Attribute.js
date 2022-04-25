@@ -36,7 +36,7 @@ class Attribute extends Component {
           this.props.attributeClick(this.props.name, this.props.value)
         }
       >
-        {this.props.displayValue}
+        {this.props.value}
       </button>
     );
   }

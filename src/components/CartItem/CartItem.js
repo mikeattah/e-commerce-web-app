@@ -101,6 +101,7 @@ class CartItem extends Component {
             <Quantity
               compSize={this.props.compSize}
               type="increase"
+              id={this.props.product.id}
               quantityClick={this.props.cartItemQuantity}
             >
               +
@@ -109,6 +110,7 @@ class CartItem extends Component {
             <Quantity
               compSize={this.props.compSize}
               type="decrease"
+              id={this.props.product.id}
               quantityClick={this.props.cartItemQuantity}
             >
               -
