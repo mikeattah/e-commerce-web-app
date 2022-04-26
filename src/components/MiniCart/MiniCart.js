@@ -59,13 +59,14 @@ class MiniCart extends Component {
         </p>
         <div className="mini-cart-items-container">
           {this.props.cart.map((item) => {
+            const { product, attributes, quantity } = item;
             return (
               <CartItem
                 key={nanoid()}
-                product={item.product}
-                attributes={item.attributes}
+                product={product}
+                attributes={attributes}
                 cartItemAttributes={this.props.cartItemAttributes}
-                quantity={item.quantity}
+                quantity={quantity}
                 cartItemQuantity={this.props.cartItemQuantity}
                 currency={this.props.currency}
                 compSize="small"

@@ -55,33 +55,38 @@ class CartItem extends Component {
           <p className="cart-item-brand">{this.props.product.brand}</p>
           <div className="cart-item-attributes-container">
             {this.props.product.attributes.map((attribute) => {
+              const { id, name, type, items } = attribute;
               return (
-                <div key={nanoid()} className="cart-item-attributes">
-                  <p className="cart-item-attributes-text">{attribute.name}:</p>
-                  {attribute.type !== "swatch" &&
-                    attribute.items.map((item) => {
+                <div key={nanoid()} id={id} className="cart-item-attributes">
+                  <p className="cart-item-attributes-text">{name}:</p>
+                  {type !== "swatch" &&
+                    items.map((item) => {
+                      const { displayValue, value, id } = item;
                       return (
                         <Attribute
-                          key={item.id}
-                          name={attribute.name}
-                          displayValue={item.displayValue}
-                          value={item.value}
-                          id={item.id}
+                          key={nanoid()}
+                          name={name}
+                          displayValue={displayValue}
+                          value={value}
+                          id={id}
+                          productId={this.props.product.id}
                           attributes={this.props.attributes}
                           attributeClick={this.props.cartItemAttributes}
                           compSize={this.props.compSize}
                         />
                       );
                     })}
-                  {attribute.type === "swatch" &&
-                    attribute.items.map((item) => {
+                  {type === "swatch" &&
+                    items.map((item) => {
+                      const { displayValue, value, id } = item;
                       return (
                         <Swatch
-                          key={item.id}
-                          name={attribute.name}
-                          displayValue={item.displayValue}
-                          value={item.value}
-                          id={item.id}
+                          key={nanoid()}
+                          name={name}
+                          displayValue={displayValue}
+                          value={value}
+                          id={id}
+                          productId={this.props.product.id}
                           attributes={this.props.attributes}
                           swatchClick={this.props.cartItemAttributes}
                           compSize={this.props.compSize}

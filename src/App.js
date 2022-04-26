@@ -46,8 +46,8 @@ class App extends Component {
   };
 
   handleCartTotal = () => {
-    let total = 0;
     let cart = this.state.cart;
+    let total = 0;
     for (let item of cart) {
       let i = 0;
       while (this.state.currency !== item.product.prices[i].currency.label) i++;
@@ -101,40 +101,39 @@ class App extends Component {
   };
 
   handleAddToCart = (product, attributes) => {
-    let cart = this.state.cart;
-    let check = true;
+    let cart = this.state.cart,
+      check = false;
     for (let item of cart) {
       if (item.product.id === product.id) {
+        check = true;
         item.attributes = attributes;
         item.quantity += 1;
-        check = false;
         break;
       }
     }
-    if (!check) {
+    if (check) {
       this.setState({ cart: cart }, () => {
         this.handleCartQuantity();
         this.handleCartTotal();
       });
+      return;
     }
-    if (check) {
-      this.setState(
-        {
-          cart: [
-            ...this.state.cart,
-            {
-              product: product,
-              attributes: attributes,
-              quantity: 1,
-            },
-          ],
-        },
-        () => {
-          this.handleCartQuantity();
-          this.handleCartTotal();
-        }
-      );
-    }
+    this.setState(
+      {
+        cart: [
+          ...this.state.cart,
+          {
+            product: product,
+            attributes: attributes,
+            quantity: 1,
+          },
+        ],
+      },
+      () => {
+        this.handleCartQuantity();
+        this.handleCartTotal();
+      }
+    );
   };
 
   handleRemoveFromCart = (id) => {

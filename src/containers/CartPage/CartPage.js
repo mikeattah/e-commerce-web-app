@@ -57,13 +57,14 @@ class CartPage extends Component {
         <h1 className="cart-page-title">CART</h1>
         <div className="cart-page-main">
           {this.props.cart.map((item) => {
+            const { product, attributes, quantity } = item;
             return (
               <CartItem
                 key={nanoid()}
-                product={item.product}
-                attributes={item.attributes}
+                product={product}
+                attributes={attributes}
                 cartItemAttributes={this.props.cartItemAttributes}
-                quantity={item.quantity}
+                quantity={quantity}
                 cartItemQuantity={this.props.cartItemQuantity}
                 removeFromCart={this.props.removeFromCart}
                 currency={this.props.currency}

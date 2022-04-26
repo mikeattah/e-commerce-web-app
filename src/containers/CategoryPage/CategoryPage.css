@@ -1,14 +1,12 @@
 .category-page {
   position: relative;
-  min-height: 1500px;
+  min-height: 600px;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin: 0;
-  padding: 0; /* add LR padding of 50px later */
-  /* border: 1px solid #000; */
+  margin: 60px 0 0 0;
 }
 
 .category-page-overlay {
@@ -26,17 +24,25 @@
 }
 
 .category-page-title {
-  height: 75px;
+  height: 100px;
   width: 100%;
+  font-size: 35px;
   text-align: left;
+  padding: 30px 0 35px 50px;
 }
 
 .category-page-main {
-  min-height: 1275px;
+  min-height: 500px;
   width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: flex-start;
+}
+
+@media (max-width: 1080px) {
+  .category-page-title {
+    text-align: center;
+  }
 }

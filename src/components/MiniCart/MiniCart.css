@@ -1,9 +1,9 @@
 .mini-cart {
   position: absolute;
   top: 60px;
-  right: 30px;
+  right: 50px;
   height: 400px;
-  width: 240px;
+  width: 275px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

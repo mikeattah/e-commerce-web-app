@@ -28,7 +28,11 @@ class Swatch extends Component {
           this.props.compSize === "large" ? "swatch-large" : "swatch-small"
         }
         onClick={() =>
-          this.props.swatchClick(this.props.name, this.props.value)
+          this.props.swatchClick(
+            this.props.productId,
+            this.props.name,
+            this.props.value
+          )
         }
       >
         <StyledSwatch value={this.props.value} />

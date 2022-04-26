@@ -81,7 +81,7 @@ class ProductPage extends Component {
     this.setState({ image: image });
   };
 
-  handleProductPageAttributes = (name, value) => {
+  handleProductPageAttributes = (id, name, value) => {
     let attributes = this.state.attributes;
     for (let i = 0; i < attributes.length; i++) {
       if (attributes[i][0] === name) {
@@ -104,16 +104,18 @@ class ProductPage extends Component {
     }
     return (
       <div className="product-page">
-        <div className="product-page-small-image-container">
+        <div className="product-page-small-images-container">
           {this.state.product.gallery.map((image) => {
             return (
-              <SmallImage
-                key={nanoid()}
-                src={image}
-                alt="click to view"
-                imageClick={this.handleImageToggle}
-                currentImage={this.state.image}
-              />
+              <div className="product-page-small-image">
+                <SmallImage
+                  key={nanoid()}
+                  src={image}
+                  alt="click to view"
+                  imageClick={this.handleImageToggle}
+                  currentImage={this.state.image}
+                />
+              </div>
             );
           })}
         </div>
@@ -130,35 +132,38 @@ class ProductPage extends Component {
           <p className="product-page-brand">{this.state.product.brand}</p>
           <div className="product-page-attributes-container">
             {this.state.product.attributes.map((attribute) => {
+              const { id, name, type, items } = attribute;
               return (
-                <div key={nanoid()} className="product-page-attributes">
-                  <p className="product-page-attributes-text">
-                    {attribute.name}:
-                  </p>
-                  {attribute.type !== "swatch" &&
-                    attribute.items.map((item) => {
+                <div key={nanoid()} id={id} className="product-page-attributes">
+                  <p className="product-page-attributes-text">{name}:</p>
+                  {type !== "swatch" &&
+                    items.map((item) => {
+                      const { displayValue, value, id } = item;
                       return (
                         <Attribute
-                          key={item.id}
-                          name={attribute.name}
-                          displayValue={item.displayValue}
-                          value={item.value}
-                          id={item.id}
+                          key={nanoid()}
+                          name={name}
+                          displayValue={displayValue}
+                          value={value}
+                          id={id}
+                          productId={this.state.product.id}
                           attributes={this.state.attributes}
                           attributeClick={this.handleProductPageAttributes}
                           compSize="large"
                         />
                       );
                     })}
-                  {attribute.type === "swatch" &&
-                    attribute.items.map((item) => {
+                  {type === "swatch" &&
+                    items.map((item) => {
+                      const { displayValue, value, id } = item;
                       return (
                         <Swatch
-                          key={item.id}
-                          name={attribute.name}
-                          displayValue={item.displayValue}
-                          value={item.value}
-                          id={item.id}
+                          key={nanoid()}
+                          name={name}
+                          displayValue={displayValue}
+                          value={value}
+                          id={id}
+                          productId={this.state.product.id}
                           attributes={this.state.attributes}
                           swatchClick={this.handleProductPageAttributes}
                           compSize="large"

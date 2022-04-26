@@ -71,13 +71,13 @@ class NavBar extends Component {
           src={require("../../assets/images/shopping-bag.png")}
           alt="Shopping Bag Icon, created by DinosoftLabs - Flaticon https://www.flaticon.com/free-icons/bag"
           className="nav-bar-image"
-          onClick={() =>
+          onClick={() => {
             window.scrollTo({
               top: 0,
               left: 0,
               behavior: "smooth",
-            })
-          }
+            });
+          }}
         />
         <div className="nav-bar-toggles">
           <DropDown

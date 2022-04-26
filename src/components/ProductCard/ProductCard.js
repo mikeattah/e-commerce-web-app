@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import { nanoid } from "nanoid";
+import { nanoid } from "nanoid";
 import Attribute from "../Attribute/Attribute";
 import Swatch from "../Swatch/Swatch";
 import "./ProductCard.css";
@@ -27,7 +27,7 @@ class ProductCard extends Component {
     });
   }
 
-  handleProductCardAttributes = (name, value) => {
+  handleProductCardAttributes = (id, name, value) => {
     let attributes = this.state.attributes;
     for (let i = 0; i < attributes.length; i++) {
       if (attributes[i][0] === name) {
@@ -52,27 +52,28 @@ class ProductCard extends Component {
         />
         <div
           className="product-card-image-overlay"
-          onClick={() =>
-            this.props.productClick(this.props.id, this.state.attributes)
-          }
+          onClick={() => {
+            this.props.productClick(this.props.id, this.state.attributes);
+          }}
         ></div>
         <p className="product-card-title">{this.props.name}</p>
         <div className="product-card-attributes-container">
           {this.props.attributes.map((attribute) => {
             const { id, name, type, items } = attribute;
             return (
-              <div key={id} className="product-card-attributes">
+              <div key={nanoid()} id={id} className="product-card-attributes">
                 <p className="product-card-attributes-text">{name}:</p>
                 {type !== "swatch" &&
                   items.map((item) => {
                     const { displayValue, value, id } = item;
                     return (
                       <Attribute
-                        key={id}
+                        key={nanoid()}
                         name={name}
                         displayValue={displayValue}
                         value={value}
                         id={id}
+                        productId={this.props.id}
                         attributes={this.state.attributes}
                         attributeClick={this.handleProductCardAttributes}
                         compSize="small"
@@ -84,11 +85,12 @@ class ProductCard extends Component {
                     const { displayValue, value, id } = item;
                     return (
                       <Swatch
-                        key={id}
+                        key={nanoid()}
                         name={name}
                         displayValue={displayValue}
                         value={value}
                         id={id}
+                        productId={this.props.id}
                         attributes={this.state.attributes}
                         swatchClick={this.handleProductCardAttributes}
                         compSize="small"
@@ -101,12 +103,12 @@ class ProductCard extends Component {
         </div>
         <div
           className="product-card-add-to-cart"
-          onClick={() =>
+          onClick={() => {
             this.props.categoryPageAddToCart(
               this.props.id,
               this.state.attributes
-            )
-          }
+            );
+          }}
         >
           <img
             src={require("../../assets/images/shopping-cart-white.png")}
