@@ -53,7 +53,7 @@ class MiniCart extends Component {
         }`}
       >
         <p className="mini-cart-title">
-          <span className="mini-cart-title-bold">My Bag,</span>{" "}
+          <span className="mini-cart-title-span">My Bag,</span>{" "}
           {this.props.cartQuantity}{" "}
           {this.props.cartQuantity > 1 ? "items" : "item"}
         </p>
@@ -68,6 +68,7 @@ class MiniCart extends Component {
                 cartItemAttributes={this.props.cartItemAttributes}
                 quantity={quantity}
                 cartItemQuantity={this.props.cartItemQuantity}
+                removeFromCart={this.props.removeFromCart}
                 currency={this.props.currency}
                 compSize="small"
               />
@@ -75,7 +76,7 @@ class MiniCart extends Component {
           })}
         </div>
         <div className="mini-cart-total-price">
-          <span>Total</span>
+          <span>Total (Incl. Tax)</span>
           <span>
             {symbol} {this.props.total}
           </span>

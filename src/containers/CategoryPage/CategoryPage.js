@@ -30,6 +30,7 @@ const GET_ALL_CATEGORIES_PRODUCTS = gql`
           }
           amount
         }
+        brand
       }
     }
   }

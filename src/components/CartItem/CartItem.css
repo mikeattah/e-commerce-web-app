@@ -1,55 +1,54 @@
-.cart-item-large {
-  min-height: 100px;
+.cart-item {
+  min-height: 250px;
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  font-size: 16px;
-  border-bottom: 2px solid #ccc;
+  align-items: flex-start;
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
 }
 
 .cart-item-small {
-  min-height: 50px;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  border: 1px solid #000;
+  min-height: 150px;
+  font-size: 12px;
 }
 
 .cart-item-left-section {
-  height: 100%;
+  min-height: 250px;
   width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  margin: 24px 0;
+}
+
+.cart-item-left-section-small {
+  min-height: 150px;
+  justify-content: space-between;
+  margin: 16px 0;
 }
 
 .cart-item-name {
-  font-size: 20px;
-  font-weight: bold;
-  margin: 12px 0;
-  padding: 0;
 }
 
 .cart-item-brand {
-  margin: 0 0 12px 0;
-  padding: 0;
+  font-weight: normal;
+  margin: 12px 0;
+}
+
+.cart-item-price {
 }
 
 .cart-item-attributes-container {
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
-  margin: 12px 0;
-  padding: 0;
+  align-items: flex-start;
+  margin-top: 12px;
 }
 
 .cart-item-attributes {
@@ -58,76 +57,100 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
-  margin: 0;
-  padding: 0;
+  margin-top: 12px;
 }
 
 .cart-item-attributes-text {
   width: 100%;
-  font-weight: normal;
-  margin: 0 0 12px 0;
-  padding: 0;
-}
-
-.cart-item-price {
-  font-weight: bold;
-  margin: 12px 0;
-  padding: 0;
+  font-size: 12px;
+  margin-bottom: 12px;
 }
 
 .cart-item-right-section {
-  height: 100%;
+  height: 250px;
   width: 50%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  margin: 24px 0;
+}
+
+.cart-item-right-section-small {
+  height: 150px;
+  margin: 16px 0;
 }
 
 .cart-item-quantity {
   height: 100%;
-  width: 5%;
+  width: 40px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
 
+.cart-item-quantity-small {
+  width: 25px;
+}
+
 .cart-item-quantity-text {
-  width: 100%;
   text-align: center;
-  margin: 0;
-  padding: 0;
+  font-size: 16px;
 }
 
 .cart-item-image-container {
   position: relative;
   height: 100%;
-  width: 150px;
+  width: 200px;
+}
+
+.cart-item-image-container-small {
+  width: 120px;
+}
+
+.cart-item-image {
+  height: 100%;
+  width: 100%;
+}
+
+.cart-item-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.02);
 }
 
 .cart-item-angle-left {
   position: absolute;
-  top: 125px;
+  bottom: 20px;
   right: 35px;
   color: #fff;
   font-size: 12px;
   font-weight: normal;
-  margin: 0;
   padding: 1px 8px 3px 6px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.cart-item-angle-left-small {
+  bottom: 10px;
 }
 
 .cart-item-angle-right {
   position: absolute;
-  top: 125px;
+  bottom: 20px;
   right: 10px;
-  color: #fff;
   font-size: 12px;
   font-weight: normal;
-  margin: 0;
   padding: 2px 6px 2px 8px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+}
+
+.cart-item-angle-right-small {
+  bottom: 10px;
 }
 
 .cart-item-angle-left:hover,
@@ -137,26 +160,37 @@
 
 .cart-item-remove-icon-container {
   height: 100%;
-  width: 5%;
+  width: 40px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin: 0;
-  padding: 0;
-  border: 1px solid #000;
+}
+
+.cart-item-remove-icon-container-small {
+  width: 25px;
 }
 
 .cart-item-remove-icon {
-  color: #000;
-  font-size: 10px;
+  height: 30px;
+  width: 30px;
+  font-size: 13px;
   font-weight: bold;
-  margin: 0;
-  padding: 3px 8px;
+  border: 1px solid #000;
+  outline: none;
+  background: #fff;
+  color: #000;
+}
+
+.cart-item-remove-icon-small {
+  height: 20px;
+  width: 20px;
+  font-size: 10px;
 }
 
 .cart-item-remove-icon:hover {
   cursor: pointer;
   color: #fff;
-  background-color: rgba(0, 0, 0, 0.6);
+  background: #000;
+  border: none;
 }

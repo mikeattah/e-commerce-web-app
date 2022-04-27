@@ -1,61 +1,57 @@
 .attribute-large {
-  height: 45px;
-  width: 60px;
-  font-size: 15px;
-  margin: 0 12px 0 0;
-  padding: 0;
-  border: 1.5px solid #000;
+  height: 30px;
+  width: 45px;
+  font-size: 12px;
+  margin: 6px 12px 6px 0;
+  border: 1px solid #000;
   outline: none;
-  background-color: #fff;
+  background: #fff;
   color: #000;
 }
 
 .attribute-large-selected {
-  height: 45px;
-  width: 60px;
-  font-size: 15px;
-  margin: 0 12px 0 0;
-  padding: 0;
-  border: 1.5px solid #000;
+  height: 30px;
+  width: 45px;
+  font-size: 12px;
+  margin: 6px 12px 6px 0;
+  border: 1px solid #000;
   outline: none;
-  background-color: #000;
+  background: #000;
   color: #fff;
 }
 
 .attribute-small {
-  height: 30px;
-  width: 40px;
-  font-size: 10px;
-  margin: 0 8px 0 0;
-  padding: 0;
+  height: 20px;
+  width: 35px;
+  font-size: 9px;
+  margin: 4px 8px 4px 0;
   border: 1px solid #000;
   outline: none;
-  background-color: #fff;
+  background: #fff;
   color: #000;
 }
 
 .attribute-small-selected {
-  height: 30px;
-  width: 40px;
-  font-size: 10px;
-  margin: 0 8px 0 0;
-  padding: 0;
+  height: 20px;
+  width: 35px;
+  font-size: 9px;
+  margin: 4px 8px 4px 0;
   border: 1px solid #000;
   outline: none;
-  background-color: #000;
+  background: #000;
   color: #fff;
 }
 
 .attribute-large:hover,
 .attribute-small:hover {
-  background-color: #000;
+  background: #000;
   color: #fff;
   cursor: pointer;
 }
 
 .attribute-large-selected:hover,
 .attribute-small-selected:hover {
-  background-color: #fff;
+  background: #fff;
   color: #000;
   cursor: pointer;
 }

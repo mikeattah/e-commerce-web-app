@@ -5,11 +5,9 @@ class FillButton extends Component {
   render() {
     return (
       <button
-        className={
-          this.props.compSize === "large"
-            ? "fill-button-large"
-            : "fill-button-small"
-        }
+        className={`fill-button ${
+          this.props.compSize === "large" ? "" : "fill-button-small"
+        }`}
         onClick={() => this.props.buttonClick()}
         disabled={this.props.disabled}
       >

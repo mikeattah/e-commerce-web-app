@@ -135,7 +135,9 @@ class ProductPage extends Component {
               const { id, name, type, items } = attribute;
               return (
                 <div key={nanoid()} id={id} className="product-page-attributes">
-                  <p className="product-page-attributes-text">{name}:</p>
+                  <p className="product-page-attributes-text">
+                    {name.toUpperCase()}:
+                  </p>
                   {type !== "swatch" &&
                     items.map((item) => {
                       const { displayValue, value, id } = item;

@@ -1,20 +1,19 @@
 .swatch-large {
   position: relative;
-  height: 45px;
-  width: 45px;
-  font-size: 27px;
-  margin: 0 12px 0 0;
-  padding: 0;
+  height: 30px;
+  width: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 12px;
 }
 
 .swatch-small {
   position: relative;
-  height: 30px;
-  width: 30px;
-  font-size: 18px;
+  height: 20px;
+  width: 20px;
+  font-size: 14px;
   font-weight: bold;
-  margin: 0 8px 0 0;
-  padding: 0;
+  margin-right: 8px;
 }
 
 .swatch-large:hover,

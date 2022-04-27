@@ -62,7 +62,9 @@ class ProductCard extends Component {
             const { id, name, type, items } = attribute;
             return (
               <div key={nanoid()} id={id} className="product-card-attributes">
-                <p className="product-card-attributes-text">{name}:</p>
+                <p className="product-card-attributes-text">
+                  {name.toUpperCase()}:
+                </p>
                 {type !== "swatch" &&
                   items.map((item) => {
                     const { displayValue, value, id } = item;

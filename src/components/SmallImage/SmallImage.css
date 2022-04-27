@@ -22,9 +22,9 @@
 }
 
 .small-image-overlay:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .small-image-overlay-selected {
-  background-color: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.05);
 }

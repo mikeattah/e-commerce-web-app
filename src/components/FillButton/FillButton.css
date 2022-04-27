@@ -1,11 +1,10 @@
-.fill-button-large {
+.fill-button {
   width: 300px;
   font-family: "Raleway", "Roboto", sans-serif;
   font-size: 16px;
   font-weight: bold;
-  margin: 0;
   padding: 14px 0;
-  background-color: #5ece7b;
+  background: #5ece7b;
   color: #fff;
   border: 2px solid #5ece7b;
   outline: none;
@@ -13,21 +12,11 @@
 }
 
 .fill-button-small {
-  width: 113px;
-  font-family: "Raleway", "Roboto", sans-serif;
+  width: 125px;
   font-size: 12px;
-  font-weight: bold;
-  margin: 0;
-  padding: 14px 0;
-  background-color: #5ece7b;
-  color: #fff;
-  border: 2px solid #5ece7b;
-  outline: none;
-  transition: 0.5s ease-in-out;
 }
 
-.fill-button-large:hover,
-.fill-button-small:hover {
+.fill-button:hover {
   background-color: #fff;
   color: #5ece7b;
   cursor: pointer;

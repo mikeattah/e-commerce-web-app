@@ -5,11 +5,9 @@ class OutlineButton extends Component {
   render() {
     return (
       <button
-        className={
-          this.props.compSize === "large"
-            ? "outline-button-large"
-            : "outline-button-small"
-        }
+        className={`outline-button ${
+          this.props.compSize === "large" ? "" : "outline-button-small"
+        }`}
         onClick={() => this.props.buttonClick()}
         disabled={this.props.disabled}
       >

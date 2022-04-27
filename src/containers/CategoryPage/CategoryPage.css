@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin: 60px 0 0 0;
+  margin-top: 60px;
 }
 
 .category-page-overlay {
@@ -16,7 +16,7 @@
   height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.2);
-  z-index: 10;
+  z-index: 50;
 }
 
 .category-page-overlay-hidden {
