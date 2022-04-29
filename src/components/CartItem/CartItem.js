@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { nanoid } from "nanoid";
 import Attribute from "../Attribute/Attribute";
 import Quantity from "../Quantity/Quantity";
-import SmallImage from "../SmallImage/SmallImage";
 import Swatch from "../Swatch/Swatch";
 import "./CartItem.css";
 
@@ -30,13 +29,11 @@ class CartItem extends Component {
     }
   };
 
-  handleImageClick = () => {
-    return;
-  };
-
   render() {
-    let symbol, amount;
-    for (let price of this.props.product.prices) {
+    let symbol,
+      amount,
+      prices = this.props.product.prices;
+    for (let price of prices) {
       if (price.currency.label === this.props.currency) {
         symbol = price.currency.symbol;
         amount = price.amount;
@@ -55,8 +52,8 @@ class CartItem extends Component {
               : "cart-item-left-section-small"
           }`}
         >
-          <p className="cart-item-name">{this.props.product.name}</p>
           <p className="cart-item-brand">{this.props.product.brand}</p>
+          <p className="cart-item-name">{this.props.product.name}</p>
           <p className="cart-item-price">
             {symbol} {amount}
           </p>
@@ -150,7 +147,7 @@ class CartItem extends Component {
               className="cart-item-image"
             />
             <div className="cart-item-image-overlay"></div>
-            <span
+            <button
               className={`cart-item-angle-left ${
                 this.props.compSize === "large"
                   ? ""
@@ -159,8 +156,8 @@ class CartItem extends Component {
               onClick={() => this.handleChangeImage("left")}
             >
               &#10094;
-            </span>
-            <span
+            </button>
+            <button
               className={`cart-item-angle-right ${
                 this.props.compSize === "large"
                   ? ""
@@ -169,7 +166,7 @@ class CartItem extends Component {
               onClick={() => this.handleChangeImage("right")}
             >
               &#10095;
-            </span>
+            </button>
           </div>
           <div
             className={`cart-item-remove-icon-container ${

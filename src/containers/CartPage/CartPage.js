@@ -1,51 +1,12 @@
 import React, { Component } from "react";
-import { gql } from "@apollo/client";
 import { nanoid } from "nanoid";
 import CartItem from "../../components/CartItem/CartItem";
 import FillButton from "../../components/FillButton/FillButton";
 import "./CartPage.css";
 
-const GET_CURRENCIES = gql`
-  query GetCurrencies {
-    currencies {
-      label
-      symbol
-    }
-  }
-`;
-
 class CartPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currencies: [],
-      loading: true,
-      error: null,
-    };
-  }
-
-  componentDidMount() {
-    this.props.client
-      .query({
-        query: GET_CURRENCIES,
-      })
-      .then((response) => {
-        this.setState({
-          currencies: response.data.currencies,
-          loading: false,
-        });
-      })
-      .catch((error) => {
-        this.setState({
-          error: error,
-        });
-      });
-  }
-
   render() {
-    if (this.state.loading) return <p>Loading...</p>;
-    if (this.state.error) return <p>Error: {this.state.error}</p>;
-    let currencies = this.state.currencies;
+    let currencies = this.props.currencies;
     let symbol;
     for (let currency of currencies) {
       if (currency.label === this.props.currency) {
@@ -56,8 +17,9 @@ class CartPage extends Component {
       <div className="cart-page">
         <h1 className="cart-page-title">CART</h1>
         <div className="cart-page-main">
-          {this.props.cart.map((item) => {
-            const { product, attributes, quantity } = item;
+          {this.props.cartItems.map((item) => {
+            const { id, attributes, quantity } = item;
+            const product = this.props.getProduct(id);
             return (
               <CartItem
                 key={nanoid()}
@@ -104,7 +66,7 @@ class CartPage extends Component {
           <div className="cart-page-button-container">
             <FillButton
               buttonClick={this.props.placeOrder}
-              disabled={this.props.cart.length === 0}
+              disabled={this.props.cartItems.length === 0}
               compSize="large"
             >
               ORDER

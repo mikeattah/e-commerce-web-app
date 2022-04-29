@@ -32,13 +32,13 @@ class Attribute extends Component {
     return (
       <button
         className={style}
-        onClick={() =>
+        onClick={() => {
           this.props.attributeClick(
             this.props.productId,
             this.props.name,
             this.props.value
-          )
-        }
+          );
+        }}
       >
         {this.props.value}
       </button>

@@ -1,68 +1,25 @@
 import React, { Component } from "react";
-import { gql } from "@apollo/client";
 import { nanoid } from "nanoid";
 import DropDown from "../DropDown/DropDown";
 import "./NavBar.css";
 
-const GET_CATEGORIES_AND_CURRENCIES = gql`
-  query GetCategoriesAndCurrencies {
-    categories {
-      name
-    }
-    currencies {
-      label
-      symbol
-    }
-  }
-`;
-
 class NavBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      categories: [],
-      currencies: [],
-      loading: true,
-      error: null,
-    };
-  }
-
-  componentDidMount() {
-    this.props.client
-      .query({
-        query: GET_CATEGORIES_AND_CURRENCIES,
-      })
-      .then((response) => {
-        this.setState({
-          categories: response.data.categories,
-          currencies: response.data.currencies,
-          loading: false,
-        });
-      })
-      .catch((error) => {
-        this.setState({
-          error: error,
-        });
-      });
-  }
-
   render() {
-    if (this.state.loading) return <p>Loading...</p>;
-    if (this.state.error) return <p>Error: {this.state.error}</p>;
     return (
       <nav className="nav-bar">
         <ul className="nav-bar-group">
-          {this.state.categories.map((category) => {
-            let { name } = category;
+          {this.props.categoryNames.map((category) => {
             return (
               <li
                 key={nanoid()}
                 className={`nav-bar-item ${
-                  this.props.category === name ? "nav-bar-item-selected" : ""
+                  this.props.category === category
+                    ? "nav-bar-item-selected"
+                    : ""
                 }`}
-                onClick={() => this.props.categoryClick(name)}
+                onClick={() => this.props.categoryClick(category)}
               >
-                {name.toUpperCase()}
+                {category.toUpperCase()}
               </li>
             );
           })}
@@ -81,7 +38,7 @@ class NavBar extends Component {
         />
         <div className="nav-bar-toggles">
           <DropDown
-            items={this.state.currencies}
+            items={this.props.currencies}
             dropDownClick={this.props.currencyClick}
           />
           <img

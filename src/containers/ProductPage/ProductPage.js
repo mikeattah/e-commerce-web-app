@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { gql } from "@apollo/client";
 import { nanoid } from "nanoid";
 import { Markup } from "interweave";
 import SmallImage from "../../components/SmallImage/SmallImage";
@@ -8,36 +7,6 @@ import FillButton from "../../components/FillButton/FillButton";
 import Swatch from "../../components/Swatch/Swatch";
 import "./ProductPage.css";
 
-const GET_PRODUCT = gql`
-  query GetProduct($id: String!) {
-    product(id: $id) {
-      id
-      name
-      inStock
-      gallery
-      description
-      category
-      attributes {
-        id
-        name
-        type
-        items {
-          displayValue
-          value
-          id
-        }
-      }
-      prices {
-        currency {
-          label
-          symbol
-        }
-        amount
-      }
-      brand
-    }
-  }
-`;
 class ProductPage extends Component {
   constructor(props) {
     super(props);
@@ -46,35 +15,29 @@ class ProductPage extends Component {
       image: "",
       attributes: [],
       loading: true,
-      error: null,
     };
   }
 
   componentDidMount() {
-    this.props.client
-      .query({
-        query: GET_PRODUCT,
-        variables: {
-          id: this.props.id,
-        },
-      })
-      .then((response) => {
-        this.setState({
-          product: response.data.product,
-          image: response.data.product.gallery[0],
-          attributes: this.props.attributes,
-          loading: false,
-        });
-      })
-      .catch((error) => {
-        this.setState({
-          error: error,
-        });
-      });
+    let categories = this.props.categories;
+    for (let category of categories) {
+      let products = category.products;
+      for (let product of products) {
+        if (product.id === this.props.id) {
+          this.setState({
+            product: product,
+            image: product.gallery[0],
+            attributes: this.props.attributes,
+            loading: false,
+          });
+          return;
+        }
+      }
+    }
   }
 
   addToCart = () => {
-    this.props.addToCart(this.state.product, this.state.attributes);
+    this.props.addToCart(this.props.id, this.state.attributes);
   };
 
   handleImageToggle = (image) => {
@@ -86,14 +49,14 @@ class ProductPage extends Component {
     for (let i = 0; i < attributes.length; i++) {
       if (attributes[i][0] === name) {
         attributes[i][1] = value;
+        break;
       }
     }
     this.setState({ attributes: attributes });
   };
 
   render() {
-    if (this.state.loading) return <p>Loading...</p>;
-    if (this.state.error) return <p>Error: {this.state.error}</p>;
+    if (this.state.loading) return <div>Loading...</div>;
     let prices = this.state.product.prices;
     let symbol, amount;
     for (let price of prices) {
@@ -128,8 +91,8 @@ class ProductPage extends Component {
           <div className="product-page-large-image-overlay"></div>
         </div>
         <div className="product-page-details">
-          <h3 className="product-page-title">{this.state.product.name}</h3>
-          <p className="product-page-brand">{this.state.product.brand}</p>
+          <h3 className="product-page-title">{this.state.product.brand}</h3>
+          <p className="product-page-brand">{this.state.product.name}</p>
           <div className="product-page-attributes-container">
             {this.state.product.attributes.map((attribute) => {
               const { id, name, type, items } = attribute;

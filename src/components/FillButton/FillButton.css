@@ -17,7 +17,7 @@
 }
 
 .fill-button:hover {
-  background-color: #fff;
+  background: #fff;
   color: #5ece7b;
   cursor: pointer;
 }

@@ -1,45 +1,13 @@
 import React, { Component } from "react";
-import { gql } from "@apollo/client";
 import { nanoid } from "nanoid";
 import FillButton from "../FillButton/FillButton";
 import OutlineButton from "../OutlineButton/OutlineButton";
 import CartItem from "../CartItem/CartItem";
 import "./MiniCart.css";
 
-const GET_CURRENCIES = gql`
-  query GetCurrencies {
-    currencies {
-      label
-      symbol
-    }
-  }
-`;
-
 class MiniCart extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currencies: [],
-    };
-  }
-
-  componentDidMount() {
-    this.props.client
-      .query({
-        query: GET_CURRENCIES,
-      })
-      .then((response) => {
-        this.setState({
-          currencies: response.data.currencies,
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
   render() {
-    let currencies = this.state.currencies;
+    let currencies = this.props.currencies;
     let symbol;
     for (let currency of currencies) {
       if (currency.label === this.props.currency) {
@@ -58,8 +26,9 @@ class MiniCart extends Component {
           {this.props.cartQuantity > 1 ? "items" : "item"}
         </p>
         <div className="mini-cart-items-container">
-          {this.props.cart.map((item) => {
-            const { product, attributes, quantity } = item;
+          {this.props.cartItems.map((item) => {
+            const { id, attributes, quantity } = item;
+            const product = this.props.getProduct(id);
             return (
               <CartItem
                 key={nanoid()}
@@ -78,7 +47,7 @@ class MiniCart extends Component {
         <div className="mini-cart-total-price">
           <span>Total (Incl. Tax)</span>
           <span>
-            {symbol} {this.props.total}
+            {symbol} {this.props.subTotal}
           </span>
         </div>
         <div className="mini-cart-buttons">

@@ -56,7 +56,9 @@ class ProductCard extends Component {
             this.props.productClick(this.props.id, this.state.attributes);
           }}
         ></div>
-        <p className="product-card-title">{this.props.name}</p>
+        <p className="product-card-title">
+          {this.props.brand} {this.props.name}
+        </p>
         <div className="product-card-attributes-container">
           {this.props.attributes.map((attribute) => {
             const { id, name, type, items } = attribute;
@@ -106,10 +108,7 @@ class ProductCard extends Component {
         <div
           className="product-card-add-to-cart"
           onClick={() => {
-            this.props.categoryPageAddToCart(
-              this.props.id,
-              this.state.attributes
-            );
+            this.props.addToCart(this.props.id, this.state.attributes);
           }}
         >
           <img
