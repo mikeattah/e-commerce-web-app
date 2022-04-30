@@ -3,8 +3,9 @@ import "./Attribute.css";
 
 class Attribute extends Component {
   render() {
-    let style,
-      attributes = this.props.attributes;
+    let style =
+      this.props.compSize === "large" ? "attribute-large" : "attribute-small";
+    let attributes = this.props.attributes;
     if (this.props.compSize === "large") {
       for (let attribute of attributes) {
         if (
@@ -12,8 +13,6 @@ class Attribute extends Component {
           this.props.value === attribute[1]
         ) {
           style = "attribute-large-selected";
-        } else {
-          style = "attribute-large";
         }
       }
     } else {
@@ -23,8 +22,6 @@ class Attribute extends Component {
           this.props.value === attribute[1]
         ) {
           style = "attribute-small-selected";
-        } else {
-          style = "attribute-small";
         }
       }
     }

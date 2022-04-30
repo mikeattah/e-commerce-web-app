@@ -1,9 +1,10 @@
 .mini-cart {
   position: fixed;
+  -webkit-position: fixed;
   top: 60px;
   right: 50px;
   height: 400px;
-  width: 300px;
+  width: 280px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

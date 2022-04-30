@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { nanoid } from "nanoid";
 import { Markup } from "interweave";
 import Loading from "../../components/Loading/Loading";
-// import Error from "../../components/Error/Error";
 import SmallImage from "../../components/SmallImage/SmallImage";
 import Attribute from "../../components/Attribute/Attribute";
 import FillButton from "../../components/FillButton/FillButton";

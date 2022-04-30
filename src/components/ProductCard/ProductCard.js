@@ -9,6 +9,7 @@ class ProductCard extends Component {
     super(props);
     this.state = {
       attributes: [],
+      loading: true,
     };
   }
 
@@ -24,6 +25,7 @@ class ProductCard extends Component {
     }
     this.setState({
       attributes: temp,
+      loading: false,
     });
   }
 
@@ -39,6 +41,7 @@ class ProductCard extends Component {
   };
 
   render() {
+    if (this.state.loading) return <div>Loading...</div>;
     return (
       <div
         className={`product-card ${

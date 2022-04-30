@@ -46,7 +46,7 @@ class MiniCart extends Component {
           })}
         </div>
         <div className="mini-cart-total-price">
-          <span>Total (Incl. Tax)</span>
+          <span>Total:</span>
           <span>
             {symbol} {this.props.subTotal}
           </span>

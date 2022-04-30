@@ -26,7 +26,7 @@ class App extends Component {
       cartQuantity: 0,
       id: "",
       attributes: [],
-      miniCartOpen: true,
+      miniCartOpen: false,
       loading: true,
       error: null,
     };
