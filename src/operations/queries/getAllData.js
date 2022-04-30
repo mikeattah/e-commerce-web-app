@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-const GetAllData = gql`
+export const GET_ALL_DATA = gql`
   query GetAllData {
     categories {
       name
@@ -35,8 +35,10 @@ const GetAllData = gql`
       label
       symbol
     }
-    cartItems @client
+    cartItems @client {
+      id
+      attributes
+      quantity
+    }
   }
 `;
-
-export default GetAllData;

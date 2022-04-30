@@ -91,7 +91,7 @@ class ProductPage extends Component {
           <div className="product-page-large-image-overlay"></div>
         </div>
         <div className="product-page-details">
-          <h3 className="product-page-title">{this.state.product.brand}</h3>
+          <h1 className="product-page-title">{this.state.product.brand}</h1>
           <p className="product-page-brand">{this.state.product.name}</p>
           <div className="product-page-attributes-container">
             {this.state.product.attributes.map((attribute) => {

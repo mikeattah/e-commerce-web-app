@@ -1,7 +1,7 @@
 import { InMemoryCache } from "@apollo/client";
-import cartItemsVar from "./cartItemsVar";
+import { cartItemsVar } from "./cartItemsVar";
 
-const cache = new InMemoryCache({
+export const cache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
@@ -14,5 +14,3 @@ const cache = new InMemoryCache({
     },
   },
 });
-
-export default cache;

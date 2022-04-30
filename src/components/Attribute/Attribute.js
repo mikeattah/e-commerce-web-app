@@ -28,7 +28,6 @@ class Attribute extends Component {
         }
       }
     }
-
     return (
       <button
         className={style}
