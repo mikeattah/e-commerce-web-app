@@ -36,7 +36,7 @@ class CartItem extends Component {
     for (let price of prices) {
       if (price.currency.label === this.props.currency) {
         symbol = price.currency.symbol;
-        amount = price.amount;
+        amount = this.props.numberFormat(price.amount);
       }
     }
     return (

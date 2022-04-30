@@ -39,6 +39,7 @@ class MiniCart extends Component {
                 cartItemQuantity={this.props.cartItemQuantity}
                 removeFromCart={this.props.removeFromCart}
                 currency={this.props.currency}
+                numberFormat={this.props.numberFormat}
                 compSize="small"
               />
             );
