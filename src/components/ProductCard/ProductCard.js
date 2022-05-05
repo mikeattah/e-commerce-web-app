@@ -14,15 +14,15 @@ class ProductCard extends Component {
   }
 
   componentDidMount() {
-    let attributes = this.props.attributes;
+    const attributes = this.props.attributes;
     let name,
       value,
       temp = [];
-    for (let attribute of attributes) {
+    attributes.forEach((attribute) => {
       name = attribute.name;
       value = attribute.items[0].value;
       temp.push([name, value]);
-    }
+    });
     this.setState({
       attributes: temp,
       loading: false,
@@ -30,7 +30,7 @@ class ProductCard extends Component {
   }
 
   handleProductCardAttributes = (id, name, value) => {
-    let attributes = this.state.attributes;
+    const attributes = this.state.attributes;
     for (let i = 0; i < attributes.length; i++) {
       if (attributes[i][0] === name) {
         attributes[i][1] = value;
@@ -52,13 +52,10 @@ class ProductCard extends Component {
           src={this.props.gallery[0]}
           alt={this.props.name}
           className="product-card-image"
-        />
-        <div
-          className="product-card-image-overlay"
           onClick={() => {
             this.props.productClick(this.props.id, this.state.attributes);
           }}
-        ></div>
+        />
         <p className="product-card-title">
           {this.props.brand} {this.props.name}
         </p>
@@ -128,6 +125,9 @@ class ProductCard extends Component {
           className={`product-card-overlay-hidden ${
             this.props.inStock ? "" : "product-card-overlay-visible"
           }`}
+          onClick={() => {
+            this.props.productClick(this.props.id, this.state.attributes);
+          }}
         >
           <p>OUT OF STOCK</p>
         </div>

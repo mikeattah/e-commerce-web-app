@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { nanoid } from "nanoid";
-import ProductCard from "../../components/ProductCard/ProductCard";
 import Pagination from "../../components/Pagination/Pagination";
+import ProductCard from "../../components/ProductCard/ProductCard";
 import "./CategoryPage.css";
 
 class CategoryPage extends Component {
@@ -18,13 +18,13 @@ class CategoryPage extends Component {
 
   render() {
     // number of items per page
-    let pageItems = 6;
+    const pageItems = 6;
     // array of pages
     const pages = [];
     // index of category in categoryNames array
-    let i = this.props.categoryNames.indexOf(this.props.category);
+    const i = this.props.categoryNames.indexOf(this.props.category);
     // number of pages per category
-    let pageCount = Math.ceil(
+    const pageCount = Math.ceil(
       this.props.categories[i].products.length / pageItems
     );
     // collect page indexes into pages array
@@ -43,7 +43,7 @@ class CategoryPage extends Component {
               this.state.pageIndex + pageItems
             ),
           ].map((product) => {
-            let { id, name, inStock, gallery, attributes, prices, brand } =
+            const { id, name, inStock, gallery, attributes, prices, brand } =
               product;
             let label, symbol, amount;
             for (let price of prices) {

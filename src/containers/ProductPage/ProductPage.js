@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { nanoid } from "nanoid";
 import { Markup } from "interweave";
-import Loading from "../../components/Loading/Loading";
-import SmallImage from "../../components/SmallImage/SmallImage";
 import Attribute from "../../components/Attribute/Attribute";
 import FillButton from "../../components/FillButton/FillButton";
+import Loading from "../../components/Loading/Loading";
+import SmallImage from "../../components/SmallImage/SmallImage";
 import Swatch from "../../components/Swatch/Swatch";
 import "./ProductPage.css";
 
@@ -20,9 +20,9 @@ class ProductPage extends Component {
   }
 
   componentDidMount() {
-    let categories = this.props.categories;
+    const categories = this.props.categories;
     for (let category of categories) {
-      let products = category.products;
+      const products = category.products;
       for (let product of products) {
         if (product.id === this.props.id) {
           this.setState({
@@ -46,7 +46,7 @@ class ProductPage extends Component {
   };
 
   handleProductPageAttributes = (id, name, value) => {
-    let attributes = this.state.attributes;
+    const attributes = this.state.attributes;
     for (let i = 0; i < attributes.length; i++) {
       if (attributes[i][0] === name) {
         attributes[i][1] = value;
@@ -58,14 +58,13 @@ class ProductPage extends Component {
 
   render() {
     if (this.state.loading) return <Loading />;
-    let prices = this.state.product.prices;
     let symbol, amount;
-    for (let price of prices) {
+    this.state.product.prices.forEach((price) => {
       if (price.currency.label === this.props.currency) {
         symbol = price.currency.symbol;
         amount = this.props.numberFormat(price.amount);
       }
-    }
+    });
     return (
       <div className="product-page">
         <div className="product-page-small-images-container">

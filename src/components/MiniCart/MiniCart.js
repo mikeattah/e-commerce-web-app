@@ -7,13 +7,12 @@ import "./MiniCart.css";
 
 class MiniCart extends Component {
   render() {
-    let currencies = this.props.currencies;
     let symbol;
-    for (let currency of currencies) {
+    this.props.currencies.forEach((currency) => {
       if (currency.label === this.props.currency) {
         symbol = currency.symbol;
       }
-    }
+    });
     return (
       <div
         className={`mini-cart ${

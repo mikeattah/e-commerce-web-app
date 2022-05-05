@@ -5,7 +5,7 @@ class Attribute extends Component {
   render() {
     let style =
       this.props.compSize === "large" ? "attribute-large" : "attribute-small";
-    let attributes = this.props.attributes;
+    const attributes = this.props.attributes;
     if (this.props.compSize === "large") {
       for (let attribute of attributes) {
         if (

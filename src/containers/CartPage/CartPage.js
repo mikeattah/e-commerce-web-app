@@ -6,13 +6,13 @@ import "./CartPage.css";
 
 class CartPage extends Component {
   render() {
-    let currencies = this.props.currencies;
+    const currencies = this.props.currencies;
     let symbol;
-    for (let currency of currencies) {
+    currencies.forEach((currency) => {
       if (currency.label === this.props.currency) {
         symbol = currency.symbol;
       }
-    }
+    });
     return (
       <div className="cart-page">
         <h1 className="cart-page-title">CART</h1>

@@ -21,3 +21,7 @@
   color: #5ece7b;
   cursor: pointer;
 }
+
+.fill-button:disabled {
+  cursor: not-allowed;
+}

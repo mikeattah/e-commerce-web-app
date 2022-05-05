@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import { GET_ALL_DATA } from "./operations/queries/getAllData";
-import { cartItemsVar } from "./store/cartItemsVar";
 import Loading from "./components/Loading/Loading";
 import Error from "./components/Error/Error";
 import NavBar from "./components/NavBar/NavBar";
 import MiniCart from "./components/MiniCart/MiniCart";
+import CartPage from "./containers/CartPage/CartPage";
 import CategoryPage from "./containers/CategoryPage/CategoryPage";
 import ErrorBoundary from "./containers/ErrorBoundary/ErrorBoundary";
 import ProductPage from "./containers/ProductPage/ProductPage";
-import CartPage from "./containers/CartPage/CartPage";
+import { GET_ALL_DATA } from "./operations/queries/getAllData";
+import { cartItemsVar } from "./store/cartItemsVar";
 import "./App.css";
 
 class App extends Component {
@@ -38,11 +38,9 @@ class App extends Component {
         query: GET_ALL_DATA,
       })
       .then((response) => {
-        let categories = response.data.categories;
-        let categoryNames = [];
-        for (let category of categories) {
-          categoryNames.push(category.name);
-        }
+        let categoryNames = [],
+          categories = response.data.categories;
+        categories.forEach((category) => categoryNames.push(category.name));
         this.setState(
           {
             categories: categories,
@@ -85,23 +83,21 @@ class App extends Component {
   };
 
   handleCartQuantity = () => {
-    let cartItems = this.state.cartItems;
-    let quantity = 0;
-    for (let item of cartItems) {
-      quantity += item.quantity;
-    }
+    let quantity = 0,
+      cartItems = this.state.cartItems;
+    cartItems.forEach((item) => (quantity += item.quantity));
     this.setState({ cartQuantity: quantity });
   };
 
   handleCartTotal = () => {
-    let cartItems = this.state.cartItems;
-    let total = 0;
-    for (let item of cartItems) {
-      let product = this.handleGetProduct(item.id);
-      let i = 0;
+    let total = 0,
+      cartItems = this.state.cartItems;
+    cartItems.forEach((item) => {
+      let i = 0,
+        product = this.handleGetProduct(item.id);
       while (this.state.currency !== product.prices[i].currency.label) i++;
       total += product.prices[i].amount * item.quantity;
-    }
+    });
     this.setState({ cartTotal: total });
   };
 
@@ -141,7 +137,7 @@ class App extends Component {
   };
 
   handleCartItemQuantity = (id, type) => {
-    let cartItems = this.state.cartItems.map((item) => {
+    const cartItems = this.state.cartItems.map((item) => {
       return { ...item };
     });
     for (let item of cartItems) {

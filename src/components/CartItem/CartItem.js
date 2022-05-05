@@ -30,15 +30,13 @@ class CartItem extends Component {
   };
 
   render() {
-    let symbol,
-      amount,
-      prices = this.props.product.prices;
-    for (let price of prices) {
+    let symbol, amount;
+    this.props.product.prices.forEach((price) => {
       if (price.currency.label === this.props.currency) {
         symbol = price.currency.symbol;
         amount = this.props.numberFormat(price.amount);
       }
-    }
+    });
     return (
       <div
         className={`cart-item ${
