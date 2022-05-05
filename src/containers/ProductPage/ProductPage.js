@@ -21,9 +21,9 @@ class ProductPage extends Component {
 
   componentDidMount() {
     const categories = this.props.categories;
-    for (let category of categories) {
+    for (const category of categories) {
       const products = category.products;
-      for (let product of products) {
+      for (const product of products) {
         if (product.id === this.props.id) {
           this.setState({
             product: product,
@@ -57,18 +57,34 @@ class ProductPage extends Component {
   };
 
   render() {
-    if (this.state.loading) return <Loading />;
+    const {
+      currency,
+      categories,
+      id,
+      attributes: attributesFromProps,
+      miniCartOpen,
+      addToCart,
+      miniCartToggle,
+      numberFormat,
+    } = this.props;
+    const {
+      product,
+      image,
+      attributes: attributesFromState,
+      loading,
+    } = this.state;
+    if (loading) return <Loading />;
     let symbol, amount;
-    this.state.product.prices.forEach((price) => {
-      if (price.currency.label === this.props.currency) {
+    product.prices.forEach((price) => {
+      if (price.currency.label === currency) {
         symbol = price.currency.symbol;
-        amount = this.props.numberFormat(price.amount);
+        amount = numberFormat(price.amount);
       }
     });
     return (
       <div className="product-page">
         <div className="product-page-small-images-container">
-          {this.state.product.gallery.map((image) => {
+          {product.gallery.map((image) => {
             return (
               <div className="product-page-small-image">
                 <SmallImage
@@ -76,7 +92,7 @@ class ProductPage extends Component {
                   src={image}
                   alt="click to view"
                   imageClick={this.handleImageToggle}
-                  currentImage={this.state.image}
+                  currentImage={image}
                 />
               </div>
             );
@@ -84,17 +100,17 @@ class ProductPage extends Component {
         </div>
         <div className="product-page-large-image-container">
           <img
-            src={this.state.image}
+            src={image}
             alt="Enlarged product"
             className="product-page-large-image"
           />
           <div className="product-page-large-image-overlay"></div>
         </div>
         <div className="product-page-details">
-          <h1 className="product-page-title">{this.state.product.brand}</h1>
-          <p className="product-page-brand">{this.state.product.name}</p>
+          <h1 className="product-page-title">{product.brand}</h1>
+          <p className="product-page-brand">{product.name}</p>
           <div className="product-page-attributes-container">
-            {this.state.product.attributes.map((attribute) => {
+            {product.attributes.map((attribute) => {
               const { id, name, type, items } = attribute;
               return (
                 <div key={nanoid()} id={id} className="product-page-attributes">
@@ -111,8 +127,8 @@ class ProductPage extends Component {
                           displayValue={displayValue}
                           value={value}
                           id={id}
-                          productId={this.state.product.id}
-                          attributes={this.state.attributes}
+                          productId={product.id}
+                          attributes={attributesFromState}
                           attributeClick={this.handleProductPageAttributes}
                           compSize="large"
                         />
@@ -128,8 +144,8 @@ class ProductPage extends Component {
                           displayValue={displayValue}
                           value={value}
                           id={id}
-                          productId={this.state.product.id}
-                          attributes={this.state.attributes}
+                          productId={product.id}
+                          attributes={attributesFromState}
                           swatchClick={this.handleProductPageAttributes}
                           compSize="large"
                         />
@@ -145,22 +161,22 @@ class ProductPage extends Component {
           </p>
           <FillButton
             buttonClick={this.addToCart}
-            disabled={!this.state.product.inStock}
+            disabled={!product.inStock}
             compSize="large"
           >
             ADD TO CART
           </FillButton>
           <div className="product-page-description">
-            <Markup content={this.state.product.description} />
+            <Markup content={product.description} />
           </div>
         </div>
         <div
           className={
-            this.props.miniCartOpen
+            miniCartOpen
               ? "product-page-overlay"
               : "product-page-overlay-hidden"
           }
-          onClick={() => this.props.miniCartToggle()}
+          onClick={() => miniCartToggle()}
         ></div>
       </div>
     );

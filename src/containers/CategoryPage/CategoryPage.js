@@ -17,40 +17,45 @@ class CategoryPage extends Component {
   };
 
   render() {
+    const {
+      currency,
+      category,
+      categories,
+      categoryNames,
+      miniCartOpen,
+      productClick,
+      addToCart,
+      miniCartToggle,
+      numberFormat,
+    } = this.props;
+    const { pageIndex } = this.state;
     // number of items per page
     const pageItems = 6;
     // array of pages
     const pages = [];
     // index of category in categoryNames array
-    const i = this.props.categoryNames.indexOf(this.props.category);
+    const i = categoryNames.indexOf(category);
     // number of pages per category
-    const pageCount = Math.ceil(
-      this.props.categories[i].products.length / pageItems
-    );
+    const pageCount = Math.ceil(categories[i].products.length / pageItems);
     // collect page indexes into pages array
     for (let j = 0; j < pageCount; j++) {
       pages.push(j);
     }
     return (
       <div className="category-page">
-        <h1 className="category-page-title">
-          {this.props.category.toUpperCase()}
-        </h1>
+        <h1 className="category-page-title">{category.toUpperCase()}</h1>
         <div className="category-page-main">
           {[
-            ...this.props.categories[i].products.slice(
-              this.state.pageIndex,
-              this.state.pageIndex + pageItems
-            ),
+            ...categories[i].products.slice(pageIndex, pageIndex + pageItems),
           ].map((product) => {
             const { id, name, inStock, gallery, attributes, prices, brand } =
               product;
             let label, symbol, amount;
-            for (let price of prices) {
-              if (price.currency.label === this.props.currency) {
+            for (const price of prices) {
+              if (price.currency.label === currency) {
                 label = price.currency.label;
                 symbol = price.currency.symbol;
-                amount = this.props.numberFormat(price.amount);
+                amount = numberFormat(price.amount);
               }
             }
             return (
@@ -65,25 +70,25 @@ class CategoryPage extends Component {
                 symbol={symbol}
                 amount={amount}
                 brand={brand}
-                productClick={this.props.productClick}
-                addToCart={this.props.addToCart}
+                productClick={productClick}
+                addToCart={addToCart}
               />
             );
           })}
         </div>
         <Pagination
           pages={pages}
-          pageIndex={this.state.pageIndex}
+          pageIndex={pageIndex}
           pageItems={pageItems}
           pageClick={this.handlePageClick}
         />
         <div
           className={
-            this.props.miniCartOpen
+            miniCartOpen
               ? "category-page-overlay"
               : "category-page-overlay-hidden"
           }
-          onClick={() => this.props.miniCartToggle()}
+          onClick={() => miniCartToggle()}
         ></div>
       </div>
     );

@@ -6,10 +6,26 @@ import "./CartPage.css";
 
 class CartPage extends Component {
   render() {
-    const currencies = this.props.currencies;
+    const {
+      currency,
+      currencies,
+      cartItems,
+      subTotal,
+      tax,
+      total,
+      cartQuantity,
+      miniCartOpen,
+      getProduct,
+      cartItemAttributes,
+      cartItemQuantity,
+      removeFromCart,
+      miniCartToggle,
+      placeOrder,
+      numberFormat,
+    } = this.props;
     let symbol;
     currencies.forEach((currency) => {
-      if (currency.label === this.props.currency) {
+      if (currency.label === currency) {
         symbol = currency.symbol;
       }
     });
@@ -17,20 +33,20 @@ class CartPage extends Component {
       <div className="cart-page">
         <h1 className="cart-page-title">CART</h1>
         <div className="cart-page-main">
-          {this.props.cartItems.map((item) => {
+          {cartItems.map((item) => {
             const { id, attributes, quantity } = item;
-            const product = this.props.getProduct(id);
+            const product = getProduct(id);
             return (
               <CartItem
                 key={nanoid()}
                 product={product}
                 attributes={attributes}
-                cartItemAttributes={this.props.cartItemAttributes}
+                cartItemAttributes={cartItemAttributes}
                 quantity={quantity}
-                cartItemQuantity={this.props.cartItemQuantity}
-                removeFromCart={this.props.removeFromCart}
-                currency={this.props.currency}
-                numberFormat={this.props.numberFormat}
+                cartItemQuantity={cartItemQuantity}
+                removeFromCart={removeFromCart}
+                currency={currency}
+                numberFormat={numberFormat}
                 compSize="large"
               />
             );
@@ -39,35 +55,27 @@ class CartPage extends Component {
         <div className="cart-page-section">
           <div className="cart-page-summary">
             <span className="cart-page-summary-text-one">Qty:</span>
-            <span className="cart-page-summary-text-three">
-              {this.props.cartQuantity}
-            </span>
+            <span className="cart-page-summary-text-three">{cartQuantity}</span>
           </div>
           <div className="cart-page-summary">
             <span className="cart-page-summary-text-one">Sub-Total:</span>
             <span className="cart-page-summary-text-two">{symbol}</span>
-            <span className="cart-page-summary-text-three">
-              {this.props.subTotal}
-            </span>
+            <span className="cart-page-summary-text-three">{subTotal}</span>
           </div>
           <div className="cart-page-summary">
             <span className="cart-page-summary-text-one">Tax:</span>
             <span className="cart-page-summary-text-two">{symbol}</span>
-            <span className="cart-page-summary-text-three">
-              {this.props.tax}
-            </span>
+            <span className="cart-page-summary-text-three">{tax}</span>
           </div>
           <div className="cart-page-summary cart-page-summary-extra">
             <span className="cart-page-summary-text-one">Total:</span>
             <span className="cart-page-summary-text-two">{symbol}</span>
-            <span className="cart-page-summary-text-three">
-              {this.props.total}
-            </span>
+            <span className="cart-page-summary-text-three">{total}</span>
           </div>
           <div className="cart-page-button-container">
             <FillButton
-              buttonClick={this.props.placeOrder}
-              disabled={this.props.cartItems.length === 0}
+              buttonClick={placeOrder}
+              disabled={cartItems.length === 0}
               compSize="large"
             >
               ORDER
@@ -76,11 +84,9 @@ class CartPage extends Component {
         </div>
         <div
           className={
-            this.props.miniCartOpen
-              ? "cart-page-overlay"
-              : "cart-page-overlay-hidden"
+            miniCartOpen ? "cart-page-overlay" : "cart-page-overlay-hidden"
           }
-          onClick={() => this.props.miniCartToggle()}
+          onClick={() => miniCartToggle()}
         ></div>
       </div>
     );

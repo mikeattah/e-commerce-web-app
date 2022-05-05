@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import styled from "styled-components";
 import "./Swatch.css";
 
@@ -13,35 +13,38 @@ const StyledCheck = styled.span`
   color: ${(props) => (props.id === "White" ? "black" : "white")};
 `;
 
-class Swatch extends Component {
+class Swatch extends PureComponent {
   render() {
-    let check,
-      attributes = this.props.attributes;
-    for (let attribute of attributes) {
+    const {
+      name,
+      displayValue,
+      value,
+      id,
+      productId,
+      attributes,
+      swatchClick,
+      compSize,
+    } = this.props;
+    let check;
+    attributes.forEach((attribute) => {
       if (attribute[0] === "Color") {
         check = attribute[1];
       }
-    }
+    });
     return (
       <div
-        className={
-          this.props.compSize === "large" ? "swatch-large" : "swatch-small"
-        }
+        className={compSize === "large" ? "swatch-large" : "swatch-small"}
         onClick={() => {
-          this.props.swatchClick(
-            this.props.productId,
-            this.props.name,
-            this.props.value
-          );
+          swatchClick(productId, name, value);
         }}
       >
-        <StyledSwatch value={this.props.value} />
+        <StyledSwatch value={value} />
         <div
           className={`swatch-overlay ${
-            this.props.value === check ? "swatch-overlay-visible" : ""
+            value === check ? "swatch-overlay-visible" : ""
           }`}
         >
-          <StyledCheck id={this.props.id}>&#10003;</StyledCheck>
+          <StyledCheck id={id}>&#10003;</StyledCheck>
         </div>
       </div>
     );

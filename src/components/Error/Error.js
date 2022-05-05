@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import "./Error.css";
 
-class Error extends Component {
+class Error extends PureComponent {
   render() {
+    const { error } = this.props;
     return (
       <div className="error-container">
         <div className="error-box">
@@ -15,7 +16,7 @@ class Error extends Component {
           </div>
           <div className="error-text-container">
             <h1 className="error-title">Something went terribly wrong!</h1>
-            <p className="error-text">{this.props.error.message}</p>
+            <p className="error-text">{error.message}</p>
           </div>
         </div>
       </div>

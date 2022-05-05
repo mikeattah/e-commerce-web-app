@@ -1,16 +1,15 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import "./Quantity.css";
 
-class Quantity extends Component {
+class Quantity extends PureComponent {
   render() {
+    const { children, compSize, type, id, quantityClick } = this.props;
     return (
       <button
-        className={
-          this.props.compSize === "large" ? "quantity-large" : "quantity-small"
-        }
-        onClick={() => this.props.quantityClick(this.props.id, this.props.type)}
+        className={compSize === "large" ? "quantity-large" : "quantity-small"}
+        onClick={() => quantityClick(id, type)}
       >
-        {this.props.children}
+        {children}
       </button>
     );
   }

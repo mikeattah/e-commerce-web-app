@@ -1,21 +1,22 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import "./SmallImage.css";
 
-class SmallImage extends Component {
+class SmallImage extends PureComponent {
   render() {
+    const { src, alt, imageClick, currentImage } = this.props;
     return (
       <div
         className="small-image-container"
-        onClick={() => this.props.imageClick(this.props.src)}
+        onClick={() => imageClick(src)}
       >
         <img
-          src={this.props.src}
-          alt={this.props.alt}
+          src={src}
+          alt={alt}
           className="small-image"
         />
         <div
           className={`small-image-overlay ${
-            this.props.currentImage === this.props.src
+            currentImage === src
               ? "small-image-overlay-selected"
               : ""
           }`}

@@ -1,44 +1,59 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { nanoid } from "nanoid";
 import FillButton from "../FillButton/FillButton";
 import OutlineButton from "../OutlineButton/OutlineButton";
 import CartItem from "../CartItem/CartItem";
 import "./MiniCart.css";
 
-class MiniCart extends Component {
+class MiniCart extends PureComponent {
   render() {
+    const {
+      currency,
+      currencies,
+      cartItems,
+      subTotal,
+      cartQuantity,
+      miniCartOpen,
+      getProduct,
+      cartItemAttributes,
+      cartItemQuantity,
+      removeFromCart,
+      viewBag,
+      placeOrder,
+      numberFormat,
+    } = this.props;
     let symbol;
-    this.props.currencies.forEach((currency) => {
-      if (currency.label === this.props.currency) {
+    currencies.forEach((currency) => {
+      if (currency.label === currency) {
         symbol = currency.symbol;
       }
     });
     return (
       <div
         className={`mini-cart ${
-          this.props.miniCartOpen ? "" : "mini-cart-hidden"
+          miniCartOpen ? "" : "mini-cart-hidden"
         }`}
       >
         <p className="mini-cart-title">
           <span className="mini-cart-title-span">My Bag,</span>{" "}
-          {this.props.cartQuantity}{" "}
-          {this.props.cartQuantity > 1 ? "items" : "item"}
+          {cartQuantity}{" "}
+          {cartQuantity > 1 ? "items" : "item"}
         </p>
         <div className="mini-cart-items-container">
-          {this.props.cartItems.map((item) => {
+          {cartItems.map((item) => {
             const { id, attributes, quantity } = item;
-            const product = this.props.getProduct(id);
+            const product = getProduct(id);
             return (
               <CartItem
                 key={nanoid()}
                 product={product}
                 attributes={attributes}
-                cartItemAttributes={this.props.cartItemAttributes}
+                cartItemAttributes={cartItemAttributes}
                 quantity={quantity}
-                cartItemQuantity={this.props.cartItemQuantity}
-                removeFromCart={this.props.removeFromCart}
-                currency={this.props.currency}
-                numberFormat={this.props.numberFormat}
+                cartItemQuantity={cartItemQuantity}
+                removeFromCart={removeFromCart}
+                currency={currency}
+                numberFormat={numberFormat}
                 compSize="small"
               />
             );
@@ -47,19 +62,19 @@ class MiniCart extends Component {
         <div className="mini-cart-total-price">
           <span>Total:</span>
           <span>
-            {symbol} {this.props.subTotal}
+            {symbol} {subTotal}
           </span>
         </div>
         <div className="mini-cart-buttons">
           <OutlineButton
-            buttonClick={this.props.viewBag}
+            buttonClick={viewBag}
             compSize="small"
             disabled={false}
           >
             VIEW BAG
           </OutlineButton>
           <FillButton
-            buttonClick={this.props.placeOrder}
+            buttonClick={placeOrder}
             compSize="small"
             disabled={false}
           >

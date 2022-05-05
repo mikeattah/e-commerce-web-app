@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { nanoid } from "nanoid";
 import Attribute from "../Attribute/Attribute";
 import Swatch from "../Swatch/Swatch";
 import "./ProductCard.css";
 
-class ProductCard extends Component {
+class ProductCard extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,11 +14,10 @@ class ProductCard extends Component {
   }
 
   componentDidMount() {
-    const attributes = this.props.attributes;
     let name,
       value,
       temp = [];
-    attributes.forEach((attribute) => {
+    this.props.attributes.forEach((attribute) => {
       name = attribute.name;
       value = attribute.items[0].value;
       temp.push([name, value]);
@@ -41,26 +40,35 @@ class ProductCard extends Component {
   };
 
   render() {
+    const {
+      id,
+      name,
+      inStock,
+      gallery,
+      attributes,
+      label,
+      symbol,
+      amount,
+      brand,
+      productClick,
+      addToCart,
+    } = this.props;
     if (this.state.loading) return <div>Loading...</div>;
     return (
-      <div
-        className={`product-card ${
-          this.props.inStock ? "" : "product-card-disabled"
-        }`}
-      >
+      <div className={`product-card ${inStock ? "" : "product-card-disabled"}`}>
         <img
-          src={this.props.gallery[0]}
-          alt={this.props.name}
+          src={gallery[0]}
+          alt={name}
           className="product-card-image"
           onClick={() => {
-            this.props.productClick(this.props.id, this.state.attributes);
+            productClick(id, this.state.attributes);
           }}
         />
         <p className="product-card-title">
-          {this.props.brand} {this.props.name}
+          {brand} {name}
         </p>
         <div className="product-card-attributes-container">
-          {this.props.attributes.map((attribute) => {
+          {attributes.map((attribute) => {
             const { id, name, type, items } = attribute;
             return (
               <div key={nanoid()} id={id} className="product-card-attributes">
@@ -77,7 +85,7 @@ class ProductCard extends Component {
                         displayValue={displayValue}
                         value={value}
                         id={id}
-                        productId={this.props.id}
+                        productId={id}
                         attributes={this.state.attributes}
                         attributeClick={this.handleProductCardAttributes}
                         compSize="small"
@@ -94,7 +102,7 @@ class ProductCard extends Component {
                         displayValue={displayValue}
                         value={value}
                         id={id}
-                        productId={this.props.id}
+                        productId={id}
                         attributes={this.state.attributes}
                         swatchClick={this.handleProductCardAttributes}
                         compSize="small"
@@ -108,7 +116,7 @@ class ProductCard extends Component {
         <div
           className="product-card-add-to-cart"
           onClick={() => {
-            this.props.addToCart(this.props.id, this.state.attributes);
+            addToCart(id, this.state.attributes);
           }}
         >
           <img
@@ -119,14 +127,14 @@ class ProductCard extends Component {
           />
         </div>
         <p className="product-card-price">
-          {this.props.symbol} {this.props.amount}
+          {symbol} {amount}
         </p>
         <div
           className={`product-card-overlay-hidden ${
-            this.props.inStock ? "" : "product-card-overlay-visible"
+            inStock ? "" : "product-card-overlay-visible"
           }`}
           onClick={() => {
-            this.props.productClick(this.props.id, this.state.attributes);
+            productClick(id, this.state.attributes);
           }}
         >
           <p>OUT OF STOCK</p>

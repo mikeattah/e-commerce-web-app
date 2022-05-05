@@ -38,15 +38,22 @@ class App extends Component {
         query: GET_ALL_DATA,
       })
       .then((response) => {
-        let categoryNames = [],
-          categories = response.data.categories;
-        categories.forEach((category) => categoryNames.push(category.name));
+        const categoryNames = response.data.categories.map(
+          (category) => category.name
+        );
+        // unfreeze arrays and objects saved in local storage
+        const cartItems = response.data.cartItems.map((item) => {
+          const init = { ...item };
+          const temp = [...init.attributes].map((attribute) => [...attribute]);
+          init.attributes = temp;
+          return init;
+        });
         this.setState(
           {
-            categories: categories,
+            categories: response.data.categories,
             categoryNames: categoryNames,
             currencies: response.data.currencies,
-            cartItems: response.data.cartItems,
+            cartItems: cartItems,
             loading: false,
           },
           () => {
@@ -71,10 +78,10 @@ class App extends Component {
   };
 
   handleGetProduct = (id) => {
-    let categories = this.state.categories;
-    for (let category of categories) {
-      let products = category.products;
-      for (let product of products) {
+    const categories = categories;
+    for (const category of categories) {
+      const products = category.products;
+      for (const product of products) {
         if (product.id === id) {
           return product;
         }
@@ -83,16 +90,14 @@ class App extends Component {
   };
 
   handleCartQuantity = () => {
-    let quantity = 0,
-      cartItems = this.state.cartItems;
-    cartItems.forEach((item) => (quantity += item.quantity));
+    let quantity = 0;
+    this.state.cartItems.forEach((item) => (quantity += item.quantity));
     this.setState({ cartQuantity: quantity });
   };
 
   handleCartTotal = () => {
-    let total = 0,
-      cartItems = this.state.cartItems;
-    cartItems.forEach((item) => {
+    let total = 0;
+    this.state.cartItems.forEach((item) => {
       let i = 0,
         product = this.handleGetProduct(item.id);
       while (this.state.currency !== product.prices[i].currency.label) i++;
@@ -108,68 +113,10 @@ class App extends Component {
     );
   };
 
-  handleCartItemAttributes = (id, name, value) => {
-    let cartItems = this.state.cartItems.map((item) => {
-      return { ...item };
-    });
-    let check = false;
-    for (let item of cartItems) {
-      if (item.id === id) {
-        let attributes = [
-          ...item.attributes.map((attribute) => {
-            return [...attribute];
-          }),
-        ];
-        for (let i = 0; i < attributes.length; i++) {
-          if (attributes[i][0] === name) {
-            check = true;
-            attributes[i][1] = value;
-          }
-        }
-        if (!check) attributes.push([name, value]);
-        item.attributes = attributes;
-        break;
-      }
-    }
-    cartItemsVar(cartItems);
-    this.handleSaveCartItems();
-    this.setState({ cartItems: cartItems });
-  };
-
-  handleCartItemQuantity = (id, type) => {
-    const cartItems = this.state.cartItems.map((item) => {
-      return { ...item };
-    });
-    for (let item of cartItems) {
-      if (item.id === id) {
-        if (type === "increase") {
-          item.quantity += 1;
-        } else if (type === "decrease") {
-          if (item.quantity > 1) {
-            item.quantity -= 1;
-          }
-        }
-        break;
-      }
-    }
-    cartItemsVar(cartItems);
-    this.handleSaveCartItems();
-    this.setState({ cartItems: cartItems }, () => {
-      this.handleCartQuantity();
-      this.handleCartTotal();
-    });
-  };
-
-  handleCurrencyClick = (currency) => {
-    this.setState({ currency: currency }, () => {
-      this.handleCartTotal();
-    });
-  };
-
   handleAddToCart = (id, attributes) => {
-    let cartItems = this.state.cartItems,
+    let cartItems = cartItems,
       check = false;
-    for (let item of cartItems) {
+    for (const item of cartItems) {
       if (item.id === id) {
         check = true;
         item.attributes = attributes;
@@ -196,8 +143,8 @@ class App extends Component {
   };
 
   handleRemoveFromCart = (id) => {
-    let cartItems = this.state.cartItems;
-    for (let item of cartItems) {
+    let cartItems = cartItems;
+    for (const item of cartItems) {
       if (item.id === id) {
         cartItems.splice(cartItems.indexOf(item), 1);
         break;
@@ -207,6 +154,58 @@ class App extends Component {
     this.handleSaveCartItems();
     this.setState({ cartItems: cartItems }, () => {
       this.handleCartQuantity();
+      this.handleCartTotal();
+    });
+  };
+
+  handleCartItemAttributes = (id, name, value) => {
+    let cartItems = cartItems,
+      check = false;
+    for (const item of cartItems) {
+      if (item.id === id) {
+        const attributes = item.attributes;
+        for (let i = 0; i < attributes.length; i++) {
+          if (attributes[i][0] === name) {
+            check = true;
+            attributes[i][1] = value;
+          }
+        }
+        if (!check) attributes.push([name, value]);
+        item.attributes = attributes;
+        break;
+      }
+    }
+    cartItemsVar(cartItems);
+    this.handleSaveCartItems();
+    this.setState({ cartItems: cartItems });
+  };
+
+  handleCartItemQuantity = (id, type) => {
+    const cartItems = cartItems;
+    for (const item of cartItems) {
+      if (item.id === id) {
+        if (type === "increase") {
+          item.quantity += 1;
+        } else if (type === "decrease") {
+          if (item.quantity > 1) {
+            item.quantity -= 1;
+          } else {
+            this.handleRemoveFromCart(id);
+          }
+        }
+        break;
+      }
+    }
+    cartItemsVar(cartItems);
+    this.handleSaveCartItems();
+    this.setState({ cartItems: cartItems }, () => {
+      this.handleCartQuantity();
+      this.handleCartTotal();
+    });
+  };
+
+  handleCurrencyClick = (currency) => {
+    this.setState({ currency: currency }, () => {
       this.handleCartTotal();
     });
   };
@@ -231,34 +230,47 @@ class App extends Component {
   };
 
   render() {
-    if (this.state.loading) return <Loading />;
-    if (this.state.error) return <Error error={this.state.error} />;
+    const {
+      page,
+      currency,
+      currencies,
+      category,
+      categories,
+      categoryNames,
+      cartItems,
+      cartTotal,
+      cartQuantity,
+      id,
+      attributes,
+      miniCartOpen,
+      loading,
+      error,
+    } = this.state;
+    if (loading) return <Loading />;
+    if (error) return <Error error={error} />;
     const taxRate = 0.075;
-    const subTotal = this.handleNumberFormat(this.state.cartTotal);
-    const tax = this.handleNumberFormat(this.state.cartTotal * taxRate);
-    const total = this.handleNumberFormat(
-      this.state.cartTotal + this.state.cartTotal * taxRate
-    );
+    const subTotal = this.handleNumberFormat(cartTotal);
+    const tax = this.handleNumberFormat(cartTotal * taxRate);
+    const total = this.handleNumberFormat(cartTotal + cartTotal * taxRate);
     return (
       <ErrorBoundary>
         <div className="app">
           <NavBar
-            currencies={this.state.currencies}
-            category={this.state.category}
-            categoryNames={this.state.categoryNames}
-            cartQuantity={this.state.cartQuantity}
+            currencies={currencies}
+            category={category}
+            categoryNames={categoryNames}
+            cartQuantity={cartQuantity}
             categoryClick={this.handleCategoryClick}
             currencyClick={this.handleCurrencyClick}
             miniCartToggle={this.handleMiniCartToggle}
           />
           <MiniCart
-            currency={this.state.currency}
-            currencies={this.state.currencies}
-            cartItems={this.state.cartItems}
+            currency={currency}
+            currencies={currencies}
+            cartItems={cartItems}
             subTotal={subTotal}
-            total={total}
-            cartQuantity={this.state.cartQuantity}
-            miniCartOpen={this.state.miniCartOpen}
+            cartQuantity={cartQuantity}
+            miniCartOpen={miniCartOpen}
             getProduct={this.handleGetProduct}
             cartItemAttributes={this.handleCartItemAttributes}
             cartItemQuantity={this.handleCartItemQuantity}
@@ -268,15 +280,15 @@ class App extends Component {
             numberFormat={this.handleNumberFormat}
           />
           {(() => {
-            switch (this.state.page) {
+            switch (page) {
               case "categorypage":
                 return (
                   <CategoryPage
-                    currency={this.state.currency}
-                    category={this.state.category}
-                    categories={this.state.categories}
-                    categoryNames={this.state.categoryNames}
-                    miniCartOpen={this.state.miniCartOpen}
+                    currency={currency}
+                    category={category}
+                    categories={categories}
+                    categoryNames={categoryNames}
+                    miniCartOpen={miniCartOpen}
                     productClick={this.handleProductClick}
                     addToCart={this.handleAddToCart}
                     miniCartToggle={this.handleMiniCartToggle}
@@ -286,11 +298,11 @@ class App extends Component {
               case "productpage":
                 return (
                   <ProductPage
-                    currency={this.state.currency}
-                    categories={this.state.categories}
-                    id={this.state.id}
-                    attributes={this.state.attributes}
-                    miniCartOpen={this.state.miniCartOpen}
+                    currency={currency}
+                    categories={categories}
+                    id={id}
+                    attributes={attributes}
+                    miniCartOpen={miniCartOpen}
                     addToCart={this.handleAddToCart}
                     miniCartToggle={this.handleMiniCartToggle}
                     numberFormat={this.handleNumberFormat}
@@ -299,15 +311,14 @@ class App extends Component {
               case "cartpage":
                 return (
                   <CartPage
-                    currency={this.state.currency}
-                    currencies={this.state.currencies}
-                    categories={this.state.categories}
-                    cartItems={this.state.cartItems}
+                    currency={currency}
+                    currencies={currencies}
+                    cartItems={cartItems}
                     subTotal={subTotal}
                     tax={tax}
                     total={total}
-                    cartQuantity={this.state.cartQuantity}
-                    miniCartOpen={this.state.miniCartOpen}
+                    cartQuantity={cartQuantity}
+                    miniCartOpen={miniCartOpen}
                     getProduct={this.handleGetProduct}
                     cartItemAttributes={this.handleCartItemAttributes}
                     cartItemQuantity={this.handleCartItemQuantity}

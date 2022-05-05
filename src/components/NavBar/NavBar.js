@@ -1,23 +1,32 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { nanoid } from "nanoid";
 import DropDown from "../DropDown/DropDown";
 import "./NavBar.css";
 
-class NavBar extends Component {
+class NavBar extends PureComponent {
   render() {
+    const {
+      currencies,
+      category: categoryFromProps,
+      categoryNames,
+      cartQuantity,
+      categoryClick,
+      currencyClick,
+      miniCartToggle,
+    } = this.props;
     return (
       <nav className="nav-bar">
         <ul className="nav-bar-group">
-          {this.props.categoryNames.map((category) => {
+          {categoryNames.map((category) => {
             return (
               <li
                 key={nanoid()}
                 className={`nav-bar-item ${
-                  this.props.category === category
+                  category === categoryFromProps
                     ? "nav-bar-item-selected"
                     : ""
                 }`}
-                onClick={() => this.props.categoryClick(category)}
+                onClick={() => categoryClick(category)}
               >
                 {category.toUpperCase()}
               </li>
@@ -38,18 +47,18 @@ class NavBar extends Component {
         />
         <div className="nav-bar-toggles">
           <DropDown
-            items={this.props.currencies}
-            dropDownClick={this.props.currencyClick}
+            items={currencies}
+            dropDownClick={currencyClick}
           />
           <img
             src={require("../../assets/images/shopping-cart-black.png")}
             alt="Toggle minicart, created by Kiranshastry - Flaticon https://www.flaticon.com/free-icons/shopping-cart"
             className="nav-bar-image"
             aria-label="Toggle minicart"
-            onClick={() => this.props.miniCartToggle()}
+            onClick={() => miniCartToggle()}
           />
           <div className="nav-bar-counter">
-            <span>{this.props.cartQuantity}</span>
+            <span>{cartQuantity}</span>
           </div>
         </div>
       </nav>

@@ -1,17 +1,18 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import "./OutlineButton.css";
 
-class OutlineButton extends Component {
+class OutlineButton extends PureComponent {
   render() {
+    const { children, buttonClick, compSize, disabled } = this.props;
     return (
       <button
         className={`outline-button ${
-          this.props.compSize === "large" ? "" : "outline-button-small"
+          compSize === "large" ? "" : "outline-button-small"
         }`}
-        onClick={() => this.props.buttonClick()}
-        disabled={this.props.disabled}
+        onClick={() => buttonClick()}
+        disabled={disabled}
       >
-        {this.props.children}
+        {children}
       </button>
     );
   }

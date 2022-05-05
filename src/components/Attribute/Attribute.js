@@ -1,25 +1,34 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import "./Attribute.css";
 
-class Attribute extends Component {
+class Attribute extends PureComponent {
   render() {
+    const {
+      name,
+      displayValue,
+      value,
+      id,
+      productId,
+      attributes,
+      attributeClick,
+      compSize,
+    } = this.props;
     let style =
-      this.props.compSize === "large" ? "attribute-large" : "attribute-small";
-    const attributes = this.props.attributes;
-    if (this.props.compSize === "large") {
-      for (let attribute of attributes) {
+      compSize === "large" ? "attribute-large" : "attribute-small";
+    if (compSize === "large") {
+      for (const attribute of attributes) {
         if (
-          this.props.name === attribute[0] &&
-          this.props.value === attribute[1]
+          name === attribute[0] &&
+          value === attribute[1]
         ) {
           style = "attribute-large-selected";
         }
       }
     } else {
-      for (let attribute of attributes) {
+      for (const attribute of attributes) {
         if (
-          this.props.name === attribute[0] &&
-          this.props.value === attribute[1]
+          name === attribute[0] &&
+          value === attribute[1]
         ) {
           style = "attribute-small-selected";
         }
@@ -29,14 +38,14 @@ class Attribute extends Component {
       <button
         className={style}
         onClick={() => {
-          this.props.attributeClick(
-            this.props.productId,
-            this.props.name,
-            this.props.value
+          attributeClick(
+            productId,
+            name,
+            value
           );
         }}
       >
-        {this.props.value}
+        {value}
       </button>
     );
   }

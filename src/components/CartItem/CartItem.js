@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { nanoid } from "nanoid";
 import Attribute from "../Attribute/Attribute";
 import Quantity from "../Quantity/Quantity";
 import Swatch from "../Swatch/Swatch";
 import "./CartItem.css";
 
-class CartItem extends Component {
+class CartItem extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,49 +14,58 @@ class CartItem extends Component {
   }
 
   handleChangeImage = (dir) => {
+    const { imageIndex } = this.state;
     if (dir === "left") {
-      if (this.state.imageIndex === 0) {
+      if (imageIndex === 0) {
         this.setState({ imageIndex: this.props.product.gallery.length - 1 });
       } else {
-        this.setState({ imageIndex: this.state.imageIndex - 1 });
+        this.setState({ imageIndex: imageIndex - 1 });
       }
     } else if (dir === "right") {
-      if (this.state.imageIndex === this.props.product.gallery.length - 1) {
+      if (imageIndex === this.props.product.gallery.length - 1) {
         this.setState({ imageIndex: 0 });
       } else {
-        this.setState({ imageIndex: this.state.imageIndex + 1 });
+        this.setState({ imageIndex: imageIndex + 1 });
       }
     }
   };
 
   render() {
+    const {
+      product,
+      attributes,
+      cartItemAttributes,
+      quantity,
+      cartItemQuantity,
+      removeFromCart,
+      currency,
+      numberFormat,
+      compSize,
+    } = this.props;
+    const { imageIndex } = this.state;
     let symbol, amount;
-    this.props.product.prices.forEach((price) => {
-      if (price.currency.label === this.props.currency) {
+    product.prices.forEach((price) => {
+      if (price.currency.label === currency) {
         symbol = price.currency.symbol;
-        amount = this.props.numberFormat(price.amount);
+        amount = numberFormat(price.amount);
       }
     });
     return (
       <div
-        className={`cart-item ${
-          this.props.compSize === "large" ? "" : "cart-item-small"
-        }`}
+        className={`cart-item ${compSize === "large" ? "" : "cart-item-small"}`}
       >
         <div
           className={`cart-item-left-section ${
-            this.props.compSize === "large"
-              ? ""
-              : "cart-item-left-section-small"
+            compSize === "large" ? "" : "cart-item-left-section-small"
           }`}
         >
-          <p className="cart-item-brand">{this.props.product.brand}</p>
-          <p className="cart-item-name">{this.props.product.name}</p>
+          <p className="cart-item-brand">{product.brand}</p>
+          <p className="cart-item-name">{product.name}</p>
           <p className="cart-item-price">
             {symbol} {amount}
           </p>
           <div className="cart-item-attributes-container">
-            {this.props.product.attributes.map((attribute) => {
+            {product.attributes.map((attribute) => {
               const { id, name, type, items } = attribute;
               return (
                 <div key={nanoid()} id={id} className="cart-item-attributes">
@@ -73,10 +82,10 @@ class CartItem extends Component {
                           displayValue={displayValue}
                           value={value}
                           id={id}
-                          productId={this.props.product.id}
-                          attributes={this.props.attributes}
-                          attributeClick={this.props.cartItemAttributes}
-                          compSize={this.props.compSize}
+                          productId={product.id}
+                          attributes={attributes}
+                          attributeClick={cartItemAttributes}
+                          compSize={compSize}
                         />
                       );
                     })}
@@ -90,10 +99,10 @@ class CartItem extends Component {
                           displayValue={displayValue}
                           value={value}
                           id={id}
-                          productId={this.props.product.id}
-                          attributes={this.props.attributes}
-                          swatchClick={this.props.cartItemAttributes}
-                          compSize={this.props.compSize}
+                          productId={product.id}
+                          attributes={attributes}
+                          swatchClick={cartItemAttributes}
+                          compSize={compSize}
                         />
                       );
                     })}
@@ -104,52 +113,46 @@ class CartItem extends Component {
         </div>
         <div
           className={`cart-item-right-section ${
-            this.props.compSize === "large"
-              ? ""
-              : "cart-item-right-section-small"
+            compSize === "large" ? "" : "cart-item-right-section-small"
           }`}
         >
           <div
             className={`cart-item-quantity ${
-              this.props.compSize === "large" ? "" : "cart-item-quantity-small"
+              compSize === "large" ? "" : "cart-item-quantity-small"
             }`}
           >
             <Quantity
-              compSize={this.props.compSize}
+              compSize={compSize}
               type="increase"
-              id={this.props.product.id}
-              quantityClick={this.props.cartItemQuantity}
+              id={product.id}
+              quantityClick={cartItemQuantity}
             >
               +
             </Quantity>
-            <p className="cart-item-quantity-text">{this.props.quantity}</p>
+            <p className="cart-item-quantity-text">{quantity}</p>
             <Quantity
-              compSize={this.props.compSize}
+              compSize={compSize}
               type="decrease"
-              id={this.props.product.id}
-              quantityClick={this.props.cartItemQuantity}
+              id={product.id}
+              quantityClick={cartItemQuantity}
             >
               -
             </Quantity>
           </div>
           <div
             className={`cart-item-image-container ${
-              this.props.compSize === "large"
-                ? ""
-                : "cart-item-image-container-small"
+              compSize === "large" ? "" : "cart-item-image-container-small"
             }`}
           >
             <img
-              src={this.props.product.gallery[this.state.imageIndex]}
-              alt={this.props.product.name}
+              src={product.gallery[imageIndex]}
+              alt={product.name}
               className="cart-item-image"
             />
             <div className="cart-item-image-overlay"></div>
             <button
               className={`cart-item-angle-left ${
-                this.props.compSize === "large"
-                  ? ""
-                  : "cart-item-angle-left-small"
+                compSize === "large" ? "" : "cart-item-angle-left-small"
               }`}
               onClick={() => this.handleChangeImage("left")}
             >
@@ -157,9 +160,7 @@ class CartItem extends Component {
             </button>
             <button
               className={`cart-item-angle-right ${
-                this.props.compSize === "large"
-                  ? ""
-                  : "cart-item-angle-right-small"
+                compSize === "large" ? "" : "cart-item-angle-right-small"
               }`}
               onClick={() => this.handleChangeImage("right")}
             >
@@ -168,18 +169,16 @@ class CartItem extends Component {
           </div>
           <div
             className={`cart-item-remove-icon-container ${
-              this.props.compSize === "large"
+              compSize === "large"
                 ? ""
                 : "cart-item-remove-icon-container-small"
             }`}
           >
             <button
               className={`cart-item-remove-icon ${
-                this.props.compSize === "large"
-                  ? ""
-                  : "cart-item-remove-icon-small"
+                compSize === "large" ? "" : "cart-item-remove-icon-small"
               }`}
-              onClick={() => this.props.removeFromCart(this.props.product.id)}
+              onClick={() => removeFromCart(product.id)}
             >
               &#10005;
             </button>

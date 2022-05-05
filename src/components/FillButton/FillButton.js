@@ -1,17 +1,18 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import "./FillButton.css";
 
-class FillButton extends Component {
+class FillButton extends PureComponent {
   render() {
+    const { children, buttonClick, compSize, disabled } = this.props;
     return (
       <button
         className={`fill-button ${
-          this.props.compSize === "large" ? "" : "fill-button-small"
+          compSize === "large" ? "" : "fill-button-small"
         }`}
-        onClick={() => this.props.buttonClick()}
-        disabled={this.props.disabled}
+        onClick={() => buttonClick()}
+        disabled={disabled}
       >
-        {this.props.children}
+        {children}
       </button>
     );
   }

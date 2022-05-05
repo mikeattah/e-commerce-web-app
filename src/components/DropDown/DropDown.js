@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { nanoid } from "nanoid";
 import "./DropDown.css";
 
-class DropDown extends Component {
+class DropDown extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,30 +46,26 @@ class DropDown extends Component {
   };
 
   render() {
+    const { items, dropDownClick } = this.props;
+    const { title, dropDownOpen } = this.state;
     return (
       <div className="dropdown-container">
         <div className="dropdown-header" onClick={this.handleDropDownToggle}>
-          <span>{this.state.title}</span>
-          {this.state.dropDownOpen ? (
-            <span>&#65087;</span>
-          ) : (
-            <span>&#65088;</span>
-          )}
+          <span>{title}</span>
+          {dropDownOpen ? <span>&#65087;</span> : <span>&#65088;</span>}
         </div>
         <div
           className={`dropdown-list ${
-            this.state.dropDownOpen ? "" : "dropdown-list-hidden"
+            dropDownOpen ? "" : "dropdown-list-hidden"
           }`}
         >
-          {this.props.items.map((item) => {
+          {items.map((item) => {
             const { label, symbol } = item;
             return (
               <button
                 key={nanoid()}
                 className={`dropdown-list-item ${
-                  this.state.title === symbol
-                    ? "dropdown-list-item-selected"
-                    : ""
+                  title === symbol ? "dropdown-list-item-selected" : ""
                 }`}
                 onClick={() => this.handleSelectedItem(label, symbol)}
               >
