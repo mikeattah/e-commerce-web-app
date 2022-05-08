@@ -22,9 +22,7 @@ class NavBar extends PureComponent {
               <li
                 key={nanoid()}
                 className={`nav-bar-item ${
-                  category === categoryFromProps
-                    ? "nav-bar-item-selected"
-                    : ""
+                  category === categoryFromProps ? "nav-bar-item-selected" : ""
                 }`}
                 onClick={() => categoryClick(category)}
               >
@@ -46,10 +44,7 @@ class NavBar extends PureComponent {
           }}
         />
         <div className="nav-bar-toggles">
-          <DropDown
-            items={currencies}
-            dropDownClick={currencyClick}
-          />
+          <DropDown items={currencies} dropDownClick={currencyClick} />
           <img
             src={require("../../assets/images/shopping-cart-black.png")}
             alt="Toggle minicart, created by Kiranshastry - Flaticon https://www.flaticon.com/free-icons/shopping-cart"

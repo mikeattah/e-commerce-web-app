@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Loading from "./components/Loading/Loading";
 import Error from "./components/Error/Error";
-import NavBar from "./components/NavBar/NavBar";
+import Loading from "./components/Loading/Loading";
 import MiniCart from "./components/MiniCart/MiniCart";
+import NavBar from "./components/NavBar/NavBar";
 import CartPage from "./containers/CartPage/CartPage";
 import CategoryPage from "./containers/CategoryPage/CategoryPage";
 import ErrorBoundary from "./containers/ErrorBoundary/ErrorBoundary";
@@ -78,7 +78,7 @@ class App extends Component {
   };
 
   handleGetProduct = (id) => {
-    const categories = categories;
+    const categories = this.state.categories;
     for (const category of categories) {
       const products = category.products;
       for (const product of products) {
@@ -97,10 +97,11 @@ class App extends Component {
 
   handleCartTotal = () => {
     let total = 0;
-    this.state.cartItems.forEach((item) => {
+    const { cartItems, currency } = this.state;
+    cartItems.forEach((item) => {
       let i = 0,
         product = this.handleGetProduct(item.id);
-      while (this.state.currency !== product.prices[i].currency.label) i++;
+      while (currency !== product.prices[i].currency.label) i++;
       total += product.prices[i].amount * item.quantity;
     });
     this.setState({ cartTotal: total });
@@ -114,7 +115,7 @@ class App extends Component {
   };
 
   handleAddToCart = (id, attributes) => {
-    let cartItems = cartItems,
+    let cartItems = this.state.cartItems,
       check = false;
     for (const item of cartItems) {
       if (item.id === id) {
@@ -143,7 +144,7 @@ class App extends Component {
   };
 
   handleRemoveFromCart = (id) => {
-    let cartItems = cartItems;
+    let cartItems = this.state.cartItems;
     for (const item of cartItems) {
       if (item.id === id) {
         cartItems.splice(cartItems.indexOf(item), 1);
@@ -159,7 +160,7 @@ class App extends Component {
   };
 
   handleCartItemAttributes = (id, name, value) => {
-    let cartItems = cartItems,
+    let cartItems = this.state.cartItems,
       check = false;
     for (const item of cartItems) {
       if (item.id === id) {
@@ -181,7 +182,7 @@ class App extends Component {
   };
 
   handleCartItemQuantity = (id, type) => {
-    const cartItems = cartItems;
+    const cartItems = this.state.cartItems;
     for (const item of cartItems) {
       if (item.id === id) {
         if (type === "increase") {
@@ -246,12 +247,26 @@ class App extends Component {
       loading,
       error,
     } = this.state;
+    const {
+      handleCategoryClick,
+      handleProductClick,
+      handleGetProduct,
+      handleAddToCart,
+      handleRemoveFromCart,
+      handleCartItemAttributes,
+      handleCartItemQuantity,
+      handleCurrencyClick,
+      handleMiniCartToggle,
+      handleViewBag,
+      handlePlaceOrder,
+      handleNumberFormat,
+    } = this;
     if (loading) return <Loading />;
     if (error) return <Error error={error} />;
     const taxRate = 0.075;
-    const subTotal = this.handleNumberFormat(cartTotal);
-    const tax = this.handleNumberFormat(cartTotal * taxRate);
-    const total = this.handleNumberFormat(cartTotal + cartTotal * taxRate);
+    const subTotal = handleNumberFormat(cartTotal);
+    const tax = handleNumberFormat(cartTotal * taxRate);
+    const total = handleNumberFormat(cartTotal + tax);
     return (
       <ErrorBoundary>
         <div className="app">
@@ -260,9 +275,9 @@ class App extends Component {
             category={category}
             categoryNames={categoryNames}
             cartQuantity={cartQuantity}
-            categoryClick={this.handleCategoryClick}
-            currencyClick={this.handleCurrencyClick}
-            miniCartToggle={this.handleMiniCartToggle}
+            categoryClick={handleCategoryClick}
+            currencyClick={handleCurrencyClick}
+            miniCartToggle={handleMiniCartToggle}
           />
           <MiniCart
             currency={currency}
@@ -271,13 +286,13 @@ class App extends Component {
             subTotal={subTotal}
             cartQuantity={cartQuantity}
             miniCartOpen={miniCartOpen}
-            getProduct={this.handleGetProduct}
-            cartItemAttributes={this.handleCartItemAttributes}
-            cartItemQuantity={this.handleCartItemQuantity}
-            removeFromCart={this.handleRemoveFromCart}
-            viewBag={this.handleViewBag}
-            placeOrder={this.handlePlaceOrder}
-            numberFormat={this.handleNumberFormat}
+            getProduct={handleGetProduct}
+            cartItemAttributes={handleCartItemAttributes}
+            cartItemQuantity={handleCartItemQuantity}
+            removeFromCart={handleRemoveFromCart}
+            viewBag={handleViewBag}
+            placeOrder={handlePlaceOrder}
+            numberFormat={handleNumberFormat}
           />
           {(() => {
             switch (page) {
@@ -289,10 +304,10 @@ class App extends Component {
                     categories={categories}
                     categoryNames={categoryNames}
                     miniCartOpen={miniCartOpen}
-                    productClick={this.handleProductClick}
-                    addToCart={this.handleAddToCart}
-                    miniCartToggle={this.handleMiniCartToggle}
-                    numberFormat={this.handleNumberFormat}
+                    productClick={handleProductClick}
+                    addToCart={handleAddToCart}
+                    miniCartToggle={handleMiniCartToggle}
+                    numberFormat={handleNumberFormat}
                   />
                 );
               case "productpage":
@@ -303,9 +318,9 @@ class App extends Component {
                     id={id}
                     attributes={attributes}
                     miniCartOpen={miniCartOpen}
-                    addToCart={this.handleAddToCart}
-                    miniCartToggle={this.handleMiniCartToggle}
-                    numberFormat={this.handleNumberFormat}
+                    addToCart={handleAddToCart}
+                    miniCartToggle={handleMiniCartToggle}
+                    numberFormat={handleNumberFormat}
                   />
                 );
               case "cartpage":
@@ -319,13 +334,13 @@ class App extends Component {
                     total={total}
                     cartQuantity={cartQuantity}
                     miniCartOpen={miniCartOpen}
-                    getProduct={this.handleGetProduct}
-                    cartItemAttributes={this.handleCartItemAttributes}
-                    cartItemQuantity={this.handleCartItemQuantity}
-                    removeFromCart={this.handleRemoveFromCart}
-                    miniCartToggle={this.handleMiniCartToggle}
-                    placeOrder={this.handlePlaceOrder}
-                    numberFormat={this.handleNumberFormat}
+                    getProduct={handleGetProduct}
+                    cartItemAttributes={handleCartItemAttributes}
+                    cartItemQuantity={handleCartItemQuantity}
+                    removeFromCart={handleRemoveFromCart}
+                    miniCartToggle={handleMiniCartToggle}
+                    placeOrder={handlePlaceOrder}
+                    numberFormat={handleNumberFormat}
                   />
                 );
               default:

@@ -46,7 +46,7 @@ class DropDown extends PureComponent {
   };
 
   render() {
-    const { items, dropDownClick } = this.props;
+    const { items } = this.props;
     const { title, dropDownOpen } = this.state;
     return (
       <div className="dropdown-container">

@@ -1,7 +1,4 @@
 import React, { PureComponent } from "react";
-import { nanoid } from "nanoid";
-import Attribute from "../Attribute/Attribute";
-import Swatch from "../Swatch/Swatch";
 import "./ProductCard.css";
 
 class ProductCard extends PureComponent {
@@ -28,32 +25,20 @@ class ProductCard extends PureComponent {
     });
   }
 
-  handleProductCardAttributes = (id, name, value) => {
-    const attributes = this.state.attributes;
-    for (let i = 0; i < attributes.length; i++) {
-      if (attributes[i][0] === name) {
-        attributes[i][1] = value;
-        break;
-      }
-    }
-    this.setState({ attributes: attributes });
-  };
-
   render() {
     const {
-      id,
+      id: productId,
       name,
       inStock,
       gallery,
-      attributes,
-      label,
       symbol,
       amount,
       brand,
       productClick,
       addToCart,
     } = this.props;
-    if (this.state.loading) return <div>Loading...</div>;
+    const { attributes: attributesFromState, loading } = this.state;
+    if (loading) return <div>Loading...</div>;
     return (
       <div className={`product-card ${inStock ? "" : "product-card-disabled"}`}>
         <img
@@ -61,62 +46,16 @@ class ProductCard extends PureComponent {
           alt={name}
           className="product-card-image"
           onClick={() => {
-            productClick(id, this.state.attributes);
+            productClick(productId, attributesFromState);
           }}
         />
         <p className="product-card-title">
           {brand} {name}
         </p>
-        <div className="product-card-attributes-container">
-          {attributes.map((attribute) => {
-            const { id, name, type, items } = attribute;
-            return (
-              <div key={nanoid()} id={id} className="product-card-attributes">
-                <p className="product-card-attributes-text">
-                  {name.toUpperCase()}:
-                </p>
-                {type !== "swatch" &&
-                  items.map((item) => {
-                    const { displayValue, value, id } = item;
-                    return (
-                      <Attribute
-                        key={nanoid()}
-                        name={name}
-                        displayValue={displayValue}
-                        value={value}
-                        id={id}
-                        productId={id}
-                        attributes={this.state.attributes}
-                        attributeClick={this.handleProductCardAttributes}
-                        compSize="small"
-                      />
-                    );
-                  })}
-                {type === "swatch" &&
-                  items.map((item) => {
-                    const { displayValue, value, id } = item;
-                    return (
-                      <Swatch
-                        key={nanoid()}
-                        name={name}
-                        displayValue={displayValue}
-                        value={value}
-                        id={id}
-                        productId={id}
-                        attributes={this.state.attributes}
-                        swatchClick={this.handleProductCardAttributes}
-                        compSize="small"
-                      />
-                    );
-                  })}
-              </div>
-            );
-          })}
-        </div>
         <div
           className="product-card-add-to-cart"
           onClick={() => {
-            addToCart(id, this.state.attributes);
+            addToCart(productId, attributesFromState);
           }}
         >
           <img
@@ -134,7 +73,7 @@ class ProductCard extends PureComponent {
             inStock ? "" : "product-card-overlay-visible"
           }`}
           onClick={() => {
-            productClick(id, this.state.attributes);
+            productClick(productId, attributesFromState);
           }}
         >
           <p>OUT OF STOCK</p>

@@ -15,14 +15,15 @@ class CartItem extends PureComponent {
 
   handleChangeImage = (dir) => {
     const { imageIndex } = this.state;
+    const { gallery } = this.props.product;
     if (dir === "left") {
       if (imageIndex === 0) {
-        this.setState({ imageIndex: this.props.product.gallery.length - 1 });
+        this.setState({ imageIndex: gallery.length - 1 });
       } else {
         this.setState({ imageIndex: imageIndex - 1 });
       }
     } else if (dir === "right") {
-      if (imageIndex === this.props.product.gallery.length - 1) {
+      if (imageIndex === gallery.length - 1) {
         this.setState({ imageIndex: 0 });
       } else {
         this.setState({ imageIndex: imageIndex + 1 });
@@ -32,19 +33,25 @@ class CartItem extends PureComponent {
 
   render() {
     const {
-      product,
-      attributes,
+      product: {
+        id: productId,
+        name,
+        gallery,
+        attributes: attributesFromProduct,
+        prices,
+        brand,
+      },
+      attributes: attributesFromProps,
       cartItemAttributes,
       quantity,
       cartItemQuantity,
-      removeFromCart,
       currency,
       numberFormat,
       compSize,
     } = this.props;
     const { imageIndex } = this.state;
     let symbol, amount;
-    product.prices.forEach((price) => {
+    prices.forEach((price) => {
       if (price.currency.label === currency) {
         symbol = price.currency.symbol;
         amount = numberFormat(price.amount);
@@ -59,31 +66,35 @@ class CartItem extends PureComponent {
             compSize === "large" ? "" : "cart-item-left-section-small"
           }`}
         >
-          <p className="cart-item-brand">{product.brand}</p>
-          <p className="cart-item-name">{product.name}</p>
+          <p className="cart-item-brand">{brand}</p>
+          <p className="cart-item-name">{name}</p>
           <p className="cart-item-price">
             {symbol} {amount}
           </p>
           <div className="cart-item-attributes-container">
-            {product.attributes.map((attribute) => {
-              const { id, name, type, items } = attribute;
+            {attributesFromProduct.map((attribute) => {
+              const { id: attributeId, name, type, items } = attribute;
               return (
-                <div key={nanoid()} id={id} className="cart-item-attributes">
+                <div
+                  key={nanoid()}
+                  id={attributeId}
+                  className="cart-item-attributes"
+                >
                   <p className="cart-item-attributes-text">
                     {name.toUpperCase()}:
                   </p>
                   {type !== "swatch" &&
                     items.map((item) => {
-                      const { displayValue, value, id } = item;
+                      const { displayValue, value, id: itemId } = item;
                       return (
                         <Attribute
                           key={nanoid()}
                           name={name}
                           displayValue={displayValue}
                           value={value}
-                          id={id}
-                          productId={product.id}
-                          attributes={attributes}
+                          id={itemId}
+                          productId={productId}
+                          attributes={attributesFromProps}
                           attributeClick={cartItemAttributes}
                           compSize={compSize}
                         />
@@ -91,16 +102,16 @@ class CartItem extends PureComponent {
                     })}
                   {type === "swatch" &&
                     items.map((item) => {
-                      const { displayValue, value, id } = item;
+                      const { displayValue, value, id: itemId } = item;
                       return (
                         <Swatch
                           key={nanoid()}
                           name={name}
                           displayValue={displayValue}
                           value={value}
-                          id={id}
-                          productId={product.id}
-                          attributes={attributes}
+                          id={itemId}
+                          productId={productId}
+                          attributes={attributesFromProps}
                           swatchClick={cartItemAttributes}
                           compSize={compSize}
                         />
@@ -124,7 +135,7 @@ class CartItem extends PureComponent {
             <Quantity
               compSize={compSize}
               type="increase"
-              id={product.id}
+              id={productId}
               quantityClick={cartItemQuantity}
             >
               +
@@ -133,7 +144,7 @@ class CartItem extends PureComponent {
             <Quantity
               compSize={compSize}
               type="decrease"
-              id={product.id}
+              id={productId}
               quantityClick={cartItemQuantity}
             >
               -
@@ -145,8 +156,8 @@ class CartItem extends PureComponent {
             }`}
           >
             <img
-              src={product.gallery[imageIndex]}
-              alt={product.name}
+              src={gallery[imageIndex]}
+              alt={name}
               className="cart-item-image"
             />
             <div className="cart-item-image-overlay"></div>
@@ -165,22 +176,6 @@ class CartItem extends PureComponent {
               onClick={() => this.handleChangeImage("right")}
             >
               &#10095;
-            </button>
-          </div>
-          <div
-            className={`cart-item-remove-icon-container ${
-              compSize === "large"
-                ? ""
-                : "cart-item-remove-icon-container-small"
-            }`}
-          >
-            <button
-              className={`cart-item-remove-icon ${
-                compSize === "large" ? "" : "cart-item-remove-icon-small"
-              }`}
-              onClick={() => removeFromCart(product.id)}
-            >
-              &#10005;
             </button>
           </div>
         </div>

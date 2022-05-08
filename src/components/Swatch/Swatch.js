@@ -9,43 +9,28 @@ const StyledSwatch = styled.div`
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
 `;
 
-const StyledCheck = styled.span`
-  color: ${(props) => (props.id === "White" ? "black" : "white")};
-`;
-
 class Swatch extends PureComponent {
   render() {
-    const {
-      name,
-      displayValue,
-      value,
-      id,
-      productId,
-      attributes,
-      swatchClick,
-      compSize,
-    } = this.props;
-    let check;
+    const { name, value, productId, attributes, swatchClick, compSize } =
+      this.props;
+    let selected;
     attributes.forEach((attribute) => {
       if (attribute[0] === "Color") {
-        check = attribute[1];
+        selected = attribute[1];
       }
     });
+    let style = compSize === "large" ? "swatch-large" : "swatch-small";
+    if (value === selected) {
+      style = `${style} swatch-selected`;
+    }
     return (
       <div
-        className={compSize === "large" ? "swatch-large" : "swatch-small"}
+        className={style}
         onClick={() => {
           swatchClick(productId, name, value);
         }}
       >
         <StyledSwatch value={value} />
-        <div
-          className={`swatch-overlay ${
-            value === check ? "swatch-overlay-visible" : ""
-          }`}
-        >
-          <StyledCheck id={id}>&#10003;</StyledCheck>
-        </div>
       </div>
     );
   }

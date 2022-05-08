@@ -1,43 +1,30 @@
 .attribute-large {
-  height: 30px;
+  height: 40px;
   width: 45px;
   font-size: 12px;
+  font-weight: bold;
   margin: 6px 12px 6px 0;
+  padding: 2px;
   border: 1px solid #000;
   outline: none;
   background: #fff;
   color: #000;
-}
-
-.attribute-large-selected {
-  height: 30px;
-  width: 45px;
-  font-size: 12px;
-  margin: 6px 12px 6px 0;
-  border: 1px solid #000;
-  outline: none;
-  background: #000;
-  color: #fff;
 }
 
 .attribute-small {
-  height: 20px;
+  height: 30px;
   width: 35px;
-  font-size: 9px;
+  font-size: 10px;
+  font-weight: bold;
   margin: 4px 8px 4px 0;
+  padding: 2px;
   border: 1px solid #000;
   outline: none;
   background: #fff;
   color: #000;
 }
 
-.attribute-small-selected {
-  height: 20px;
-  width: 35px;
-  font-size: 9px;
-  margin: 4px 8px 4px 0;
-  border: 1px solid #000;
-  outline: none;
+.attribute-selected {
   background: #000;
   color: #fff;
 }
@@ -49,8 +36,7 @@
   cursor: pointer;
 }
 
-.attribute-large-selected:hover,
-.attribute-small-selected:hover {
+.attribute-selected:hover {
   background: #fff;
   color: #000;
   cursor: pointer;

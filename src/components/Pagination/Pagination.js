@@ -8,20 +8,19 @@ class Pagination extends PureComponent {
   };
 
   render() {
-    const { pages, pageIndex, pageItems, pageClick } = this.props;
+    const { pages, pageIndex, pageItems } = this.props;
+    const { pageClick } = this;
     return (
       <div className="pagination">
         <button
-          onClick={() => this.pageClick(pages[0])}
+          onClick={() => pageClick(pages[0])}
           className="pagination-button"
           disabled={pageIndex === pages[0] ? true : false}
         >
           &#8810;
         </button>
         <button
-          onClick={() =>
-            this.pageClick(pageIndex - pageItems)
-          }
+          onClick={() => pageClick(pageIndex - pageItems)}
           className="pagination-button"
           disabled={pageIndex === pages[0] ? true : false}
         >
@@ -30,11 +29,9 @@ class Pagination extends PureComponent {
         {pages.map((page) => {
           return (
             <button
-              onClick={() => this.pageClick(page * pageItems)}
+              onClick={() => pageClick(page * pageItems)}
               className={`pagination-button ${
-                pageIndex === pageItems * page
-                  ? "pagination-button-active"
-                  : ""
+                pageIndex === pageItems * page ? "pagination-button-active" : ""
               }`}
               key={nanoid()}
             >
@@ -43,32 +40,19 @@ class Pagination extends PureComponent {
           );
         })}
         <button
-          onClick={() =>
-            this.pageClick(pageIndex + pageItems)
-          }
+          onClick={() => pageClick(pageIndex + pageItems)}
           className="pagination-button"
           disabled={
-            pageIndex ===
-            pages[pages.length - 1] * pageItems
-              ? "true"
-              : ""
+            pageIndex === pages[pages.length - 1] * pageItems ? "true" : ""
           }
         >
           &#62;
         </button>
         <button
-          onClick={() =>
-            this.pageClick(
-              pages[pages.length - 1] *
-                pageItems
-            )
-          }
+          onClick={() => pageClick(pages[pages.length - 1] * pageItems)}
           className="pagination-button"
           disabled={
-            pageIndex ===
-            pages[pages.length - 1] * pageItems
-              ? "true"
-              : ""
+            pageIndex === pages[pages.length - 1] * pageItems ? "true" : ""
           }
         >
           &#8811;

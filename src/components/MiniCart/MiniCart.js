@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
 import { nanoid } from "nanoid";
 import FillButton from "../FillButton/FillButton";
-import OutlineButton from "../OutlineButton/OutlineButton";
 import CartItem from "../CartItem/CartItem";
+import OutlineButton from "../OutlineButton/OutlineButton";
 import "./MiniCart.css";
 
 class MiniCart extends PureComponent {
@@ -29,14 +29,9 @@ class MiniCart extends PureComponent {
       }
     });
     return (
-      <div
-        className={`mini-cart ${
-          miniCartOpen ? "" : "mini-cart-hidden"
-        }`}
-      >
+      <div className={`mini-cart ${miniCartOpen ? "" : "mini-cart-hidden"}`}>
         <p className="mini-cart-title">
-          <span className="mini-cart-title-span">My Bag,</span>{" "}
-          {cartQuantity}{" "}
+          <span className="mini-cart-title-span">My Bag,</span> {cartQuantity}{" "}
           {cartQuantity > 1 ? "items" : "item"}
         </p>
         <div className="mini-cart-items-container">

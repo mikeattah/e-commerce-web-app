@@ -57,25 +57,26 @@ class ProductPage extends Component {
   };
 
   render() {
+    const { currency, miniCartOpen, miniCartToggle, numberFormat } = this.props;
     const {
-      currency,
-      categories,
-      id,
-      attributes: attributesFromProps,
-      miniCartOpen,
-      addToCart,
-      miniCartToggle,
-      numberFormat,
-    } = this.props;
-    const {
-      product,
+      product: {
+        id: productId,
+        name,
+        inStock,
+        gallery,
+        description,
+        attributes: attributesFromProduct,
+        prices,
+        brand,
+      },
       image,
       attributes: attributesFromState,
       loading,
     } = this.state;
+    const { addToCart, handleImageToggle, handleProductPageAttributes } = this;
     if (loading) return <Loading />;
     let symbol, amount;
-    product.prices.forEach((price) => {
+    prices.forEach((price) => {
       if (price.currency.label === currency) {
         symbol = price.currency.symbol;
         amount = numberFormat(price.amount);
@@ -84,14 +85,14 @@ class ProductPage extends Component {
     return (
       <div className="product-page">
         <div className="product-page-small-images-container">
-          {product.gallery.map((image) => {
+          {gallery.map((image) => {
             return (
               <div className="product-page-small-image">
                 <SmallImage
                   key={nanoid()}
                   src={image}
                   alt="click to view"
-                  imageClick={this.handleImageToggle}
+                  imageClick={handleImageToggle}
                   currentImage={image}
                 />
               </div>
@@ -107,46 +108,50 @@ class ProductPage extends Component {
           <div className="product-page-large-image-overlay"></div>
         </div>
         <div className="product-page-details">
-          <h1 className="product-page-title">{product.brand}</h1>
-          <p className="product-page-brand">{product.name}</p>
+          <h1 className="product-page-title">{brand}</h1>
+          <p className="product-page-brand">{name}</p>
           <div className="product-page-attributes-container">
-            {product.attributes.map((attribute) => {
-              const { id, name, type, items } = attribute;
+            {attributesFromProduct.map((attribute) => {
+              const { id: attributeId, name, type, items } = attribute;
               return (
-                <div key={nanoid()} id={id} className="product-page-attributes">
+                <div
+                  key={nanoid()}
+                  id={attributeId}
+                  className="product-page-attributes"
+                >
                   <p className="product-page-attributes-text">
                     {name.toUpperCase()}:
                   </p>
                   {type !== "swatch" &&
                     items.map((item) => {
-                      const { displayValue, value, id } = item;
+                      const { displayValue, value, id: itemId } = item;
                       return (
                         <Attribute
                           key={nanoid()}
                           name={name}
                           displayValue={displayValue}
                           value={value}
-                          id={id}
-                          productId={product.id}
+                          id={itemId}
+                          productId={productId}
                           attributes={attributesFromState}
-                          attributeClick={this.handleProductPageAttributes}
+                          attributeClick={handleProductPageAttributes}
                           compSize="large"
                         />
                       );
                     })}
                   {type === "swatch" &&
                     items.map((item) => {
-                      const { displayValue, value, id } = item;
+                      const { displayValue, value, id: itemId } = item;
                       return (
                         <Swatch
                           key={nanoid()}
                           name={name}
                           displayValue={displayValue}
                           value={value}
-                          id={id}
-                          productId={product.id}
+                          id={itemId}
+                          productId={productId}
                           attributes={attributesFromState}
-                          swatchClick={this.handleProductPageAttributes}
+                          swatchClick={handleProductPageAttributes}
                           compSize="large"
                         />
                       );
@@ -160,14 +165,14 @@ class ProductPage extends Component {
             {symbol} {amount}
           </p>
           <FillButton
-            buttonClick={this.addToCart}
-            disabled={!product.inStock}
+            buttonClick={addToCart}
+            disabled={!inStock}
             compSize="large"
           >
             ADD TO CART
           </FillButton>
           <div className="product-page-description">
-            <Markup content={product.description} />
+            <Markup content={description} />
           </div>
         </div>
         <div
