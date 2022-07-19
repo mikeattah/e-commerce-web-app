@@ -263,10 +263,10 @@ class App extends Component {
     } = this;
     if (loading) return <Loading />;
     if (error) return <Error error={error} />;
-    const taxRate = 0.075;
-    const subTotal = handleNumberFormat(cartTotal);
-    const tax = handleNumberFormat(cartTotal * taxRate);
-    const total = handleNumberFormat(cartTotal + tax);
+    const taxRate = 0.075,
+      subTotal = handleNumberFormat(cartTotal),
+      tax = handleNumberFormat(cartTotal * taxRate),
+      total = handleNumberFormat(cartTotal + tax);
     return (
       <ErrorBoundary>
         <div className="app">

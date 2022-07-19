@@ -41,7 +41,7 @@
   align-items: flex-start;
 }
 
-@media (max-width: 900px) {
+@media screen and (max-width: 900px) {
   .category-page-title {
     text-align: center;
   }
