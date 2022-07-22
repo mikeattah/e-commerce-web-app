@@ -24,7 +24,7 @@ class ProductPage extends Component {
     for (const category of categories) {
       const products = category.products;
       for (const product of products) {
-        if (product.id === this.props.id) {
+        if (product.id === this.props.productId) {
           this.setState({
             product: product,
             image: product.gallery[0],
@@ -38,14 +38,14 @@ class ProductPage extends Component {
   }
 
   addToCart = () => {
-    this.props.addToCart(this.props.id, this.state.attributes);
+    this.props.addToCart(this.props.productId, this.state.attributes);
   };
 
   handleImageToggle = (image) => {
     this.setState({ image: image });
   };
 
-  handleProductPageAttributes = (id, name, value) => {
+  handleProductPageAttributes = (productId, name, value) => {
     const attributes = this.state.attributes;
     for (let i = 0; i < attributes.length; i++) {
       if (attributes[i][0] === name) {

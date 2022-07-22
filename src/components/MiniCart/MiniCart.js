@@ -36,12 +36,13 @@ class MiniCart extends PureComponent {
         </p>
         <div className="mini-cart-items-container">
           {cartItems.map((item) => {
-            const { id, attributes, quantity } = item;
-            const product = getProduct(id);
+            const { productId, itemId, attributes, quantity } = item;
+            const product = getProduct(productId);
             return (
               <CartItem
                 key={nanoid()}
                 product={product}
+                itemId={itemId}
                 attributes={attributes}
                 cartItemAttributes={cartItemAttributes}
                 quantity={quantity}

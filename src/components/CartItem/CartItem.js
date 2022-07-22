@@ -34,13 +34,13 @@ class CartItem extends PureComponent {
   render() {
     const {
       product: {
-        id: productId,
         name,
         gallery,
         attributes: attributesFromProduct,
         prices,
         brand,
       },
+      itemId: productItemId,
       attributes: attributesFromProps,
       cartItemAttributes,
       quantity,
@@ -93,7 +93,7 @@ class CartItem extends PureComponent {
                           displayValue={displayValue}
                           value={value}
                           id={itemId}
-                          productId={productId}
+                          productItemId={productItemId}
                           attributes={attributesFromProps}
                           attributeClick={cartItemAttributes}
                           compSize={compSize}
@@ -110,7 +110,7 @@ class CartItem extends PureComponent {
                           displayValue={displayValue}
                           value={value}
                           id={itemId}
-                          productId={productId}
+                          productItemId={productItemId}
                           attributes={attributesFromProps}
                           swatchClick={cartItemAttributes}
                           compSize={compSize}
@@ -135,7 +135,7 @@ class CartItem extends PureComponent {
             <Quantity
               compSize={compSize}
               type="increase"
-              id={productId}
+              productItemId={productItemId}
               quantityClick={cartItemQuantity}
             >
               +
@@ -144,7 +144,7 @@ class CartItem extends PureComponent {
             <Quantity
               compSize={compSize}
               type="decrease"
-              id={productId}
+              productItemId={productItemId}
               quantityClick={cartItemQuantity}
             >
               -

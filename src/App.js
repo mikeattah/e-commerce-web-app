@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { nanoid } from "nanoid";
 import Error from "./components/Error/Error";
 import Loading from "./components/Loading/Loading";
 import MiniCart from "./components/MiniCart/MiniCart";
@@ -24,7 +25,7 @@ class App extends Component {
       cartItems: [],
       cartTotal: 0,
       cartQuantity: 0,
-      id: "",
+      productId: "",
       attributes: [],
       miniCartOpen: false,
       loading: true,
@@ -73,16 +74,20 @@ class App extends Component {
     this.setState({ category: category, page: "categorypage" });
   };
 
-  handleProductClick = (id, attributes) => {
-    this.setState({ id: id, attributes: attributes, page: "productpage" });
+  handleProductClick = (productId, attributes) => {
+    this.setState({
+      productId: productId,
+      attributes: attributes,
+      page: "productpage",
+    });
   };
 
-  handleGetProduct = (id) => {
+  handleGetProduct = (productId) => {
     const categories = this.state.categories;
     for (const category of categories) {
       const products = category.products;
       for (const product of products) {
-        if (product.id === id) {
+        if (product.id === productId) {
           return product;
         }
       }
@@ -100,7 +105,7 @@ class App extends Component {
     const { cartItems, currency } = this.state;
     cartItems.forEach((item) => {
       let i = 0,
-        product = this.handleGetProduct(item.id);
+        product = this.handleGetProduct(item.productId);
       while (currency !== product.prices[i].currency.label) i++;
       total += product.prices[i].amount * item.quantity;
     });
@@ -114,27 +119,18 @@ class App extends Component {
     );
   };
 
-  handleAddToCart = (id, attributes) => {
+  handleAddToCart = (productId, attributes) => {
     let cartItems = this.state.cartItems,
-      check = false;
-    for (const item of cartItems) {
-      if (item.id === id) {
-        check = true;
-        item.attributes = attributes;
-        item.quantity += 1;
-        break;
-      }
-    }
-    if (check) {
-      cartItemsVar(cartItems);
-      this.handleSaveCartItems();
-      this.setState({ cartItems: cartItems }, () => {
-        this.handleCartQuantity();
-        this.handleCartTotal();
-      });
-      return;
-    }
-    cartItems = [...cartItems, { id: id, attributes: attributes, quantity: 1 }];
+      itemId = nanoid();
+    cartItems = [
+      ...cartItems,
+      {
+        productId: productId,
+        itemId: itemId,
+        attributes: attributes,
+        quantity: 1,
+      },
+    ];
     cartItemsVar(cartItems);
     this.handleSaveCartItems();
     this.setState({ cartItems: cartItems }, () => {
@@ -143,10 +139,10 @@ class App extends Component {
     });
   };
 
-  handleRemoveFromCart = (id) => {
+  handleRemoveFromCart = (itemId) => {
     let cartItems = this.state.cartItems;
     for (const item of cartItems) {
-      if (item.id === id) {
+      if (item.itemId === itemId) {
         cartItems.splice(cartItems.indexOf(item), 1);
         break;
       }
@@ -159,11 +155,11 @@ class App extends Component {
     });
   };
 
-  handleCartItemAttributes = (id, name, value) => {
+  handleCartItemAttributes = (itemId, name, value) => {
     let cartItems = this.state.cartItems,
       check = false;
     for (const item of cartItems) {
-      if (item.id === id) {
+      if (item.itemId === itemId) {
         const attributes = item.attributes;
         for (let i = 0; i < attributes.length; i++) {
           if (attributes[i][0] === name) {
@@ -181,17 +177,17 @@ class App extends Component {
     this.setState({ cartItems: cartItems });
   };
 
-  handleCartItemQuantity = (id, type) => {
+  handleCartItemQuantity = (itemId, type) => {
     const cartItems = this.state.cartItems;
     for (const item of cartItems) {
-      if (item.id === id) {
+      if (item.itemId === itemId) {
         if (type === "increase") {
           item.quantity += 1;
         } else if (type === "decrease") {
           if (item.quantity > 1) {
             item.quantity -= 1;
           } else {
-            this.handleRemoveFromCart(id);
+            this.handleRemoveFromCart(itemId);
           }
         }
         break;
@@ -241,7 +237,7 @@ class App extends Component {
       cartItems,
       cartTotal,
       cartQuantity,
-      id,
+      productId,
       attributes,
       miniCartOpen,
       loading,
@@ -315,7 +311,7 @@ class App extends Component {
                   <ProductPage
                     currency={currency}
                     categories={categories}
-                    id={id}
+                    productId={productId}
                     attributes={attributes}
                     miniCartOpen={miniCartOpen}
                     addToCart={handleAddToCart}

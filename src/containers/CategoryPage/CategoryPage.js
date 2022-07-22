@@ -48,8 +48,15 @@ class CategoryPage extends Component {
           {[
             ...categories[i].products.slice(pageIndex, pageIndex + pageItems),
           ].map((product) => {
-            const { id, name, inStock, gallery, attributes, prices, brand } =
-              product;
+            const {
+              id: productId,
+              name,
+              inStock,
+              gallery,
+              attributes,
+              prices,
+              brand,
+            } = product;
             let label, symbol, amount;
             for (const price of prices) {
               if (price.currency.label === currency) {
@@ -61,7 +68,7 @@ class CategoryPage extends Component {
             return (
               <ProductCard
                 key={nanoid()}
-                id={id}
+                productId={productId}
                 name={name}
                 inStock={inStock}
                 gallery={gallery}

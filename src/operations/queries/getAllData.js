@@ -36,7 +36,8 @@ export const GET_ALL_DATA = gql`
       symbol
     }
     cartItems @client {
-      id
+      productId
+      itemId
       attributes
       quantity
     }
