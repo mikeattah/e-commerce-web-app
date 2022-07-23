@@ -11,7 +11,7 @@ const StyledSwatch = styled.div`
 
 class Swatch extends PureComponent {
   render() {
-    const { name, value, productId, attributes, swatchClick, compSize } =
+    const { name, value, itemId, attributes, swatchClick, compSize } =
       this.props;
     let selected;
     attributes.forEach((attribute) => {
@@ -27,7 +27,7 @@ class Swatch extends PureComponent {
       <div
         className={style}
         onClick={() => {
-          swatchClick(productId, name, value);
+          swatchClick(itemId, name, value);
         }}
       >
         <StyledSwatch value={value} />

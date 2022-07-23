@@ -121,12 +121,12 @@ class App extends Component {
 
   handleAddToCart = (productId, attributes) => {
     let cartItems = this.state.cartItems,
-      itemId = nanoid();
+      cartItemId = nanoid();
     cartItems = [
       ...cartItems,
       {
         productId: productId,
-        itemId: itemId,
+        cartItemId: cartItemId,
         attributes: attributes,
         quantity: 1,
       },
@@ -139,10 +139,10 @@ class App extends Component {
     });
   };
 
-  handleRemoveFromCart = (itemId) => {
+  handleRemoveFromCart = (cartItemId) => {
     let cartItems = this.state.cartItems;
     for (const item of cartItems) {
-      if (item.itemId === itemId) {
+      if (item.cartItemId === cartItemId) {
         cartItems.splice(cartItems.indexOf(item), 1);
         break;
       }
@@ -155,11 +155,11 @@ class App extends Component {
     });
   };
 
-  handleCartItemAttributes = (itemId, name, value) => {
+  handleCartItemAttributes = (cartItemId, name, value) => {
     let cartItems = this.state.cartItems,
       check = false;
     for (const item of cartItems) {
-      if (item.itemId === itemId) {
+      if (item.cartItemId === cartItemId) {
         const attributes = item.attributes;
         for (let i = 0; i < attributes.length; i++) {
           if (attributes[i][0] === name) {
@@ -177,17 +177,17 @@ class App extends Component {
     this.setState({ cartItems: cartItems });
   };
 
-  handleCartItemQuantity = (itemId, type) => {
+  handleCartItemQuantity = (cartItemId, type) => {
     const cartItems = this.state.cartItems;
     for (const item of cartItems) {
-      if (item.itemId === itemId) {
+      if (item.cartItemId === cartItemId) {
         if (type === "increase") {
           item.quantity += 1;
         } else if (type === "decrease") {
           if (item.quantity > 1) {
             item.quantity -= 1;
           } else {
-            this.handleRemoveFromCart(itemId);
+            this.handleRemoveFromCart(cartItemId);
           }
         }
         break;
@@ -262,7 +262,7 @@ class App extends Component {
     const taxRate = 0.075,
       subTotal = handleNumberFormat(cartTotal),
       tax = handleNumberFormat(cartTotal * taxRate),
-      total = handleNumberFormat(cartTotal + tax);
+      total = handleNumberFormat(cartTotal * (1 + taxRate));
     return (
       <ErrorBoundary>
         <div className="app">

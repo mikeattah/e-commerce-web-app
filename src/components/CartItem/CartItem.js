@@ -40,7 +40,7 @@ class CartItem extends PureComponent {
         prices,
         brand,
       },
-      itemId: productItemId,
+      cartItemId,
       attributes: attributesFromProps,
       cartItemAttributes,
       quantity,
@@ -85,15 +85,15 @@ class CartItem extends PureComponent {
                   </p>
                   {type !== "swatch" &&
                     items.map((item) => {
-                      const { displayValue, value, id: itemId } = item;
+                      const { displayValue, value, id } = item;
                       return (
                         <Attribute
                           key={nanoid()}
                           name={name}
                           displayValue={displayValue}
                           value={value}
-                          id={itemId}
-                          productItemId={productItemId}
+                          id={id}
+                          itemId={cartItemId}
                           attributes={attributesFromProps}
                           attributeClick={cartItemAttributes}
                           compSize={compSize}
@@ -102,15 +102,15 @@ class CartItem extends PureComponent {
                     })}
                   {type === "swatch" &&
                     items.map((item) => {
-                      const { displayValue, value, id: itemId } = item;
+                      const { displayValue, value, id } = item;
                       return (
                         <Swatch
                           key={nanoid()}
                           name={name}
                           displayValue={displayValue}
                           value={value}
-                          id={itemId}
-                          productItemId={productItemId}
+                          id={id}
+                          itemId={cartItemId}
                           attributes={attributesFromProps}
                           swatchClick={cartItemAttributes}
                           compSize={compSize}
@@ -135,7 +135,7 @@ class CartItem extends PureComponent {
             <Quantity
               compSize={compSize}
               type="increase"
-              productItemId={productItemId}
+              cartItemId={cartItemId}
               quantityClick={cartItemQuantity}
             >
               +
@@ -144,7 +144,7 @@ class CartItem extends PureComponent {
             <Quantity
               compSize={compSize}
               type="decrease"
-              productItemId={productItemId}
+              cartItemId={cartItemId}
               quantityClick={cartItemQuantity}
             >
               -

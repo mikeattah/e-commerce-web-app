@@ -28,15 +28,15 @@ class CategoryPage extends Component {
       miniCartToggle,
       numberFormat,
     } = this.props;
-    const { pageIndex } = this.state;
-    // number of items per page
-    const pageItems = 6;
-    // array of pages
-    const pages = [];
-    // index of category in categoryNames array
-    const i = categoryNames.indexOf(category);
-    // number of pages per category
-    const pageCount = Math.ceil(categories[i].products.length / pageItems);
+    const { pageIndex } = this.state,
+      // number of items per page
+      pageItems = 6,
+      // array of pages
+      pages = [],
+      // index of category in categoryNames array
+      i = categoryNames.indexOf(category),
+      // number of pages per category
+      pageCount = Math.ceil(categories[i].products.length / pageItems);
     // collect page indexes into pages array
     for (let j = 0; j < pageCount; j++) {
       pages.push(j);

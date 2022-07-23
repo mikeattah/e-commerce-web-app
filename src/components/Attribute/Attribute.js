@@ -3,7 +3,7 @@ import "./Attribute.css";
 
 class Attribute extends PureComponent {
   render() {
-    const { name, value, productId, attributes, attributeClick, compSize } =
+    const { name, value, itemId, attributes, attributeClick, compSize } =
       this.props;
     let style = compSize === "large" ? "attribute-large" : "attribute-small";
     attributes.forEach((attribute) => {
@@ -15,7 +15,7 @@ class Attribute extends PureComponent {
       <button
         className={style}
         onClick={() => {
-          attributeClick(productId, name, value);
+          attributeClick(itemId, name, value);
         }}
       >
         {value}

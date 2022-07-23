@@ -27,7 +27,7 @@ class ProductCard extends PureComponent {
 
   render() {
     const {
-      id: productId,
+      productId,
       name,
       inStock,
       gallery,

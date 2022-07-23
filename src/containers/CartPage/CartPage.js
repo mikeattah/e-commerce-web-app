@@ -34,13 +34,13 @@ class CartPage extends Component {
         <h1 className="cart-page-title">CART</h1>
         <div className="cart-page-main">
           {cartItems.map((item) => {
-            const { productId, itemId, attributes, quantity } = item;
+            const { productId, cartItemId, attributes, quantity } = item;
             const product = getProduct(productId);
             return (
               <CartItem
                 key={nanoid()}
                 product={product}
-                itemId={itemId}
+                cartItemId={cartItemId}
                 attributes={attributes}
                 cartItemAttributes={cartItemAttributes}
                 quantity={quantity}

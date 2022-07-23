@@ -3,12 +3,11 @@ import "./Quantity.css";
 
 class Quantity extends PureComponent {
   render() {
-    const { children, compSize, type, productItemId, quantityClick } =
-      this.props;
+    const { children, compSize, type, cartItemId, quantityClick } = this.props;
     return (
       <button
         className={compSize === "large" ? "quantity-large" : "quantity-small"}
-        onClick={() => quantityClick(productItemId, type)}
+        onClick={() => quantityClick(cartItemId, type)}
       >
         {children}
       </button>

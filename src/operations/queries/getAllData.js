@@ -37,7 +37,7 @@ export const GET_ALL_DATA = gql`
     }
     cartItems @client {
       productId
-      itemId
+      cartItemId
       attributes
       quantity
     }

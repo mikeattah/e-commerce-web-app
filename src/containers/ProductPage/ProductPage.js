@@ -124,15 +124,15 @@ class ProductPage extends Component {
                   </p>
                   {type !== "swatch" &&
                     items.map((item) => {
-                      const { displayValue, value, id: itemId } = item;
+                      const { displayValue, value, id } = item;
                       return (
                         <Attribute
                           key={nanoid()}
                           name={name}
                           displayValue={displayValue}
                           value={value}
-                          id={itemId}
-                          productId={productId}
+                          id={id}
+                          itemId={productId}
                           attributes={attributesFromState}
                           attributeClick={handleProductPageAttributes}
                           compSize="large"
@@ -141,15 +141,15 @@ class ProductPage extends Component {
                     })}
                   {type === "swatch" &&
                     items.map((item) => {
-                      const { displayValue, value, id: itemId } = item;
+                      const { displayValue, value, id } = item;
                       return (
                         <Swatch
                           key={nanoid()}
                           name={name}
                           displayValue={displayValue}
                           value={value}
-                          id={itemId}
-                          productId={productId}
+                          id={id}
+                          itemId={productId}
                           attributes={attributesFromState}
                           swatchClick={handleProductPageAttributes}
                           compSize="large"
